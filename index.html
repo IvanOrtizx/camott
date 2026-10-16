@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Camott · Soluciones digitales</title>
+<meta name="description" content="Camott crea herramientas digitales a la medida para restaurantes, negocios, emprendedores y empresas: menús con pedidos, catálogos, cotizadores, inventarios y páginas web.">
+<meta property="og:title" content="Camott · Soluciones digitales">
+<meta property="og:description" content="Herramientas digitales a la medida para que tu negocio venda más y trabaje menos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F6F2EA;
+    --ink:#141210;
+    --muted:#5E5850;
+    --line:#E2DBCE;
+    --card:#FFFFFF;
+    --accent:#FF5B1F;
+    --accent-ink:#FFFFFF;
+    --lime:#D7F25A;
+    --radius:20px;
+    --wa:#25D366;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--bg);color:var(--ink);font-family:'Manrope',system-ui,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+  h1,h2,h3{font-family:'Bricolage Grotesque',sans-serif;line-height:1.05;letter-spacing:-0.02em}
+
+  /* Nav */
+  nav{position:sticky;top:0;z-index:20;background:rgba(246,242,234,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px}
+  .logo{font-family:'Bricolage Grotesque',sans-serif;font-weight:800;font-size:1.6rem;letter-spacing:-0.03em}
+  .logo .tt{color:var(--accent)}
+  .nav-links{display:flex;gap:28px;font-weight:600;font-size:.95rem}
+  .nav-links a:hover{color:var(--accent)}
+  .btn{display:inline-flex;align-items:center;gap:10px;font-weight:700;border-radius:999px;padding:14px 24px;transition:transform .15s ease, box-shadow .15s ease}
+  .btn:hover{transform:translateY(-2px)}
+  .btn-primary{background:var(--accent);color:var(--accent-ink);box-shadow:0 8px 24px -8px rgba(255,91,31,.6)}
+  .btn-ghost{border:1.5px solid var(--ink)}
+  .btn-sm{padding:10px 18px;font-size:.9rem}
+  @media (max-width:760px){.nav-links{display:none}}
+
+  /* Hero */
+  .hero{padding:80px 0 64px;position:relative;overflow:hidden}
+  .tag{display:inline-block;background:var(--lime);font-weight:700;font-size:.85rem;padding:6px 14px;border-radius:999px;margin-bottom:24px}
+  .hero h1{font-size:clamp(2.6rem,7.5vw,5.6rem);font-weight:800;max-width:14ch}
+  .hero h1 em{font-style:normal;color:var(--accent)}
+  .hero p.lead{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:56ch;margin:28px 0 36px}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:14px}
+  .hero .blob{position:absolute;right:-120px;top:40px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--lime),transparent 65%);opacity:.7;z-index:-1}
+  .for-who{display:flex;flex-wrap:wrap;gap:10px;margin-top:48px}
+  .for-who span{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:8px 16px;font-weight:600;font-size:.92rem}
+
+  /* Sections */
+  section{padding:72px 0}
+  .eyebrow{font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;font-size:.8rem;margin-bottom:12px}
+  .sec-title{font-size:clamp(2rem,4.5vw,3.2rem);font-weight:800;max-width:20ch;margin-bottom:16px}
+  .sec-sub{color:var(--muted);max-width:60ch;margin-bottom:44px;font-size:1.05rem}
+
+  /* Services */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:28px;transition:transform .2s ease,border-color .2s ease}
+  .card:hover{transform:translateY(-4px);border-color:var(--ink)}
+  .icon{width:52px;height:52px;border-radius:14px;background:var(--bg);display:grid;place-items:center;font-size:1.6rem;margin-bottom:18px}
+  .card h3{font-size:1.35rem;margin-bottom:8px}
+  .card p{color:var(--muted);font-size:.98rem}
+
+  /* Dark band */
+  .band{background:var(--ink);color:var(--bg);border-radius:32px;margin:0 12px}
+  .band .sec-sub{color:#B9B1A5}
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:28px}
+  .step .num{font-family:'Bricolage Grotesque',sans-serif;font-size:3.4rem;font-weight:800;color:var(--lime);line-height:1}
+  .step h3{font-size:1.3rem;margin:12px 0 6px}
+  .step p{color:#B9B1A5}
+
+  /* Why */
+  .why{display:grid;grid-template-columns:1.1fr 1fr;gap:48px;align-items:center}
+  .why ul{list-style:none;display:grid;gap:16px}
+  .why li{display:flex;gap:14px;align-items:flex-start;font-weight:600}
+  .why li::before{content:"";flex:0 0 22px;height:22px;margin-top:2px;border-radius:50%;background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'/%3E%3C/svg%3E") center/13px no-repeat}
+  .why li span{font-weight:400;color:var(--muted);display:block}
+  @media (max-width:860px){.why{grid-template-columns:1fr}}
+
+  /* CTA */
+  .cta{text-align:center;background:var(--accent);color:var(--accent-ink);border-radius:32px;padding:72px 24px;margin:0 12px}
+  .cta h2{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;max-width:18ch;margin:0 auto 18px}
+  .cta p{opacity:.9;max-width:50ch;margin:0 auto 32px;font-size:1.08rem}
+  .cta .btn{background:var(--ink);color:var(--bg)}
+
+  footer{padding:48px 0 100px;color:var(--muted);font-size:.92rem}
+  footer .wrap{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+
+  /* WhatsApp float */
+  .wa-float{position:fixed;right:18px;bottom:18px;z-index:30;width:60px;height:60px;border-radius:50%;background:var(--wa);display:grid;place-items:center;box-shadow:0 10px 28px -6px rgba(0,0,0,.35);transition:transform .15s ease}
+  .wa-float:hover{transform:scale(1.08)}
+  .wa-float svg{width:32px;height:32px;fill:#fff}
+
+  /* Reveal */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.btn,.card{transition:none}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a href="#" class="logo">Camo<span class="tt">tt</span></a>
+    <div class="nav-links">
+      <a href="#servicios">Servicios</a>
+      <a href="#proceso">Cómo trabajo</a>
+      <a href="#contacto">Contacto</a>
+    </div>
+    <a class="btn btn-primary btn-sm wa-link" href="#">Escríbeme</a>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="blob" aria-hidden="true"></div>
+  <div class="wrap">
+    <span class="tag">Soluciones digitales a la medida</span>
+    <h1>Tu negocio, más fácil de <em>vender</em> y de manejar.</h1>
+    <p class="lead">En Camott creo herramientas digitales sencillas y bonitas para que tus clientes te compren desde el celular y tú dejes de perder tiempo en tareas repetitivas.</p>
+    <div class="hero-actions">
+      <a class="btn btn-primary wa-link" href="#">Cotiza tu proyecto por WhatsApp</a>
+      <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
+    </div>
+    <div class="for-who">
+      <span>🍔 Restaurantes</span>
+      <span>🛍️ Tiendas y negocios</span>
+      <span>🚀 Emprendedores</span>
+      <span>🏢 Empresas medianas</span>
+      <span>✨ Y más</span>
+    </div>
+  </div>
+</header>
+
+<section id="servicios">
+  <div class="wrap">
+    <p class="eyebrow reveal">Servicios</p>
+    <h2 class="sec-title reveal">Lo que puedo construir para ti</h2>
+    <p class="sec-sub reveal">Cada herramienta se diseña según cómo funciona tu negocio. Nada de plantillas que no te sirven.</p>
+    <div class="grid">
+      <div class="card reveal"><div class="icon">📱</div><h3>Menús digitales</h3><p>Tu carta en el celular de tus clientes, con fotos, precios y pedidos directo a tu WhatsApp.</p></div>
+      <div class="card reveal"><div class="icon">🛒</div><h3>Catálogos online</h3><p>Muestra tus productos de forma profesional y recibe pedidos sin necesidad de una tienda complicada.</p></div>
+      <div class="card reveal"><div class="icon">🧮</div><h3>Cotizadores</h3><p>Tus clientes calculan precios en segundos y te llegan listos para cerrar la venta.</p></div>
+      <div class="card reveal"><div class="icon">📦</div><h3>Inventarios</h3><p>Controla existencias desde Google Sheets, conectado a tu menú o catálogo para no vender lo que no tienes.</p></div>
+      <div class="card reveal"><div class="icon">🌐</div><h3>Páginas web</h3><p>Sitios rápidos y claros que presentan tu marca y convierten visitas en mensajes.</p></div>
+      <div class="card reveal"><div class="icon">⚡</div><h3>Automatizaciones</h3><p>Reservas, recordatorios, formularios y reportes que trabajan solos mientras tú atiendes tu negocio.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="proceso" class="band">
+  <div class="wrap">
+    <p class="eyebrow reveal" style="color:var(--lime)">Cómo trabajo</p>
+    <h2 class="sec-title reveal">De la idea a tu herramienta funcionando</h2>
+    <p class="sec-sub reveal">Un proceso simple, sin tecnicismos y con acompañamiento de principio a fin.</p>
+    <div class="steps">
+      <div class="step reveal"><div class="num">01</div><h3>Conversamos</h3><p>Me cuentas cómo funciona tu negocio y qué te quita tiempo o ventas.</p></div>
+      <div class="step reveal"><div class="num">02</div><h3>Diseño y construyo</h3><p>Creo tu herramienta con tu marca y te muestro avances para ajustarla.</p></div>
+      <div class="step reveal"><div class="num">03</div><h3>La lanzamos</h3><p>Queda publicada con su propio enlace, lista para compartir en redes y WhatsApp.</p></div>
+      <div class="step reveal"><div class="num">04</div><h3>Te acompaño</h3><p>Te enseño a usarla y te ayudo con cambios y mejoras cuando lo necesites.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap why">
+    <div>
+      <p class="eyebrow reveal">Por qué Camott</p>
+      <h2 class="sec-title reveal">Tecnología que se siente fácil</h2>
+      <p class="sec-sub reveal" style="margin-bottom:0">Además de soluciones digitales, hago fotografía, video y diseño gráfico, así que tu herramienta no solo funciona: también se ve increíble.</p>
+    </div>
+    <ul>
+      <li class="reveal"><div>Hecho a tu medida<span>Se adapta a tu negocio, no al revés.</span></div></li>
+      <li class="reveal"><div>Pensado para el celular<span>Donde están tus clientes todo el día.</span></div></li>
+      <li class="reveal"><div>Fácil de administrar<span>Cambias precios y productos sin saber programar.</span></div></li>
+      <li class="reveal"><div>Trato directo<span>Hablas conmigo, sin intermediarios ni call centers.</span></div></li>
+    </ul>
+  </div>
+</section>
+
+<section id="contacto" style="padding-top:24px">
+  <div class="cta reveal">
+    <h2>¿Listo para darle un empujón digital a tu negocio?</h2>
+    <p>Escríbeme por WhatsApp, cuéntame tu idea y te digo cómo la podemos hacer realidad.</p>
+    <a class="btn wa-link" href="#">Hablemos por WhatsApp · 321 397 3458</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="logo" style="font-size:1.3rem">Camo<span class="tt">tt</span></a>
+    <span>Soluciones digitales · Neiva, Huila · Colombia</span>
+    <span>© <span id="year"></span> Camott</span>
+  </div>
+</footer>
+
+<a class="wa-float wa-link" href="#" aria-label="Escríbeme por WhatsApp">
+  <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 3C8.86 3 3.03 8.82 3.03 16c0 2.29.6 4.53 1.74 6.5L3 29l6.68-1.75A12.95 12.95 0 0 0 16.04 29C23.2 29 29 23.18 29 16S23.2 3 16.04 3zm0 23.62c-2 0-3.96-.54-5.67-1.56l-.4-.24-3.97 1.04 1.06-3.86-.26-.4A10.6 10.6 0 0 1 5.4 16c0-5.86 4.77-10.63 10.64-10.63 5.86 0 10.62 4.77 10.62 10.63 0 5.87-4.77 10.62-10.62 10.62zm5.83-7.96c-.32-.16-1.89-.93-2.18-1.04-.29-.11-.5-.16-.72.16-.21.32-.82 1.04-1 1.25-.19.21-.37.24-.69.08-.32-.16-1.35-.5-2.57-1.59-.95-.85-1.59-1.9-1.78-2.22-.19-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.19.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.72-1.73-.98-2.37-.26-.62-.52-.54-.72-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.12 1.09-1.12 2.66 0 1.57 1.14 3.08 1.3 3.3.16.21 2.25 3.43 5.44 4.81.76.33 1.35.52 1.81.67.76.24 1.46.21 2 .13.61-.09 1.89-.77 2.15-1.52.27-.75.27-1.39.19-1.52-.08-.13-.29-.21-.61-.37z"/></svg>
+</a>
+
+<script>
+  // Cambia aquí tu número (con 57 de Colombia) y el mensaje inicial
+  const WHATSAPP = "573213973458";
+  const MENSAJE = "Hola Camott, quiero información sobre una solución digital para mi negocio.";
+  const url = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(MENSAJE);
+  document.querySelectorAll(".wa-link").forEach(a => { a.href = url; a.target = "_blank"; a.rel = "noopener"; });
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>
