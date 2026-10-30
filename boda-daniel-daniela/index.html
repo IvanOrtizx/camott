@@ -332,7 +332,7 @@ details.p-card summary{cursor:pointer;font-weight:500;color:var(--rose-deep)}
     </div>
   </section>
 
-  <section id="portada" aria-label="Portada">
+  <section id="portada" aria-label="Portada" hidden>
     <div class="foto" role="img" aria-label="Daniel y Daniela frente a la Torre del Reloj"></div>
     <div class="contenido">
       <div class="eyebrow">Nos casamos</div>
@@ -676,17 +676,11 @@ function iniciarInvitacion(){
     if(abierto) return; abierto=true;
     reproducir();
     const sb=$("#sobre"); sb.classList.add("abriendo");
-    setTimeout(()=>sb.classList.add("fuera"), quieto?50:2500);
-    setTimeout(()=>{ sb.hidden=true; $("#abrir").focus({preventScroll:true}); }, quieto?400:3500);
+    setTimeout(()=>{ window.scrollTo(0,0); document.body.style.overflow=""; sb.classList.add("fuera"); }, quieto?50:2500);
+    setTimeout(()=>{ sb.hidden=true; }, quieto?400:3500);
   }
   $("#abrirSobre").addEventListener("click", abrirSobre);
   $("#sello").addEventListener("click", abrirSobre);
-  $("#abrir").addEventListener("click", ()=>{
-    $("#portada").classList.add("abierta");
-    document.body.style.overflow="";
-    reproducir();
-    setTimeout(()=>{ $("#portada").hidden=true; }, 1200);
-  });
 
   // Cuenta regresiva
   const meta = new Date(CONFIG.fechaBoda).getTime();
