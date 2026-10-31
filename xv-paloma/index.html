@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b1712">
+<meta name="description" content="Te invito a celebrar mis XV años. Sábado 5 de diciembre, 7:00 p. m., Bogotá.">
+<meta property="og:title" content="Mis XV Años · Paloma Linares Barón">
+<meta property="og:description" content="Sábado 5 de diciembre · 7:00 p. m. · Bogotá. ¡Te espero para vivir juntos este cuento!">
+<meta property="og:image" content="https://camott.com/xv-paloma/img/hero.jpg">
+<meta property="og:url" content="https://camott.com/xv-paloma/">
+<meta property="og:type" content="website">
+<style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<title>Mis XV Años · Paloma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pinyon+Script&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Marcellus+SC&display=swap">
+<style>
+/* Layout: noche de cuento en el pantano — sobre lacrado de entrada, luego una sola columna como libro de cuentos con filigrana dorada sobre textura de pantano y luciérnagas */
+:root{
+  --noche:#0b1712;
+  --musgo:#142a1f;
+  --oro:#d9b66a;
+  --oro-claro:#f6e3a8;
+  --oro-osc:#8a6a2c;
+  --nenufar:#9cc9a0;
+  --cielo:#bcd6f0;
+  --texto:#efe8d6;
+  --tenue:#b5b19c;
+  --dorado:linear-gradient(115deg,#a8833a 0%,#f6e3a8 22%,#d9b66a 38%,#fff3c9 50%,#c79d4f 64%,#f6e3a8 80%,#a8833a 100%);
+  --f-nombre:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
+  --f-cuerpo:"Cormorant Garamond",Georgia,"Times New Roman",serif;
+  --f-etiqueta:"Marcellus SC","Trajan Pro",Georgia,serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--noche);color:var(--texto);font-family:var(--f-cuerpo);font-size:19px;line-height:1.55;overflow-x:hidden;-webkit-tap-highlight-color:transparent}
+body.cerrado{overflow:hidden}
+
+/* ---------- Capas del pantano ---------- */
+.fondo{position:fixed;inset:0;pointer-events:none}
+#escena{z-index:0;width:100%;height:100%}
+.textura{z-index:0;opacity:.22;mix-blend-mode:soft-light;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.012 .035' numOctaves='5' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 .35  0 0 0 0 .6  0 0 0 0 .32  0 0 0 1.4 -.35'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E"),
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='turbulence' baseFrequency='.9' numOctaves='2' seed='3'/%3E%3CfeColorMatrix values='0 0 0 0 .8  0 0 0 0 .9  0 0 0 0 .7  0 0 0 .5 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");}
+.bruma{z-index:0;overflow:hidden}
+.bruma::before,.bruma::after{content:"";position:absolute;left:-50%;width:200%;height:38%;border-radius:50%;filter:blur(40px);opacity:.16;background:radial-gradient(ellipse at center,#cfe3cf 0%,transparent 65%)}
+.bruma::before{bottom:6%}
+.bruma::after{top:30%;opacity:.08}
+#luces{z-index:1;width:100%;height:100%}
+
+main{position:relative;z-index:2;max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:34px 60px;display:flex;flex-direction:column;gap:72px}
+section{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;position:relative}
+.eti{font-family:var(--f-etiqueta);letter-spacing:.24em;font-size:.76rem;color:var(--oro);text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.eti::before,.eti::after{content:"";width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--oro))}
+.eti::after{transform:scaleX(-1)}
+.oro-txt{background:var(--dorado);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-family:var(--f-nombre);font-weight:400;font-size:clamp(2.7rem,11vw,3.4rem);line-height:1.05;margin:0;text-wrap:balance;padding:0 .2em}
+p{margin:0;max-width:34ch}
+.divisor{width:min(300px,82%);height:auto;display:block;overflow:visible}
+
+/* ---------- Sobre de entrada ---------- */
+#sobre{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(30,58,42,.92),rgba(8,16,12,.97));transition:opacity .9s ease,visibility .9s}
+#sobre.fuera{opacity:0;visibility:hidden}
+#sobre .aviso{font-family:var(--f-etiqueta);letter-spacing:.26em;font-size:.78rem;color:var(--oro);text-align:center}
+#sobre .para{font-family:var(--f-nombre);font-size:clamp(2.4rem,10vw,3.2rem);line-height:1}
+#sobre .toca{font-style:italic;color:var(--tenue);font-size:1.05rem;display:flex;align-items:center;gap:8px}
+#sobre .toca span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--oro-claro);box-shadow:0 0 10px var(--oro-claro);animation:latido 1.6s ease-in-out infinite}
+.env{position:relative;width:min(340px,84vw);aspect-ratio:1.45;perspective:1100px;cursor:pointer;border:0;padding:0;background:none;transition:transform .4s}
+.env:hover{transform:translateY(-4px) rotate(-.6deg)}
+.env:focus-visible{outline:2px solid var(--oro-claro);outline-offset:8px;border-radius:8px}
+.env .atras{position:absolute;inset:0;border-radius:8px;background:linear-gradient(160deg,#1f4030,#132a1f);box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(217,182,106,.45)}
+.env .carta-in{position:absolute;left:7%;right:7%;top:8%;height:84%;border-radius:4px;background:linear-gradient(180deg,#fbf3dc,#efe1bb);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#2a3a2c;transition:transform 1s cubic-bezier(.2,.8,.2,1) .7s;z-index:1;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.env .carta-in b{font-family:var(--f-etiqueta);font-weight:400;letter-spacing:.3em;font-size:.7rem;color:#8a6a2c}
+.env .carta-in i{font-family:var(--f-nombre);font-style:normal;font-size:2.6rem;line-height:1;color:#3a5a3e}
+.env .frente{position:absolute;inset:0;z-index:2;border-radius:8px;overflow:hidden;pointer-events:none}
+.env .frente::before,.env .frente::after{content:"";position:absolute;inset:0}
+.env .frente::before{background:linear-gradient(200deg,#24493a,#173225);clip-path:polygon(0 0,50% 56%,100% 0,100% 100%,0 100%)}
+.env .frente::after{background:linear-gradient(20deg,#1b392b,#2a5240);clip-path:polygon(0 100%,50% 50%,100% 100%)}
+.env .borde{position:absolute;inset:6px;z-index:3;border:1px solid rgba(217,182,106,.55);border-radius:5px;pointer-events:none}
+.env .solapa{position:absolute;left:0;right:0;top:0;height:60%;z-index:4;transform-origin:top center;transition:transform .8s cubic-bezier(.5,0,.3,1),z-index 0s .4s;transform-style:preserve-3d}
+.env .solapa::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#2c5a45,#1c3a2c);clip-path:polygon(0 0,100% 0,50% 100%);border-radius:8px 8px 0 0;filter:drop-shadow(0 6px 6px rgba(0,0,0,.35))}
+.env .solapa::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(217,182,106,.5));clip-path:polygon(0 0,100% 0,50% 100%,50% 97%,98% 1.5%,2% 1.5%,50% 97%,50% 100%)}
+.env .sello{position:absolute;left:50%;top:60%;z-index:6;width:74px;height:74px;transform:translate(-50%,-50%);transition:transform .5s,opacity .5s;filter:drop-shadow(0 4px 6px rgba(0,0,0,.45))}
+.env .sello svg{width:100%;height:100%;animation:latido 2.2s ease-in-out infinite}
+.env.abierto .sello{transform:translate(-50%,-50%) scale(1.4);opacity:0}
+.env.abierto .solapa{transform:rotateX(180deg);z-index:0}
+.env.abierto .carta-in{transform:translateY(-62%)}
+.env.abierto{transform:none}
+
+/* ---------- Portada ---------- */
+.portada{gap:14px;padding-top:6px}
+.erase{font-style:italic;color:var(--tenue);font-size:1.08rem}
+.ventana{position:relative;width:min(340px,84vw);aspect-ratio:3/4.3;max-width:100%;margin-top:44px}
+.ventana .marco{position:absolute;inset:0;border-radius:999px 999px 14px 14px;padding:8px;background:var(--dorado);background-size:200% 200%;box-shadow:0 0 60px rgba(217,182,106,.28),0 24px 44px rgba(0,0,0,.55);animation:brillo 7s linear infinite}
+.ventana .marco::after{content:"";position:absolute;inset:14px;border-radius:999px 999px 8px 8px;border:1px solid rgba(255,243,201,.55);pointer-events:none;z-index:2}
+.ventana img{width:100%;height:100%;object-fit:cover;object-position:50% 18%;border-radius:999px 999px 8px 8px;display:block}
+.ventana .corona{position:absolute;left:50%;top:-50px;transform:translateX(-50%);width:104px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.5));z-index:3}
+.ventana .filig{position:absolute;width:74px;height:74px;bottom:-14px;z-index:3}
+.ventana .filig.izq{left:-14px}
+.ventana .filig.der{right:-14px;transform:scaleX(-1)}
+.ventana .sapo-h{position:absolute;right:-26px;bottom:-30px;width:118px;z-index:4;cursor:pointer;border:0;background:none;padding:0}
+.ventana .sapo-h svg{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 10px rgba(0,0,0,.55))}
+.burbuja{position:absolute;bottom:100%;left:50%;transform:translate(-50%,6px) scale(.6);opacity:0;background:var(--oro-claro);color:#1b2a1f;font-family:var(--f-etiqueta);font-size:.72rem;letter-spacing:.12em;padding:6px 10px;border-radius:12px;white-space:nowrap;pointer-events:none;transition:.3s}
+.burbuja::after{content:"";position:absolute;top:100%;left:50%;border:6px solid transparent;border-top-color:var(--oro-claro);transform:translateX(-50%)}
+.habla .burbuja{opacity:1;transform:translate(-50%,-4px) scale(1)}
+.chispa{position:absolute;width:12px;height:12px;pointer-events:none}
+.chispa::before{content:"";position:absolute;inset:0;background:var(--oro-claro);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:titila 2.4s ease-in-out infinite}
+.mis{font-family:var(--f-etiqueta);letter-spacing:.34em;color:var(--oro);font-size:.95rem;margin-top:30px}
+.nombre{font-family:var(--f-nombre);font-weight:400;font-size:clamp(4.4rem,21vw,6.4rem);line-height:1;margin:0;padding:0 .15em;filter:drop-shadow(0 0 22px rgba(246,227,168,.25));animation:brillo 6s linear infinite}
+.apellidos{font-family:var(--f-etiqueta);letter-spacing:.3em;font-size:.9rem;color:var(--texto)}
+.fecha-corta{display:flex;align-items:center;gap:14px;font-family:var(--f-etiqueta);letter-spacing:.14em;margin-top:8px}
+.fecha-corta .dia{font-size:2.8rem;font-family:var(--f-cuerpo);font-weight:500;letter-spacing:0;line-height:1;padding:0 16px;border-left:1px solid var(--oro);border-right:1px solid var(--oro)}
+.fecha-corta span{font-size:.85rem}
+
+/* ---------- Cuenta regresiva con sapo saltarín ---------- */
+.reloj-zona{position:relative;width:100%;max-width:420px;padding-top:78px}
+.reloj{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;width:100%}
+.reloj div{position:relative;border-radius:12px;padding:14px 4px 10px;background:radial-gradient(ellipse at 50% 0%,rgba(63,138,85,.35),rgba(20,42,31,.85) 70%);border:1px solid rgba(217,182,106,.5);box-shadow:inset 0 0 0 3px rgba(11,23,18,.6),inset 0 0 0 4px rgba(217,182,106,.18)}
+.reloj div::before{content:"";position:absolute;left:50%;top:-6px;width:10px;height:10px;transform:translateX(-50%) rotate(45deg);background:var(--noche);border:1px solid var(--oro)}
+.reloj b{display:block;font-family:var(--f-cuerpo);font-weight:500;font-size:2.1rem;line-height:1;color:var(--oro-claro);font-variant-numeric:tabular-nums}
+.reloj small{font-family:var(--f-etiqueta);font-size:.62rem;letter-spacing:.16em;color:var(--tenue)}
+.reloj div.pisa{animation:pisa .35s ease}
+#saltarin{position:absolute;left:0;top:0;width:66px;height:66px;cursor:pointer;border:0;background:none;padding:0;z-index:3;will-change:transform}
+#saltarin svg{width:100%;height:100%;display:block;filter:drop-shadow(0 5px 5px rgba(0,0,0,.5))}
+.pista{font-style:italic;color:var(--tenue);font-size:.95rem}
+
+/* ---------- Carta ---------- */
+.carta{background:linear-gradient(180deg,rgba(24,48,36,.94),rgba(14,29,22,.94));border:1px solid rgba(217,182,106,.5);border-radius:6px;padding:46px 26px 40px;gap:14px;box-shadow:0 20px 50px rgba(0,0,0,.4)}
+.carta::before{content:"";position:absolute;inset:8px;border:1px solid rgba(217,182,106,.22);border-radius:3px;pointer-events:none}
+.esq{position:absolute;width:62px;height:62px;pointer-events:none}
+.esq.a{top:-2px;left:-2px}.esq.b{top:-2px;right:-2px;transform:scaleX(-1)}.esq.c{bottom:-2px;left:-2px;transform:scaleY(-1)}.esq.d{bottom:-2px;right:-2px;transform:scale(-1,-1)}
+.carta p{font-size:1.14rem;font-style:italic;max-width:32ch}
+.carta p:first-of-type::first-letter{font-family:var(--f-nombre);font-style:normal;font-size:3.2em;line-height:.8;color:var(--oro-claro);float:left;margin:.08em .08em 0 0}
+.carta p:first-of-type{text-align:left}
+.carta .firma{font-family:var(--f-nombre);font-style:normal;font-size:2.6rem;line-height:1;margin-top:8px}
+
+/* ---------- Detalles ---------- */
+.tarjetas{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.tarjeta{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:22px 12px 20px;border-radius:120px 120px 10px 10px;background:linear-gradient(180deg,rgba(32,64,48,.75),rgba(16,32,24,.85));border:1px solid rgba(217,182,106,.45);min-width:0}
+.tarjeta svg.ico{width:38px;height:38px}
+.tarjeta .grande{font-size:1.28rem;font-weight:500;line-height:1.2}
+.tarjeta .sub{color:var(--tenue);font-size:1rem;line-height:1.3}
+.botones{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:12px 22px;border-radius:999px;font-family:var(--f-etiqueta);letter-spacing:.13em;font-size:.8rem;text-decoration:none;cursor:pointer;transition:transform .2s,box-shadow .2s;border:1px solid var(--oro);color:var(--oro-claro);background:rgba(11,23,18,.4)}
+.btn:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(217,182,106,.22)}
+.btn:focus-visible{outline:2px solid var(--oro-claro);outline-offset:3px}
+.btn.lleno{background:var(--dorado);background-size:200% 100%;color:#1b2a1f;border-color:transparent;animation:brillo 5s linear infinite}
+.btn.lleno::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:destello 3.5s ease-in-out infinite}
+.btn svg{width:18px;height:18px;flex:none}
+
+/* ---------- Vestimenta ---------- */
+.siluetas{display:flex;gap:28px;justify-content:center;align-items:flex-end}
+.siluetas svg{height:92px;width:auto}
+.tonos{display:flex;gap:9px;justify-content:center;flex-wrap:wrap}
+.tono{position:relative;width:36px;height:36px;border-radius:50%;border:2px solid rgba(239,232,214,.65);cursor:pointer;padding:0;transition:transform .2s}
+.tono::after{content:"";position:absolute;left:50%;top:-5px;bottom:-5px;width:2px;background:var(--texto);transform:translateX(-50%) rotate(45deg);border-radius:2px;box-shadow:0 0 0 1px var(--noche)}
+.tono:focus-visible{outline:2px solid var(--oro-claro);outline-offset:3px}
+.tono.no{animation:niega .45s}
+.reservado{font-size:1.04rem;color:var(--tenue);max-width:30ch}
+.reservado b{color:var(--nenufar);font-weight:600}
+#msjTono{min-height:1.5em;font-style:italic;color:var(--oro-claro);font-size:1rem}
+
+/* ---------- Sobres ---------- */
+.lluvia{position:relative;width:100%;height:120px;overflow:hidden;mask-image:linear-gradient(180deg,transparent,#000 25%,#000 70%,transparent)}
+.lluvia i{position:absolute;top:-30px;width:26px;height:18px;border-radius:2px;background:linear-gradient(160deg,var(--oro-claro),var(--oro));animation:cae linear infinite}
+.lluvia i::after{content:"";position:absolute;inset:0;background:linear-gradient(200deg,transparent 48%,rgba(138,106,44,.8) 50%,transparent 52%),linear-gradient(160deg,transparent 48%,rgba(138,106,44,.8) 50%,transparent 52%);background-size:100% 100%}
+.sobre-ico{width:96px;height:auto;margin-top:-90px;position:relative}
+
+/* ---------- Galería ---------- */
+.galeria{display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%}
+.galeria button{position:relative;margin:0;padding:6px;border:0;border-radius:8px;background:var(--dorado);background-size:200% 200%;aspect-ratio:3/4.4;max-width:100%;cursor:zoom-in;box-shadow:0 10px 24px rgba(0,0,0,.4)}
+.galeria button.ancha{grid-column:span 2;aspect-ratio:4/3.3;border-radius:200px 200px 8px 8px}
+.galeria button.ancha img{border-radius:196px 196px 4px 4px}
+.galeria button:focus-visible{outline:2px solid var(--oro-claro);outline-offset:3px}
+.galeria img{width:100%;height:100%;object-fit:cover;display:block;border-radius:4px;transition:transform .6s,filter .6s}
+.galeria button:hover img{filter:brightness(1.08)}
+#visor{position:fixed;inset:0;z-index:60;background:rgba(6,12,9,.94);display:flex;align-items:center;justify-content:center;padding:calc(56px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) calc(56px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
+#visor[hidden]{display:none}
+#visor img{max-height:100%;max-width:100%;border-radius:8px;border:3px solid var(--oro);box-shadow:0 0 60px rgba(217,182,106,.25)}
+#visor button{position:absolute;width:48px;height:48px;border-radius:50%;border:1px solid var(--oro);background:rgba(11,23,18,.7);color:var(--oro-claro);font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#visor .x{top:calc(12px + env(safe-area-inset-top,0px));right:max(12px,env(safe-area-inset-right,0px))}
+#visor .ant{left:max(10px,env(safe-area-inset-left,0px));top:50%;transform:translateY(-50%)}
+#visor .sig{right:max(10px,env(safe-area-inset-right,0px));top:50%;transform:translateY(-50%)}
+
+/* ---------- Confirmar ---------- */
+.numero{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:center;font-size:1.3rem;font-variant-numeric:tabular-nums}
+.numero span{user-select:all}
+.copiar{font-family:var(--f-etiqueta);font-size:.7rem;letter-spacing:.14em;background:none;border:1px solid rgba(217,182,106,.5);color:var(--oro);border-radius:999px;padding:7px 13px;cursor:pointer}
+.copiar:focus-visible{outline:2px solid var(--oro-claro);outline-offset:2px}
+
+.fin{font-family:var(--f-nombre);font-size:clamp(2.2rem,9vw,2.7rem);line-height:1.15;max-width:16ch}
+footer{position:relative;z-index:2;text-align:center;font-family:var(--f-etiqueta);font-size:.66rem;letter-spacing:.18em;color:var(--tenue);opacity:.75;padding-block:0 96px}
+
+/* ---------- Botón de música ---------- */
+#musicaBtn{position:fixed;z-index:40;right:calc(16px + env(safe-area-inset-right,0px));bottom:calc(16px + env(safe-area-inset-bottom,0px));width:54px;height:54px;border-radius:50%;border:0;cursor:pointer;background:var(--dorado);background-size:200% 200%;box-shadow:0 6px 20px rgba(0,0,0,.5),0 0 0 4px rgba(11,23,18,.6),0 0 0 5px rgba(217,182,106,.5);display:flex;align-items:flex-end;justify-content:center;gap:3px;padding-bottom:17px}
+#musicaBtn i{width:4px;height:6px;border-radius:2px;background:#1b2a1f}
+#musicaBtn.suena i{animation:eq .9s ease-in-out infinite}
+#musicaBtn.suena i:nth-child(2){animation-delay:.2s}#musicaBtn.suena i:nth-child(3){animation-delay:.45s}#musicaBtn.suena i:nth-child(4){animation-delay:.1s}
+#musicaBtn:focus-visible{outline:2px solid var(--oro-claro);outline-offset:4px}
+
+/* ---------- Revelado al hacer scroll ---------- */
+.rev{transition:opacity .9s ease,transform .9s ease}
+.js .rev:not(.ver){opacity:.12;transform:translateY(24px)}
+
+@keyframes brillo{to{background-position:220% 0}}
+@keyframes latido{50%{transform:scale(1.07)}}
+@keyframes titila{0%,100%{transform:scale(.4) rotate(0);opacity:.3}50%{transform:scale(1) rotate(45deg);opacity:1}}
+@keyframes pisa{40%{transform:translateY(4px) scale(1.03,.95)}}
+@keyframes niega{20%,60%{transform:translateX(-5px)}40%,80%{transform:translateX(5px)}}
+@keyframes cae{from{transform:translateY(0) rotate(var(--r0))}to{transform:translateY(170px) rotate(var(--r1))}}
+@keyframes destello{0%,60%{left:-60%}100%{left:130%}}
+@keyframes eq{50%{height:20px}}
+@keyframes flota{50%{transform:translateY(-6px) rotate(-2deg)}}
+@keyframes sube{from{opacity:.001;transform:translateY(18px)}to{opacity:1;transform:none}}
+.ventana .sapo-h svg{animation:flota 4s ease-in-out infinite}
+.abierta .portada > *{animation:sube 1.1s ease both}
+.abierta .portada .ventana{animation-delay:.2s}.abierta .portada .mis{animation-delay:.45s}.abierta .portada .nombre{animation:sube 1.1s ease .6s both,brillo 6s linear 1.7s infinite}.abierta .portada .apellidos,.abierta .portada .fecha-corta{animation-delay:.8s}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+  .js .rev:not(.ver){opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+
+<!-- Símbolos reutilizables -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="goldG" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f6e3a8"/><stop offset=".45" stop-color="#d9b66a"/><stop offset=".7" stop-color="#fff3c9"/><stop offset="1" stop-color="#a8833a"/></linearGradient>
+    <radialGradient id="cera" cx=".38" cy=".32" r=".75"><stop offset="0" stop-color="#fff3c9"/><stop offset=".35" stop-color="#d9b66a"/><stop offset="1" stop-color="#7a5a22"/></radialGradient>
+  </defs>
+  <symbol id="sapo" viewBox="0 0 120 110">
+    <ellipse cx="60" cy="70" rx="34" ry="24" fill="#6fb86a"/>
+    <ellipse cx="60" cy="76" rx="22" ry="14" fill="#c9e6a6"/>
+    <ellipse cx="34" cy="88" rx="12" ry="6" fill="#5aa257"/><ellipse cx="86" cy="88" rx="12" ry="6" fill="#5aa257"/>
+    <circle cx="44" cy="46" r="13" fill="#6fb86a"/><circle cx="76" cy="46" r="13" fill="#6fb86a"/>
+    <circle cx="44" cy="46" r="8.5" fill="#fff"/><circle cx="76" cy="46" r="8.5" fill="#fff"/>
+    <circle cx="45.5" cy="47.5" r="5" fill="#1a2a1e"/><circle cx="77.5" cy="47.5" r="5" fill="#1a2a1e"/>
+    <circle cx="47" cy="45.5" r="1.6" fill="#fff"/><circle cx="79" cy="45.5" r="1.6" fill="#fff"/>
+    <path d="M48 66 Q60 75 72 66" fill="none" stroke="#1d4a2c" stroke-width="2.5" stroke-linecap="round"/>
+    <circle cx="40" cy="64" r="4" fill="#f2a7a7" opacity=".6"/><circle cx="80" cy="64" r="4" fill="#f2a7a7" opacity=".6"/>
+    <path d="M48 30 L46 16 L54 23 L60 12 L66 23 L74 16 L72 30 Z" fill="url(#goldG)" stroke="#8a6a2c" stroke-width="1.3" stroke-linejoin="round"/>
+    <circle cx="60" cy="24" r="2.3" fill="#bcd6f0"/>
+  </symbol>
+  <symbol id="nenufar" viewBox="0 0 120 30">
+    <ellipse cx="60" cy="16" rx="56" ry="13" fill="#2f6b43"/>
+    <ellipse cx="60" cy="13" rx="52" ry="10" fill="#3f8a55"/>
+    <path d="M60 13 L110 9" stroke="#1d4a2c" stroke-width="3"/>
+    <path d="M30 12 Q60 4 90 12" fill="none" stroke="#5aa267" stroke-width="1" opacity=".6"/>
+  </symbol>
+  <symbol id="esquina" viewBox="0 0 64 64">
+    <path d="M3 61 V14 Q3 3 14 3 H61" fill="none" stroke="url(#goldG)" stroke-width="1.6"/>
+    <path d="M9 50 V18 Q9 9 18 9 H50" fill="none" stroke="url(#goldG)" stroke-width=".8" opacity=".7"/>
+    <path d="M14 14 C22 14 26 20 22 24 C19 27 15 24 17 21" fill="none" stroke="url(#goldG)" stroke-width="1.3" stroke-linecap="round"/>
+    <path d="M14 14 C14 22 20 26 24 22" fill="none" stroke="url(#goldG)" stroke-width="1.3" stroke-linecap="round"/>
+    <circle cx="14" cy="14" r="2.6" fill="url(#goldG)"/>
+    <path d="M30 6 q4 -3 8 0 q-4 3 -8 0z M6 30 q-3 4 0 8 q3 -4 0 -8z" fill="url(#goldG)"/>
+  </symbol>
+  <symbol id="enredadera" viewBox="0 0 300 30">
+    <path d="M0 15 H112 M188 15 H300" stroke="url(#goldG)" stroke-width="1"/>
+    <path d="M40 15 q6 -9 14 -6 q-6 2 -14 6z M70 15 q6 9 14 6 q-6 -2 -14 -6z M230 15 q6 -9 14 -6 q-6 2 -14 6z M260 15 q-6 9 -14 6 q6 -2 14 -6z" fill="url(#goldG)"/>
+    <path d="M150 2 L160 15 L150 28 L140 15 Z" fill="none" stroke="url(#goldG)" stroke-width="1.2"/>
+    <circle cx="150" cy="15" r="3.5" fill="url(#goldG)"/>
+    <path d="M118 15 q8 -8 16 0 q-8 8 -16 0z M166 15 q8 -8 16 0 q-8 8 -16 0z" fill="none" stroke="url(#goldG)" stroke-width="1"/>
+    <circle cx="112" cy="15" r="2" fill="url(#goldG)"/><circle cx="188" cy="15" r="2" fill="url(#goldG)"/>
+  </symbol>
+</svg>
+
+<canvas id="escena" class="fondo" aria-hidden="true"></canvas>
+<div class="fondo textura" aria-hidden="true"></div>
+<div class="fondo bruma" aria-hidden="true"></div>
+<canvas id="luces" class="fondo" aria-hidden="true"></canvas>
+
+<audio id="musica" src="te-esperaba.mp3" loop preload="auto"></audio>
+
+<!-- SOBRE DE ENTRADA -->
+<div id="sobre" role="dialog" aria-label="Invitación cerrada">
+  <div class="aviso">TIENES UNA INVITACIÓN</div>
+  <div class="para oro-txt">Mis XV Años</div>
+  <button class="env" id="env" type="button" aria-label="Abrir la invitación">
+    <span class="atras"></span>
+    <span class="carta-in"><b>XV AÑOS</b><i>Paloma</i><b>05 · 12 · 2026</b></span>
+    <span class="frente"></span>
+    <span class="borde"></span>
+    <span class="solapa"></span>
+    <span class="sello"><svg viewBox="0 0 80 80">
+      <path d="M40 3 C50 5 52 9 60 9 C69 11 70 18 74 24 C78 32 76 37 77 44 C77 53 72 56 69 63 C64 71 57 70 50 75 C42 79 36 76 29 75 C20 73 18 67 12 62 C5 55 6 49 4 41 C3 32 7 28 10 21 C14 12 21 12 28 7 C33 4 36 2 40 3Z" fill="url(#cera)"/>
+      <circle cx="40" cy="40" r="25" fill="none" stroke="#7a5a22" stroke-width="1.4" opacity=".7"/>
+      <circle cx="40" cy="40" r="21" fill="none" stroke="#fff3c9" stroke-width=".8" opacity=".6"/>
+      <text x="40" y="50" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="30" fill="#5c4214">P</text>
+      <path d="M31 22 l3 -5 l3 4 l3 -6 l3 6 l3 -4 l3 5z" fill="#5c4214" opacity=".85"/>
+    </svg></span>
+  </button>
+  <div class="toca"><span></span> Toca el sello para abrir</div>
+</div>
+
+<main>
+  <!-- PORTADA -->
+  <section class="portada">
+    <p class="erase">Érase una vez, en una noche de luciérnagas…</p>
+    <div class="ventana">
+      <div class="marco"><img src="img/hero.jpg" alt="Paloma con su corona y vestido azul"></div>
+      <svg class="corona" viewBox="0 0 100 60" aria-hidden="true">
+        <path d="M8 50 L4 14 L26 32 L50 4 L74 32 L96 14 L92 50 Z" fill="url(#goldG)" stroke="#7a5a22" stroke-width="1.5" stroke-linejoin="round"/>
+        <rect x="8" y="48" width="84" height="9" rx="3" fill="url(#goldG)" stroke="#7a5a22" stroke-width="1.5"/>
+        <circle cx="50" cy="30" r="5" fill="#bcd6f0" stroke="#fff" stroke-width="1"/>
+        <circle cx="27" cy="38" r="3.5" fill="#9cc9a0" stroke="#fff" stroke-width="1"/>
+        <circle cx="73" cy="38" r="3.5" fill="#9cc9a0" stroke="#fff" stroke-width="1"/>
+        <circle cx="20" cy="52.5" r="1.8" fill="#fff3c9"/><circle cx="35" cy="52.5" r="1.8" fill="#fff3c9"/><circle cx="50" cy="52.5" r="1.8" fill="#bcd6f0"/><circle cx="65" cy="52.5" r="1.8" fill="#fff3c9"/><circle cx="80" cy="52.5" r="1.8" fill="#fff3c9"/>
+        <circle cx="4" cy="13" r="3" fill="#fff3c9"/><circle cx="50" cy="4" r="3" fill="#fff3c9"/><circle cx="96" cy="13" r="3" fill="#fff3c9"/>
+      </svg>
+      <span class="chispa" style="left:6%;top:4%"></span>
+      <span class="chispa" style="right:2%;top:16%;animation-delay:.8s"></span>
+      <span class="chispa" style="left:-4%;top:46%;width:9px;height:9px"></span>
+      <span class="chispa" style="right:-5%;top:58%;width:10px;height:10px"></span>
+      <svg class="filig izq" aria-hidden="true"><use href="#esquina"/></svg>
+      <svg class="filig der" aria-hidden="true"><use href="#esquina"/></svg>
+      <button class="sapo-h" id="sapoHero" type="button" aria-label="Saludar al sapito">
+        <span class="burbuja">¡Croac!</span>
+        <svg viewBox="0 0 120 110"><use href="#nenufar" x="0" y="80" width="120" height="30"/><use href="#sapo" width="120" height="110"/></svg>
+      </button>
+    </div>
+    <div class="mis">MIS XV AÑOS</div>
+    <h1 class="nombre oro-txt">Paloma</h1>
+    <div class="apellidos">LINARES BARÓN</div>
+    <div class="fecha-corta"><span>SÁBADO</span><span class="dia oro-txt">05</span><span>DIC · 2026</span></div>
+  </section>
+
+  <!-- CUENTA REGRESIVA -->
+  <section class="rev" aria-label="Cuenta regresiva">
+    <div class="eti">Faltan</div>
+    <div class="reloj-zona" id="relojZona">
+      <button id="saltarin" type="button" aria-label="Hacer saltar al sapito">
+        <span class="burbuja" id="burbujaS">¡Ya casi!</span>
+        <svg viewBox="0 0 120 110"><use href="#sapo"/></svg>
+      </button>
+      <div class="reloj" id="reloj">
+        <div><b id="cd-d">--</b><small>DÍAS</small></div>
+        <div><b id="cd-h">--</b><small>HORAS</small></div>
+        <div><b id="cd-m">--</b><small>MIN</small></div>
+        <div><b id="cd-s">--</b><small>SEG</small></div>
+      </div>
+    </div>
+    <p class="pista">Toca al sapito para que salte más alto</p>
+  </section>
+
+  <!-- MENSAJE -->
+  <section class="carta rev">
+    <svg class="esq a" aria-hidden="true"><use href="#esquina"/></svg><svg class="esq b" aria-hidden="true"><use href="#esquina"/></svg><svg class="esq c" aria-hidden="true"><use href="#esquina"/></svg><svg class="esq d" aria-hidden="true"><use href="#esquina"/></svg>
+    <div class="eti">Unas palabras de la princesa</div>
+    <p>Después de tanto esperar y soñar ha llegado lo que probablemente sea el día más importante y añorado de mi vida.</p>
+    <p>Mis XV son una oportunidad para celebrar todo lo vivido y agradecer a los que han hecho mi camino más especial.</p>
+    <p>Quiero vivir esta noche como un pequeño cuento, rodeada de todas las personas especiales de mi vida.</p>
+    <p>Porque los momentos más bonitos se vuelven inolvidables cuando se comparten, quiero celebrar este día contigo y guardar juntos un recuerdo para toda la vida.</p>
+    <div class="firma oro-txt">Paloma</div>
+  </section>
+
+  <!-- CUÁNDO Y DÓNDE -->
+  <section class="rev">
+    <svg class="divisor" viewBox="0 0 300 30" aria-hidden="true"><use href="#enredadera"/></svg>
+    <div class="eti">La gran noche</div>
+    <div class="tarjetas">
+      <div class="tarjeta">
+        <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M27 6a14 14 0 1 0 7 22A12 12 0 0 1 27 6z" fill="url(#goldG)"/><path d="M10 9l1 2.4 2.4 1-2.4 1L10 16l-1-2.6-2.4-1 2.4-1z" fill="#fff3c9"/></svg>
+        <div class="eti" style="font-size:.66rem">Cuándo</div>
+        <div class="grande">Sábado 5 de diciembre</div>
+        <div class="sub">7:00 p. m.</div>
+      </div>
+      <div class="tarjeta">
+        <svg class="ico" viewBox="0 0 40 40" aria-hidden="true"><path d="M8 34V18l12-10 12 10v16z" fill="none" stroke="url(#goldG)" stroke-width="2"/><path d="M16 34v-8a4 4 0 0 1 8 0v8" fill="none" stroke="url(#goldG)" stroke-width="2"/><path d="M20 3l1 2 2 1-2 1-1 2-1-2-2-1 2-1z" fill="#fff3c9"/></svg>
+        <div class="eti" style="font-size:.66rem">Dónde</div>
+        <div class="grande">Calle 2B # 30-25</div>
+        <div class="sub">Barrio Asunción · Bogotá</div>
+      </div>
+    </div>
+    <div class="botones">
+      <a class="btn" href="https://www.google.com/maps/search/?api=1&query=Calle%202B%20%2330-25%2C%20Barrio%20La%20Asunci%C3%B3n%2C%20Bogot%C3%A1%2C%20Colombia" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/></svg>
+        Cómo llegar
+      </a>
+      <a class="btn" href="https://calendar.google.com/calendar/render?action=TEMPLATE&amp;text=XV%20A%C3%B1os%20de%20Paloma%20Linares%20Bar%C3%B3n&amp;dates=20261206T000000Z/20261206T060000Z&amp;location=Calle%202B%20%2330-25%2C%20Barrio%20Asunci%C3%B3n%2C%20Bogot%C3%A1&amp;details=C%C3%B3digo%20de%20vestimenta%3A%20Guapos%20y%20Lindas.%20El%20verde%20est%C3%A1%20reservado%20para%20la%20quincea%C3%B1era.%20Lluvia%20de%20sobres." target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>
+        Agendar
+      </a>
+    </div>
+  </section>
+
+  <!-- VESTIMENTA -->
+  <section class="rev">
+    <svg class="divisor" viewBox="0 0 300 30" aria-hidden="true"><use href="#enredadera"/></svg>
+    <div class="eti">Código de vestimenta</div>
+    <div class="siluetas" aria-hidden="true">
+      <svg viewBox="0 0 40 92"><circle cx="20" cy="10" r="7" fill="url(#goldG)"/><path d="M11 22h18l3 30h-5l-1 38h-5l-1-30-1 30h-5l-1-38H8z" fill="url(#goldG)"/><path d="M17 22l3 8 3-8" fill="#0b1712"/><path d="M18 24l2 2 2-2-2 1z" fill="#0b1712"/></svg>
+      <svg viewBox="0 0 56 92"><circle cx="28" cy="10" r="7" fill="url(#goldG)"/><path d="M22 4c-4 6-4 14 0 18M34 4c4 6 4 14 0 18" stroke="url(#goldG)" stroke-width="2" fill="none"/><path d="M21 22h14l-2 14 18 54H5l18-54z" fill="url(#goldG)"/><path d="M22 36h12" stroke="#0b1712" stroke-width="1.5"/></svg>
+    </div>
+    <h2 class="oro-txt">Guapos y Lindas</h2>
+    <p class="reservado">El color <b>verde, en todos sus tonos,</b> está reservado para la quinceañera.</p>
+    <div class="tonos" id="tonos">
+      <button class="tono" type="button" style="background:#cfe8b8" aria-label="Verde claro, reservado"></button>
+      <button class="tono" type="button" style="background:#8fd18a" aria-label="Verde manzana, reservado"></button>
+      <button class="tono" type="button" style="background:#3fa45a" aria-label="Verde, reservado"></button>
+      <button class="tono" type="button" style="background:#1f6b3a" aria-label="Verde esmeralda, reservado"></button>
+      <button class="tono" type="button" style="background:#6b7d3a" aria-label="Verde oliva, reservado"></button>
+      <button class="tono" type="button" style="background:#2f8f86" aria-label="Verde azulado, reservado"></button>
+    </div>
+    <p id="msjTono" aria-live="polite"></p>
+  </section>
+
+  <!-- LLUVIA DE SOBRES -->
+  <section class="rev">
+    <div class="lluvia" id="lluvia" aria-hidden="true"></div>
+    <svg class="sobre-ico" viewBox="0 0 90 70" aria-hidden="true">
+      <rect x="4" y="12" width="82" height="54" rx="4" fill="#142a1f" stroke="url(#goldG)" stroke-width="1.8"/>
+      <path d="M4 16 L45 44 L86 16" fill="none" stroke="url(#goldG)" stroke-width="1.8"/>
+      <circle cx="45" cy="44" r="8" fill="url(#cera)"/><text x="45" y="48.5" text-anchor="middle" font-family="Pinyon Script, cursive" font-size="12" fill="#5c4214">P</text>
+    </svg>
+    <div class="eti">Lluvia de sobres</div>
+    <p>Tu presencia es el mejor regalo. Si deseas tener un detalle conmigo, habrá un lugar especial para tu sobre.</p>
+  </section>
+
+  <!-- GALERÍA -->
+  <section class="rev">
+    <svg class="divisor" viewBox="0 0 300 30" aria-hidden="true"><use href="#enredadera"/></svg>
+    <div class="eti">Mi cuento en fotos</div>
+    <div class="galeria" id="galeria">
+      <button class="ancha" type="button" data-i="0"><img loading="lazy" src="img/g1.jpg" alt="Paloma junto al lago con globos del 15" style="object-position:50% 30%"></button>
+      <button type="button" data-i="1"><img loading="lazy" src="img/g2.jpg" alt="Paloma sonriendo recostada sobre su vestido"></button>
+      <button type="button" data-i="2"><img loading="lazy" src="img/g3.jpg" alt="Paloma junto a un árbol"></button>
+      <button type="button" data-i="3"><img loading="lazy" src="img/g4.jpg" alt="Paloma sentada en el pasto"></button>
+      <button type="button" data-i="4"><img loading="lazy" src="img/g5.jpg" alt="Paloma con su corona"></button>
+    </div>
+  </section>
+
+  <!-- CONFIRMAR -->
+  <section class="rev">
+    <div class="eti">Confirma tu asistencia</div>
+    <p>Me hará muy feliz saber que vienes. Confírmame por WhatsApp:</p>
+    <a class="btn lleno" href="https://wa.me/573134853009?text=%C2%A1Hola%21%20Confirmo%20mi%20asistencia%20a%20los%20XV%20a%C3%B1os%20de%20Paloma%20el%20s%C3%A1bado%205%20de%20diciembre.%20Nombre%3A%20" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.4 3.9c1.6.7 2.3.8 3.1.6a2.7 2.7 0 0 0 1.8-1.2 2.2 2.2 0 0 0 .1-1.2c0-.1-.2-.2-.5-.3z"/></svg>
+      Confirmar asistencia
+    </a>
+    <div class="numero"><span id="tel">313 485 3009</span><button class="copiar" id="copiar" type="button">Copiar</button></div>
+  </section>
+
+  <section class="rev">
+    <svg class="divisor" viewBox="0 0 300 30" aria-hidden="true"><use href="#enredadera"/></svg>
+    <p class="fin oro-txt">¡Te espero para vivir juntos este cuento!</p>
+  </section>
+</main>
+<footer>Fotografía · @fotografohuila</footer>
+
+<button id="musicaBtn" type="button" aria-label="Pausar o reproducir la música"><i></i><i></i><i></i><i></i></button>
+
+<div id="visor" hidden role="dialog" aria-label="Foto ampliada">
+  <img id="visorImg" alt="">
+  <button class="x" type="button" aria-label="Cerrar">×</button>
+  <button class="ant" type="button" aria-label="Foto anterior">‹</button>
+  <button class="sig" type="button" aria-label="Foto siguiente">›</button>
+</div>
+
+<script>
+document.documentElement.classList.add('js');
+document.body.classList.add('cerrado');
+var quieto=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var musica=document.getElementById('musica'),mBtn=document.getElementById('musicaBtn');
+musica.volume=.85;
+function estadoMusica(){mBtn.classList.toggle('suena',!musica.paused)}
+musica.addEventListener('play',estadoMusica);musica.addEventListener('pause',estadoMusica);
+mBtn.addEventListener('click',function(){if(musica.paused){musica.play().catch(function(){})}else musica.pause()});
+
+/* ---- Abrir el sobre ---- */
+(function(){
+  var env=document.getElementById('env'),sobre=document.getElementById('sobre'),abierto=false;
+  env.addEventListener('click',function(e){
+    if(abierto)return;abierto=true;
+    try{musica.currentTime=0;var p=musica.play();if(p)p.catch(function(){})}catch(err){}
+    env.classList.add('abierto');
+    var r=env.getBoundingClientRect();
+    estallido(r.left+r.width/2,r.top+r.height*.6,46);
+    setTimeout(function(){
+      sobre.classList.add('fuera');document.body.classList.remove('cerrado');document.body.classList.add('abierta');
+      var r2=document.querySelector('.ventana').getBoundingClientRect();
+      setTimeout(function(){estallido(r2.left+r2.width/2,r2.top+30,30)},500);
+    },quieto?200:2300);
+  });
+})();
+
+/* ---- Cuenta regresiva: 5 dic 2026, 7:00 p. m. Colombia (UTC-5) ---- */
+var meta=Date.UTC(2026,11,6,0,0,0);
+var cd={d:document.getElementById('cd-d'),h:document.getElementById('cd-h'),m:document.getElementById('cd-m'),s:document.getElementById('cd-s')};
+function pad(n){return n<10?'0'+n:''+n}
+function tic(){
+  var r=Math.max(0,meta-Date.now());
+  cd.d.textContent=Math.floor(r/864e5);cd.h.textContent=pad(Math.floor(r/36e5)%24);
+  cd.m.textContent=pad(Math.floor(r/6e4)%60);cd.s.textContent=pad(Math.floor(r/1e3)%60);
+}
+tic();setInterval(tic,1000);
+
+/* ---- Sapo saltarín sobre la cuenta regresiva ---- */
+(function(){
+  var zona=document.getElementById('relojZona'),sapo=document.getElementById('saltarin'),cajas=[].slice.call(document.querySelectorAll('#reloj > div'));
+  var pos=3,dir=-1,x=0,y=0,saltando=false;
+  function destino(i){
+    var z=zona.getBoundingClientRect(),c=cajas[i].getBoundingClientRect();
+    return {x:c.left-z.left+c.width/2-33,y:c.top-z.top-62};
+  }
+  function colocar(i){var d=destino(i);x=d.x;y=d.y;sapo.style.transform='translate('+x+'px,'+y+'px)'}
+  colocar(pos);addEventListener('resize',function(){colocar(pos)});
+  function saltar(i,alto){
+    if(saltando)return;saltando=true;
+    var d=destino(i),h=alto||48,x0=x,y0=y;
+    var flip=d.x<x0?' scaleX(-1)':'';
+    if(quieto){colocar(i);pos=i;saltando=false;return}
+    var a=sapo.animate([
+      {transform:'translate('+x0+'px,'+y0+'px) scale(1.08,.88)'+flip,offset:0},
+      {transform:'translate('+(x0+(d.x-x0)*.5)+'px,'+(Math.min(y0,d.y)-h)+'px) scale(.92,1.1) rotate('+(d.x<x0?8:-8)+'deg)'+flip,offset:.5},
+      {transform:'translate('+d.x+'px,'+d.y+'px) scale(1.1,.86)'+flip,offset:.9},
+      {transform:'translate('+d.x+'px,'+d.y+'px)',offset:1}
+    ],{duration:alto?900:620,easing:'cubic-bezier(.3,.6,.4,1)'});
+    a.onfinish=function(){
+      x=d.x;y=d.y;pos=i;sapo.style.transform='translate('+x+'px,'+y+'px)';saltando=false;
+      cajas[i].classList.remove('pisa');void cajas[i].offsetWidth;cajas[i].classList.add('pisa');
+    };
+  }
+  setInterval(function(){
+    if(document.hidden)return;
+    var n=pos+dir;if(n<0||n>3){dir=-dir;n=pos+dir}
+    saltar(n);
+  },2000);
+  var frases=['¡Ya casi!','¡Croac!','¡Te espero!','¡Faltan pocos días!'],k=0;
+  sapo.addEventListener('click',function(){
+    var b=document.getElementById('burbujaS');b.textContent=frases[k++%frases.length];
+    sapo.classList.add('habla');setTimeout(function(){sapo.classList.remove('habla')},1400);
+    saltar(pos,110);
+    var r=sapo.getBoundingClientRect();estallido(r.left+r.width/2,r.top+r.height/2,14);
+  });
+})();
+
+/* ---- Sapito de la portada ---- */
+(function(){
+  var s=document.getElementById('sapoHero');
+  s.addEventListener('click',function(){
+    s.classList.add('habla');setTimeout(function(){s.classList.remove('habla')},1300);
+    if(!quieto)s.animate([{transform:'none'},{transform:'translateY(-34px) rotate(-8deg)'},{transform:'none'}],{duration:600,easing:'ease-out'});
+  });
+})();
+
+/* ---- Tonos reservados ---- */
+(function(){
+  var m=document.getElementById('msjTono'),t;
+  [].forEach.call(document.querySelectorAll('.tono'),function(b){
+    b.addEventListener('click',function(){
+      b.classList.remove('no');void b.offsetWidth;b.classList.add('no');
+      m.textContent='Este tono es solo para la princesa de la noche';clearTimeout(t);t=setTimeout(function(){m.textContent=''},2600);
+    });
+  });
+})();
+
+/* ---- Lluvia de sobres ---- */
+(function(){
+  var ll=document.getElementById('lluvia');
+  for(var i=0;i<14;i++){
+    var e=document.createElement('i');
+    e.style.left=(Math.random()*92)+'%';
+    e.style.animationDuration=(3+Math.random()*3)+'s';
+    e.style.animationDelay=(-Math.random()*6)+'s';
+    e.style.setProperty('--r0',(Math.random()*60-30)+'deg');
+    e.style.setProperty('--r1',(Math.random()*120-60)+'deg');
+    e.style.transform='scale('+(.6+Math.random()*.5)+')';
+    ll.appendChild(e);
+  }
+})();
+
+/* ---- Galería con visor ---- */
+(function(){
+  var fotos=[].slice.call(document.querySelectorAll('#galeria img')),v=document.getElementById('visor'),vi=document.getElementById('visorImg'),i=0,x0=null;
+  function ver(n){i=(n+fotos.length)%fotos.length;vi.src=fotos[i].src;vi.alt=fotos[i].alt}
+  [].forEach.call(document.querySelectorAll('#galeria button'),function(b){b.addEventListener('click',function(){ver(+b.dataset.i);v.hidden=false})});
+  v.querySelector('.x').onclick=function(){v.hidden=true};
+  v.querySelector('.ant').onclick=function(e){e.stopPropagation();ver(i-1)};
+  v.querySelector('.sig').onclick=function(e){e.stopPropagation();ver(i+1)};
+  v.addEventListener('click',function(e){if(e.target===v)v.hidden=true});
+  addEventListener('keydown',function(e){if(v.hidden)return;if(e.key==='Escape')v.hidden=true;if(e.key==='ArrowLeft')ver(i-1);if(e.key==='ArrowRight')ver(i+1)});
+  v.addEventListener('touchstart',function(e){x0=e.touches[0].clientX},{passive:true});
+  v.addEventListener('touchend',function(e){if(x0===null)return;var dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>40)ver(i+(dx<0?1:-1));x0=null});
+})();
+
+/* ---- Copiar número ---- */
+document.getElementById('copiar').addEventListener('click',function(){
+  var b=this;
+  function ok(){b.textContent='Copiado';setTimeout(function(){b.textContent='Copiar'},1800)}
+  function sel(){var r=document.createRange();r.selectNodeContents(document.getElementById('tel'));var s=getSelection();s.removeAllRanges();s.addRange(r)}
+  try{navigator.clipboard.writeText('3134853009').then(ok,sel)}catch(e){sel()}
+});
+
+/* ---- Revelado al hacer scroll ---- */
+(function(){
+  var els=document.querySelectorAll('.rev');
+  if(!('IntersectionObserver' in window)){[].forEach.call(els,function(e){e.classList.add('ver')});return}
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('ver');io.unobserve(x.target)}})},{rootMargin:'0px 0px -8% 0px'});
+  [].forEach.call(els,function(e){io.observe(e)});
+})();
+
+/* ---- Escena del pantano (estática, dibujada una vez) ---- */
+(function(){
+  var c=document.getElementById('escena'),x=c.getContext('2d');
+  function rnd(s){return function(){s=(s*16807)%2147483647;return (s-1)/2147483646}}
+  function dibuja(){
+    var dpr=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight,R=rnd(42);
+    c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#10241b');g.addColorStop(.55,'#0b1712');g.addColorStop(1,'#0e2018');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    // luna difusa
+    var lu=x.createRadialGradient(W*.78,H*.1,0,W*.78,H*.1,H*.35);lu.addColorStop(0,'rgba(246,227,168,.13)');lu.addColorStop(1,'rgba(246,227,168,0)');x.fillStyle=lu;x.fillRect(0,0,W,H);
+    // agua con reflejos
+    for(var i=0;i<38;i++){var yy=H*.62+R()*H*.38,ww=30+R()*120,xx=R()*W;x.strokeStyle='rgba(180,210,170,'+(.03+R()*.05)+')';x.lineWidth=1;x.beginPath();x.moveTo(xx,yy);x.quadraticCurveTo(xx+ww/2,yy-2,xx+ww,yy);x.stroke()}
+    // cipreses a los lados con musgo colgante
+    function cipres(cx,base,alto,ancho,lado){
+      x.fillStyle='rgba(5,14,10,.75)';
+      x.beginPath();x.moveTo(cx-ancho*1.6,base);x.quadraticCurveTo(cx-ancho*.5,base-alto*.25,cx-ancho*.35,base-alto);x.lineTo(cx+ancho*.35,base-alto);x.quadraticCurveTo(cx+ancho*.5,base-alto*.25,cx+ancho*1.6,base);x.fill();
+      for(var r=0;r<6;r++){
+        var ry=base-alto*(.35+r*.11),largo=(60+R()*90)*lado,bx=cx;
+        x.strokeStyle='rgba(5,14,10,.75)';x.lineWidth=3-r*.3;x.beginPath();x.moveTo(bx,ry);x.quadraticCurveTo(bx+largo*.5,ry-20,bx+largo,ry-6-R()*20);x.stroke();
+        x.fillStyle='rgba(6,18,12,.7)';x.beginPath();x.ellipse(bx+largo*.8,ry-14,Math.abs(largo)*.35,16,0,0,6.283);x.fill();
+        for(var m=0;m<9;m++){var mx=bx+largo*(.3+R()*.65),my=ry-8,ml=20+R()*70;
+          x.strokeStyle='rgba(120,150,110,'+(.07+R()*.08)+')';x.lineWidth=1+R()*1.5;x.beginPath();x.moveTo(mx,my);
+          x.bezierCurveTo(mx+4*(R()-.5)*4,my+ml*.3,mx-6*(R()-.5)*4,my+ml*.7,mx+(R()-.5)*8,my+ml);x.stroke()}
+      }
+    }
+    cipres(-10,H*.7,H*.85,22,1);cipres(W+10,H*.66,H*.8,20,-1);
+    if(W>700){cipres(W*.12,H*.72,H*.6,12,1);cipres(W*.9,H*.7,H*.55,12,-1)}
+    // nenúfares en el agua
+    for(var n=0;n<9;n++){var nx=R()*W,ny=H*.74+R()*H*.24,nr=14+R()*26;
+      x.fillStyle='rgba(47,107,67,'+(.18+R()*.15)+')';x.beginPath();x.ellipse(nx,ny,nr,nr*.35,0,.25,6.1);x.lineTo(nx,ny);x.fill();
+      if(R()>.6){x.fillStyle='rgba(240,200,220,.22)';x.beginPath();x.arc(nx-nr*.2,ny-4,4,0,6.283);x.fill()}}
+    // juncos y totoras al frente
+    for(var j=0;j<Math.round(W/9);j++){
+      var jx=R()*W,jh=40+R()*H*.18,jb=H+4,cur=(R()-.5)*30;
+      x.strokeStyle='rgba(8,22,14,'+(.6+R()*.3)+')';x.lineWidth=1.5+R()*2;x.beginPath();x.moveTo(jx,jb);x.quadraticCurveTo(jx+cur*.3,jb-jh*.6,jx+cur,jb-jh);x.stroke();
+      if(R()>.75){x.fillStyle='rgba(30,22,10,.8)';x.beginPath();x.ellipse(jx+cur*.92,jb-jh*.92,3,10,cur/100,0,6.283);x.fill()}
+    }
+  }
+  dibuja();var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(dibuja,150)});
+})();
+
+/* ---- Luciérnagas + destellos dorados al tocar ---- */
+var estallido=function(){};
+(function(){
+  var c=document.getElementById('luces'),x=c.getContext('2d'),W,H,dpr=Math.min(devicePixelRatio||1,2),L=[],P=[],px=-999,py=-999;
+  function tam(){W=innerWidth;H=innerHeight;c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0)}
+  tam();addEventListener('resize',tam);
+  var n=Math.round(Math.min(60,Math.max(28,innerWidth/14)));
+  for(var i=0;i<n;i++)L.push({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*1.9,a:Math.random()*6.28,v:.15+Math.random()*.4,f:Math.random()*6.28,fs:.01+Math.random()*.03});
+  addEventListener('pointermove',function(e){px=e.clientX;py=e.clientY},{passive:true});
+  addEventListener('pointerdown',function(e){px=e.clientX;py=e.clientY;if(!e.target.closest('#sobre'))estallido(e.clientX,e.clientY,12)},{passive:true});
+  estallido=function(ex,ey,k){
+    if(quieto)return;
+    for(var i=0;i<k;i++){var an=Math.random()*6.283,sp=1+Math.random()*4;P.push({x:ex,y:ey,vx:Math.cos(an)*sp,vy:Math.sin(an)*sp-1.5,vida:1,r:1.5+Math.random()*2.5,rot:Math.random()*6})}
+  };
+  function estrella(px,py,r,rot){x.save();x.translate(px,py);x.rotate(rot);x.beginPath();for(var i=0;i<8;i++){var rr=i%2?r*.35:r;x.lineTo(Math.cos(i*.785)*rr,Math.sin(i*.785)*rr)}x.closePath();x.fill();x.restore()}
+  function cuadro(){
+    x.clearRect(0,0,W,H);
+    for(var i=0;i<L.length;i++){var p=L[i];
+      if(!quieto){
+        p.a+=(Math.random()-.5)*.2;p.x+=Math.cos(p.a)*p.v;p.y+=Math.sin(p.a)*p.v-.05;p.f+=p.fs;
+        var dx=px-p.x,dy=py-p.y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<180&&d>20){p.x+=dx/d*.35;p.y+=dy/d*.35}
+        if(p.x<-10)p.x=W+10;if(p.x>W+10)p.x=-10;if(p.y<-10)p.y=H+10;if(p.y>H+10)p.y=-10;
+      }
+      var b=.35+.65*Math.abs(Math.sin(p.f));
+      var g=x.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*7);
+      g.addColorStop(0,'rgba(246,230,150,'+(.9*b)+')');g.addColorStop(.25,'rgba(220,210,110,'+(.35*b)+')');g.addColorStop(1,'rgba(200,190,90,0)');
+      x.fillStyle=g;x.beginPath();x.arc(p.x,p.y,p.r*7,0,6.283);x.fill();
+    }
+    for(var j=P.length-1;j>=0;j--){var q=P[j];q.x+=q.vx;q.y+=q.vy;q.vy+=.06;q.vx*=.98;q.vida-=.018;q.rot+=.1;
+      if(q.vida<=0){P.splice(j,1);continue}
+      x.fillStyle='rgba(246,227,168,'+q.vida+')';estrella(q.x,q.y,q.r*2,q.rot);
+    }
+    if(!quieto)requestAnimationFrame(cuadro);
+  }
+  cuadro();
+})();
+</script>
+
+</body>
+</html>
