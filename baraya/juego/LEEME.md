@@ -36,3 +36,18 @@ En la pestaña **Patrocinadores** de la hoja escribe una fila por marca:
 - La pestaña **Ranking** guarda todos los intentos con su contacto (privado; en la web solo
   se ve el nombre). El servidor rechaza puntajes imposibles para el tiempo jugado.
 - Recomendado: final en vivo con los 3 mejores en la pantalla gigante.
+
+## 5. Inscripciones al estreno
+La sección «Inscríbete y asegura tu cupo» de la página principal usa la misma hoja.
+- Cada inscripción queda en la pestaña **Inscritos** con un código (BAR-0001…), celular,
+  correo, municipio, número de personas y si acepta recibir mensajes.
+- El cupo total está en `CUPO_INSCRIPCIONES` (3000) dentro del Apps Script; la página
+  muestra cuántos quedan y bloquea el formulario al llenarse.
+- Un mismo celular no puede inscribirse dos veces: recibe su código anterior.
+- Si la persona deja correo, le llega la confirmación (Gmail permite unos 100 al día).
+- La columna **Asistió** sirve para marcar el ingreso la noche del evento.
+- Para mensajes masivos, filtra «Acepta mensajes = Sí» y exporta la lista.
+
+**Importante:** cada vez que cambies el código del Apps Script, ve a
+Implementar › Gestionar implementaciones › editar (lápiz) › Versión: «Nueva versión» › Implementar.
+La URL no cambia.

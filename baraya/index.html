@@ -37,6 +37,7 @@ body{margin:0;color:var(--ink);font-family:var(--body);font-size:19px;line-heigh
     url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .25 0 0 0 0 .12 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   background-attachment:fixed,fixed,scroll}
 img{max-width:100%;display:block}
+[hidden]{display:none!important}
 a{color:var(--wax)}
 a:hover{color:var(--ink)}
 :focus-visible{outline:2px solid var(--wax);outline-offset:3px}
@@ -162,6 +163,25 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
 .order .what{text-align:right;max-width:62%}
 .order li.key .what{font-weight:600}
 
+/* inscripción */
+.reg{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.cupos{margin-top:24px}
+.cupos .bar{height:14px;border:1.5px solid var(--ink);background:rgba(246,236,212,.6);margin-top:8px;position:relative}
+.cupos .fill{position:absolute;left:0;top:0;bottom:0;background:var(--wax);width:0;transition:width .8s ease}
+.cupos .num{font-family:var(--display);font-weight:800;font-size:clamp(30px,4vw,44px);color:var(--wax);line-height:1}
+.regform{border:1.5px solid var(--ink);padding:26px clamp(18px,3vw,32px);background:rgba(246,236,212,.65);position:relative;display:flex;flex-direction:column;gap:12px}
+.regform::before{content:"";position:absolute;inset:5px;border:1px solid var(--rule);pointer-events:none}
+.regform label{font-family:var(--head);font-weight:700;font-size:16px;color:var(--ink-2)}
+.regform input[type=text],.regform input[type=tel],.regform input[type=email],.regform select{width:100%;min-height:46px;padding:8px 12px;border:1.5px solid var(--ink-2);background:#FBF5E6;color:var(--ink);font:inherit;font-size:18px;border-radius:0}
+.regform .two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:560px){.regform .two{grid-template-columns:1fr}}
+.regform .field{display:flex;flex-direction:column;gap:4px;min-width:0}
+.regform .check{display:flex;gap:10px;align-items:flex-start;font-family:var(--body);font-weight:400;font-size:15px;line-height:1.4;color:var(--ink-2)}
+.regform .check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--wax)}
+.regmsg{min-height:22px;color:var(--wax);font-size:16px}
+.ticket{border:2px dashed var(--wax);padding:22px;text-align:center;background:#FBF5E6;display:flex;flex-direction:column;gap:6px;align-items:center}
+.ticket .code{font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,48px);letter-spacing:.08em;color:var(--wax)}
+@media (max-width:860px){.reg{grid-template-columns:1fr;gap:32px}}
 /* patrocinio */
 .sponsor{background:linear-gradient(180deg,rgba(216,195,151,.35),rgba(216,195,151,.6));border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
 .tiers{margin-top:40px;border-top:2px solid var(--ink);border-bottom:2px solid var(--ink)}
@@ -208,6 +228,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
       <a href="#procer">El prócer</a>
       <a href="#galeria">Láminas</a>
       <a href="#estreno">Estreno</a>
+      <a href="#asistir">Asistir</a>
       <a href="#patrocina">Patrocina</a>
       <a href="juego/">Juego</a>
     </nav>
@@ -233,7 +254,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
         <span class="gc-txt"><b>Juega «La Campaña»</b><small>Cabalga con Baraya y gana un premio la noche del estreno</small></span>
       </a>
       <div class="hero-actions ink-in d5">
-        <a class="btn btn-wax" href="#historia">Conoce la historia</a>
+        <a class="btn btn-wax" href="#asistir">Inscríbete para asistir</a>
         <a class="btn" href="#patrocina">Patrocina el estreno</a>
       </div>
     </div>
@@ -351,6 +372,46 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
   </div>
 </section>
 
+<section class="section" id="asistir">
+  <div class="wrap reg">
+    <div>
+      <div class="sc">Asiste al estreno</div>
+      <h2 class="h2" style="margin-top:12px">Inscríbete y asegura tu cupo</h2>
+      <p class="lede" style="margin-top:18px">El aforo de la Plaza Botero es limitado. Inscríbete con tus datos y recibe un código para reclamar tu manilla de ingreso la noche del estreno. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
+      <div class="cupos" id="cupos" hidden>
+        <div class="num" id="cupos-num">—</div>
+        <div class="sc" id="cupos-txt">cupos disponibles</div>
+        <div class="bar" aria-hidden="true"><div class="fill" id="cupos-fill"></div></div>
+      </div>
+    </div>
+    <div>
+      <form class="regform" id="regform" novalidate>
+        <div class="field"><label for="r-nombre">Nombre completo</label><input type="text" id="r-nombre" autocomplete="name" maxlength="60" required></div>
+        <div class="two">
+          <div class="field"><label for="r-cel">Celular (WhatsApp)</label><input type="tel" id="r-cel" autocomplete="tel" inputmode="numeric" maxlength="14" placeholder="300 123 4567" required></div>
+          <div class="field"><label for="r-correo">Correo (opcional)</label><input type="email" id="r-correo" autocomplete="email" maxlength="80"></div>
+        </div>
+        <div class="two">
+          <div class="field"><label for="r-muni">Municipio</label><input type="text" id="r-muni" maxlength="40" value="Neiva" autocomplete="address-level2"></div>
+          <div class="field"><label for="r-pers">¿Cuántas personas asisten?</label>
+            <select id="r-pers"><option value="1">1 (solo yo)</option><option value="2">2 personas</option><option value="3">3 personas</option><option value="4">4 personas</option></select></div>
+        </div>
+        <label class="check"><input type="checkbox" id="r-datos" required> Autorizo el tratamiento de mis datos personales para gestionar mi inscripción al evento, según la Ley 1581 de 2012.</label>
+        <label class="check"><input type="checkbox" id="r-msj" checked> Quiero recibir recordatorios y novedades del cortometraje por WhatsApp y correo.</label>
+        <button class="btn btn-wax" type="submit" id="r-btn" style="justify-content:center">Inscribirme</button>
+        <div class="regmsg" id="r-msg" role="status"></div>
+      </form>
+      <div class="ticket" id="ticket" hidden>
+        <div class="sc">Tu código de inscripción</div>
+        <div class="code" id="t-code">BAR-0000</div>
+        <p id="t-txt"></p>
+        <p class="muted" style="font-size:16px">Toma un pantallazo o guárdalo: lo mostrarás al ingresar para recibir tu manilla.</p>
+        <button class="btn" type="button" id="t-otra" style="margin-top:8px">Inscribir a otra persona</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section sponsor" id="patrocina">
   <div class="wrap">
     <div class="sc">Patrocina el estreno</div>
@@ -405,7 +466,38 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
   </div>
 </footer>
 
+<script src="juego/config.js"></script>
 <script>
+(function(){
+  var CFG=window.BARAYA_JUEGO||{}, URL=CFG.rankingUrl;
+  var box=document.getElementById('cupos'), form=document.getElementById('regform'), msg=document.getElementById('r-msg');
+  function fmt(n){ return Number(n).toLocaleString('es-CO'); }
+  function paint(c){ if(!c) return; box.hidden=false;
+    document.getElementById('cupos-num').textContent=fmt(c.restantes);
+    document.getElementById('cupos-txt').textContent=c.cerrado?'Las inscripciones cerraron':(c.restantes>0?'cupos disponibles de '+fmt(c.cupo):'Cupos agotados');
+    document.getElementById('cupos-fill').style.width=Math.min(100,(c.inscritos/c.cupo)*100)+'%';
+    if(c.cerrado||c.restantes<=0){ document.getElementById('r-btn').disabled=true; } }
+  if(URL){ fetch(URL).then(function(r){return r.json()}).then(function(d){ paint(d.cupos); }).catch(function(){}); }
+  try{ var saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); if(saved&&saved.codigo) showTicket(saved); }catch(e){}
+  function showTicket(t){ form.hidden=true; var tk=document.getElementById('ticket'); tk.hidden=false;
+    document.getElementById('t-code').textContent=t.codigo;
+    document.getElementById('t-txt').textContent=(t.repetido?'Ya estabas inscrito. ':'¡Listo! ')+'Cupo para '+t.personas+' persona'+(t.personas>1?'s':'')+'.'; }
+  document.getElementById('t-otra').addEventListener('click',function(){ document.getElementById('ticket').hidden=true; form.hidden=false; form.reset(); document.getElementById('r-muni').value='Neiva'; document.getElementById('r-btn').disabled=false; msg.textContent=''; document.getElementById('r-nombre').focus(); });
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var n=document.getElementById('r-nombre').value.trim(), c=document.getElementById('r-cel').value.replace(/\D/g,'');
+    if(n.length<3){ msg.textContent='Escribe tu nombre completo.'; document.getElementById('r-nombre').focus(); return; }
+    if(c.length<10){ msg.textContent='Escribe tu celular de 10 dígitos.'; document.getElementById('r-cel').focus(); return; }
+    if(!document.getElementById('r-datos').checked){ msg.textContent='Debes autorizar el tratamiento de tus datos para inscribirte.'; return; }
+    if(!URL){ msg.textContent='Las inscripciones abren muy pronto.'; return; }
+    var btn=document.getElementById('r-btn'); btn.disabled=true; msg.textContent='Enviando…';
+    fetch(URL,{method:'POST',body:JSON.stringify({tipo:'inscripcion',nombre:n,celular:c,correo:document.getElementById('r-correo').value.trim(),municipio:document.getElementById('r-muni').value.trim(),personas:Number(document.getElementById('r-pers').value),aceptaDatos:true,aceptaMensajes:document.getElementById('r-msj').checked})})
+      .then(function(r){return r.json()}).then(function(d){
+        if(d.ok&&d.codigo){ var t={codigo:d.codigo,personas:d.personas,repetido:!!d.repetido}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
+        else { msg.textContent=d.error||'No se pudo completar la inscripción. Intenta de nuevo.'; btn.disabled=false; }
+      }).catch(function(){ msg.textContent='Sin conexión. Intenta de nuevo en un momento.'; btn.disabled=false; });
+  });
+})();
 (function(){
   var dlg=document.getElementById('lightbox'), img=document.getElementById('lb-img'), cap=document.getElementById('lb-cap');
   document.getElementById('gallery').addEventListener('click',function(e){
