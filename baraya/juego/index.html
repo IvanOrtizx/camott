@@ -7,7 +7,7 @@
 <meta name="description" content="Cabalga con el general Antonio Baraya, salta a los realistas y entra al ranking. El mejor puntaje gana un premio la noche del estreno.">
 <meta property="og:title" content="Baraya: La Campaña · El juego">
 <meta property="og:description" content="Cabalga con Baraya, salta a los realistas y entra al ranking. ¿Me superas?">
-<meta property="og:image" content="https://camott.com/baraya/img/og.jpg">
+<meta property="og:image" content="../img/og.jpg">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%238E1B14'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='%23F1E4C6'%3EB%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,6 +79,24 @@ canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
 .sponsors .sp{background:#F6ECD4;padding:8px 10px;min-height:52px;display:flex;align-items:center;justify-content:center}
 .sponsors .sp img{max-height:40px;max-width:140px;object-fit:contain}
 .sponsors .sp span{color:var(--ink);font-family:"Cormorant Garamond",serif;font-weight:700}
+.presented{text-align:center;margin-top:8px;font-family:"Cormorant Garamond",serif;font-weight:700;font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap}
+.presented img{max-height:34px;max-width:150px;object-fit:contain}
+.presented strong{font-family:Cinzel,serif;letter-spacing:.06em;color:var(--wax);font-size:17px;text-transform:none}
+.premios{list-style:none;margin:8px 0 0;padding:0;font-size:15.5px;color:var(--ink2)}
+.premios li{padding:2px 0}
+.count{position:absolute;inset:0;display:grid;place-items:center;font-family:"Press Start 2P",monospace;font-size:clamp(48px,14vw,170px);color:#F2E3BF;text-shadow:0 .08em 0 #8E1B14,0 0 40px rgba(0,0,0,.6);pointer-events:none}
+.count[hidden]{display:none}
+.fnames{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.fnames label{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:15px;color:var(--ink2)}
+.fnames input{min-height:46px;padding:8px 10px;border:1.5px solid var(--ink2);background:#FBF5E6;color:var(--ink);font:inherit;font-size:19px}
+.fres{list-style:none;margin:14px 0 0;padding:0}
+.fres li{display:flex;align-items:baseline;gap:12px;padding:8px 4px;border-bottom:1px dotted var(--rule);font-size:20px}
+.fres li.win{background:rgba(201,164,76,.3)}
+.fres .pos{font-family:"Press Start 2P",monospace;font-size:12px;color:var(--wax);width:34px}
+.fres .nm{flex:1;font-family:Cinzel,serif;font-weight:800}
+.fres .pt{font-family:"Press Start 2P",monospace;font-size:13px}
+.big{font-family:"Press Start 2P",monospace;font-size:clamp(26px,6vw,46px);color:var(--wax);text-align:center;margin:14px 0 4px}
+body.final .below,body.final .hint{display:none!important}
 .hint{display:none;text-align:center;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;color:#CDBB93;padding:18px 10px}
 @media (max-aspect-ratio:1/1){
   .panel{position:static;background:none;padding:12px 0 0}
@@ -107,6 +125,7 @@ canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
       <div class="card">
         <div class="sc">Un juego del cortometraje</div>
         <h1>BARAYA: LA CAMPAÑA</h1>
+        <div class="presented" id="presented" hidden></div>
         <p class="lead">Cabalga con el general, salta a los realistas y recoge las banderas patriotas.</p>
         <div class="how">
           <span><span class="kbd">TOCA</span> o <span class="kbd">ESPACIO</span> para saltar</span>
@@ -120,6 +139,9 @@ canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
         </div>
       </div>
     </div>
+
+    <div class="count" id="count" hidden aria-live="assertive"></div>
+    <div class="panel" id="p-final" hidden><div class="card" id="final-card"></div></div>
 
     <div class="panel" id="p-over" hidden>
       <div class="card">
@@ -156,8 +178,11 @@ canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
       <ol>
         <li>Juega todas las veces que quieras; cuenta tu mejor puntaje.</li>
         <li>Para participar, guarda tu puntaje con tu nombre y un contacto.</li>
-        <li id="base-cierre">El ranking se cierra antes del estreno; la fecha se anunciará en nuestras redes.</li>
-        <li>Los 3 mejores puntajes jugarán la final en vivo en la pantalla gigante de la Plaza Botero la noche del estreno.</li>
+        <li id="base-cierre">El ranking se cierra 3 días antes del estreno; la fecha exacta se anunciará en nuestras redes.</li>
+        <li>Clasifican los 5 mejores puntajes: los 3 primeros juegan la final en vivo en la pantalla gigante de la Plaza Botero y el 4.º y el 5.º son suplentes.</li>
+        <li>Te contactaremos para confirmar tu asistencia. La noche del estreno debes presentarte con tu documento en el punto de registro antes de las 6:15 p. m.; si un finalista no llega, entra el siguiente suplente.</li>
+        <li>En la final cada finalista juega un solo intento, con el mismo recorrido para todos. Gana el mejor puntaje de esa noche; si hay empate, se juega un intento más.</li>
+        <li>Los menores de edad deben estar acompañados por un adulto responsable.</li>
         <li>Puntajes imposibles o hechos con trampas se eliminan.</li>
       </ol>
     </div>
@@ -176,6 +201,10 @@ var CFG=window.BARAYA_JUEGO||{}; var CON=CFG.concurso||{};
 var cv=document.getElementById('cv'), ctx=cv.getContext('2d'), stage=document.getElementById('stage');
 var W=320,H=180,GY=152; // suelo
 var S=1;
+var QS=new URLSearchParams(location.search), FINAL=QS.has('final'), SEED=parseInt(QS.get('ruta')||'1810',10)||1810;
+function mulberry(a){ return function(){ a|=0; a=a+0x6D2B79F5|0; var t=Math.imul(a^a>>>15,1|a); t=t+Math.imul(t^t>>>7,61|t)^t; return ((t^t>>>14)>>>0)/4294967296; }; }
+var rO=Math.random, rD=Math.random;   // en la final: mismo recorrido para todos
+function lvl(sp){ var n=String(sp.nivel||'').toLowerCase(); return n==='juego'?'PRESENTA EL JUEGO':n==='premio'?'PREMIO DEL CONCURSO':(sp.nivel||'PATROCINADOR').toUpperCase(); }
 function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){ return null; } }
 if(CFG.paginaPrincipal) document.getElementById('back').href=CFG.paginaPrincipal;
 
@@ -260,11 +289,11 @@ function drawBanner(b){
     var bw=w-8,bh=h-10,r=Math.min(bw/img.naturalWidth,bh/img.naturalHeight);
     var iw=img.naturalWidth*r, ih=img.naturalHeight*r;
     ctx.drawImage(img,x+(w-iw)/2,y+2+(h-8-ih)/2,iw,ih);
-    ctx.fillStyle='#8E1B14'; ctx.font='700 4px Cinzel, Georgia, serif'; ctx.textAlign='center'; ctx.fillText((sp.nivel||'PATROCINADOR').toUpperCase(),x+w/2,y+h-2);
+    ctx.fillStyle='#8E1B14'; ctx.font='700 4px Cinzel, Georgia, serif'; ctx.textAlign='center'; ctx.fillText(lvl(sp),x+w/2,y+h-2);
   } else {
     ctx.fillStyle='#2A1C10'; ctx.textAlign='center';
     ctx.font='800 7px Cinzel, Georgia, serif'; ctx.fillText(sp?sp.nombre.toUpperCase():'TU MARCA AQUÍ',x+w/2,y+15,w-6);
-    ctx.fillStyle='#8E1B14'; ctx.font='700 4.4px Cinzel, Georgia, serif'; ctx.fillText(sp?(sp.nivel||'PATROCINADOR').toUpperCase():'CAMOTT.COM/BARAYA',x+w/2,y+24,w-6);
+    ctx.fillStyle='#8E1B14'; ctx.font='700 4.4px Cinzel, Georgia, serif'; ctx.fillText(sp?lvl(sp):'CAMOTT.COM/BARAYA',x+w/2,y+24,w-6);
   }
   ctx.restore(); ctx.imageSmoothingEnabled=false;
 }
@@ -324,6 +353,7 @@ var state='start', P, obs, flags, decor, banners, dist, flagsN, tStart, tm, next
 var MILESTONES=[[300,'1810 · Santafé se levanta el 20 de julio'],[700,'1811 · Victoria en el Bajo Palacé'],[1200,'1812 · Baraya se une a los federalistas'],[1800,'1816 · La Reconquista llega a Santafé'],[2500,'1884 · Un pueblo del Huila adopta su nombre'],[3200,'¡Leyenda de la Independencia!']];
 var best=parseInt(store('baraya-best')||'0',10)||0;
 function reset(){
+  if(FINAL){ rO=mulberry(SEED); rD=mulberry(SEED*7+3); }
   P={x:44,y:GY-30,vy:0,ground:true,hold:0,coyote:0,f:0};
   obs=[];flags=[];decor=[];banners=[];dist=0;flagsN=0;tm=0;nextObs=220;nextFlag=160;nextDecor=40;nextBanner=260;shake=0;dieT=0;msIdx=0;
   for(var i=0;i<4;i++) decor.push({x:i*90+20,k:'tree'});
@@ -335,16 +365,16 @@ function speed(){ return 125+Math.min(190,meters()*0.07); }
 
 function pickSponsor(){
   if(!SPONS.length) return null;
-  var wts={diamante:6,oro:3,plata:2,aliado:1}, tot=0, arr=SPONS.map(function(s){ var w=wts[(s.nivel||'').toLowerCase()]||1; tot+=w; return [s,w]; });
+  var wts={juego:8,diamante:6,oro:3,plata:2,premio:2,aliado:1}, tot=0, arr=SPONS.map(function(s){ var w=wts[(s.nivel||'').toLowerCase()]||1; tot+=w; return [s,w]; });
   var r=Math.random()*tot; for(var i=0;i<arr.length;i++){ r-=arr[i][1]; if(r<=0) return arr[i][0]; } return arr[0][0];
 }
 function spawnObs(){
-  var m=meters(), r=Math.random(), k='soldier';
+  var m=meters(), r=rO(), k='soldier';
   if(m>150 && r<.22) k='ball'; else if(r<.48) k='barricade'; else if(m>1000 && r<.6) k='cannon';
   var o={k:k,x:W+10,rot:0}; obs.push(o);
-  if(k==='soldier' && m>600 && Math.random()<.3) obs.push({k:'soldier',x:W+24,rot:0});
-  if(Math.random()<.35) flags.push({x:W+4,y:GY-58-Math.random()*10});
-  var sp=speed(); nextObs=sp*(0.95+Math.random()*0.9)+ (m<200?60:0);
+  if(k==='soldier' && m>600 && rO()<.3) obs.push({k:'soldier',x:W+24,rot:0});
+  if(rO()<.35) flags.push({x:W+4,y:GY-58-rO()*10});
+  var sp=speed(); nextObs=sp*(0.95+rO()*0.9)+ (m<200?60:0);
 }
 function box(o){
   if(o.k==='soldier') return [o.x,GY-23,8,23];
@@ -359,7 +389,7 @@ var jumpBuffer=0;
 function press(){ if(state!=='play') return; holding=true; jumpBuffer=0.12; }
 function release(){ holding=false; }
 window.addEventListener('keydown',function(e){
-  if(e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW'){ if(state==='play'){ e.preventDefault(); if(!e.repeat) press(); } else if(state==='start' && document.activeElement===document.body){ e.preventDefault(); start(); } }
+  if(e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW'){ if(state==='play'){ e.preventDefault(); if(!e.repeat) press(); } else if(state==='start' && !FINAL && document.activeElement===document.body){ e.preventDefault(); start(); } }
 });
 window.addEventListener('keyup',function(e){ if(e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW') release(); });
 function isUI(t){ return t.closest && t.closest('button,a,input,label,form,.card'); }
@@ -380,8 +410,8 @@ function update(dt){
   P.f+=dt*sp*0.08;
   // spawn
   nextObs-=dx; if(nextObs<=0) spawnObs();
-  nextDecor-=dx*0.6; if(nextDecor<=0){ var st=stageAt(meters()); decor.push({x:W+10,k:st.a.d}); nextDecor=60+Math.random()*120; }
-  nextBanner-=dx*0.6; if(nextBanner<=0){ banners.push({x:W+10,s:pickSponsor()}); nextBanner=900+Math.random()*700; }
+  nextDecor-=dx*0.6; if(nextDecor<=0){ var st=stageAt(meters()); decor.push({x:W+10,k:st.a.d}); nextDecor=60+rD()*120; }
+  nextBanner-=dx*0.6; if(nextBanner<=0){ banners.push({x:W+10,s:pickSponsor()}); nextBanner=900+rD()*700; }
   obs.forEach(function(o){ o.x-=dx+(o.k==='ball'?55*dt:0); if(o.k==='ball') o.rot+=dt*10; });
   flags.forEach(function(o){ o.x-=dx; });
   decor.forEach(function(o){ o.x-=dx*0.6; }); banners.forEach(function(o){ o.x-=dx*0.6; });
@@ -412,7 +442,7 @@ function render(){
     ctx.font='8px "Press Start 2P", monospace'; ctx.textAlign='left'; ctx.fillStyle='#F2E3BF';
     ctx.fillText('PUNTOS '+String(score()).padStart(5,'0'),8,14);
     ctx.fillStyle='#E2C98A'; ctx.font='6px "Press Start 2P", monospace'; ctx.fillText(m+' m  ⚑'+flagsN,8,21);
-    ctx.textAlign='right'; ctx.fillStyle='rgba(20,14,8,.55)'; ctx.fillRect(W-86,4,82,12); ctx.fillStyle='#F2E3BF'; ctx.font='6px "Press Start 2P", monospace'; ctx.fillText('MEJOR '+best,W-8,12);
+    ctx.textAlign='right'; ctx.font='6px "Press Start 2P", monospace'; var hr=FINAL?String(FX.cur||'').toUpperCase().slice(0,18):'MEJOR '+best; var hw=Math.max(82,ctx.measureText(hr).width+12); ctx.fillStyle='rgba(20,14,8,.55)'; ctx.fillRect(W-4-hw,4,hw,12); ctx.fillStyle=FINAL?'#E2C98A':'#F2E3BF'; ctx.fillText(hr,W-8,12);
   }
 }
 var raf;
@@ -433,6 +463,7 @@ function die(){ state='dying'; shake=4; P.vy=-120; holding=false; beep(220,.35,'
 var lastRun={};
 function gameOver(){
   state='over'; document.body.classList.remove('playing');
+  if(FINAL){ finalTurnDone(score(),meters(),flagsN); return; }
   var sc=score(); lastRun={puntos:sc,duracion:Math.round((performance.now()-tStart)/1000),banderas:flagsN,metros:meters()};
   var nb=sc>best; if(nb){ best=sc; store('baraya-best',String(best)); }
   document.getElementById('final').textContent=sc;
@@ -456,7 +487,7 @@ function concursoAbierto(){ if(!CON.activo) return false; if(!CON.cierre) return
 function fmtFecha(s){ var d=new Date(s); if(isNaN(d)) return ''; return d.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+', '+d.toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'}); }
 function paintPrize(){
   if(!CON.activo) return;
-  var html='<b>'+esc(CON.premio||'Premio al mejor puntaje')+'</b>'+(CON.patrocinador?'<p>Patrocinado por <strong>'+esc(CON.patrocinador)+'</strong></p>':'')+'<p>'+esc(CON.textoFinal||'')+'</p>'+(CON.cierre?('<p>'+(concursoAbierto()?'El ranking cierra el ':'El ranking cerró el ')+fmtFecha(CON.cierre)+'.</p>'):'');
+  var html='<b>'+esc(CON.premio||'Premio al mejor puntaje')+'</b>'+(CON.patrocinador?'<p>Patrocinado por <strong>'+esc(CON.patrocinador)+'</strong></p>':'')+'<p>'+esc(CON.textoFinal||'')+'</p>'+((CON.premios&&CON.premios.length)?'<ul class="premios">'+CON.premios.map(function(x){return '<li>'+esc(x)+'</li>';}).join('')+'</ul>':'')+(CON.cierre?('<p>'+(concursoAbierto()?'El ranking cierra el ':'El ranking cerró el ')+fmtFecha(CON.cierre)+'.</p>'):'');
   ['prize-start','prize-over'].forEach(function(id){ var el=document.getElementById(id); el.innerHTML=html; el.hidden=false; });
   if(CON.cierre) document.getElementById('base-cierre').textContent='El ranking se cierra el '+fmtFecha(CON.cierre)+'.';
 }
@@ -471,13 +502,16 @@ function renderRank(id){
 function paintSponsors(){
   var el=document.getElementById('sponsors');
   if(!SPONS.length){ el.innerHTML='<div class="sp"><span>Tu marca aquí</span></div>'; return; }
-  var order={diamante:0,oro:1,plata:2,aliado:3};
+  var order={juego:-1,diamante:0,oro:1,plata:2,premio:3,aliado:4};
   el.innerHTML=SPONS.slice().sort(function(a,b){ return (order[(a.nivel||'').toLowerCase()]??9)-(order[(b.nivel||'').toLowerCase()]??9); }).map(function(s){ return '<div class="sp" title="'+esc(s.nivel||'')+'">'+(s.logo?'<img src="'+esc(s.logo)+'" alt="'+esc(s.nombre)+'">':'<span>'+esc(s.nombre)+'</span>')+'</div>'; }).join('');
 }
+function gameSponsor(){ for(var i=0;i<SPONS.length;i++) if(String(SPONS[i].nivel||'').toLowerCase()==='juego') return SPONS[i]; return null; }
+function presentedHTML(){ var g=gameSponsor(); if(!g) return ''; return '<span>Presentado por</span>'+(g.logo?'<img src="'+esc(g.logo)+'" alt="'+esc(g.nombre)+'">':'<strong>'+esc(g.nombre)+'</strong>'); }
+function paintPresented(){ var el=document.getElementById('presented'), h=presentedHTML(); el.innerHTML=h; el.hidden=!h; if(FINAL&&FX.render) FX.render(); }
 function useSponsors(list){
   SPONS=(list||[]).filter(function(s){ return s&&s.nombre; });
   SPONS.forEach(function(s){ if(s.logo&&!LOGOS[s.logo]){ var im=new Image(); im.crossOrigin='anonymous'; im.src=s.logo; LOGOS[s.logo]=im; } });
-  paintSponsors();
+  paintSponsors(); paintPresented();
 }
 function load(){
   document.getElementById('best-start').textContent=best;
@@ -508,6 +542,57 @@ document.getElementById('share').addEventListener('click',function(){
   var full=text+' '+url;
   if(navigator.clipboard){ navigator.clipboard.writeText(full).then(function(){ toast('Enlace copiado. ¡Compártelo!'); }).catch(function(){ toast(full); }); } else toast(full);
 });
+
+/* ---------- modo final (camott.com/baraya/juego/?final) ---------- */
+var FX={cur:''};
+if(FINAL){
+  document.body.classList.add('final'); pStart.hidden=true;
+  var pFinal=document.getElementById('p-final'), fc=document.getElementById('final-card'), countEl=document.getElementById('count');
+  var F; try{ F=JSON.parse(store('baraya-final')||'null'); }catch(e){ F=null; }
+  if(!F||!F.names) F={names:['','',''],res:{},q:[],i:0,step:'setup',tb:{}};
+  var save=function(){ store('baraya-final',JSON.stringify(F)); };
+  var head=function(t){ var p=presentedHTML(); return '<div class="sc">Baraya: La Campaña</div><h1>'+t+'</h1>'+(p?'<div class="presented">'+p+'</div>':''); };
+  var total=function(n){ return F.res[n]?F.res[n].p:-1; };
+  var order=function(){ return F.names.filter(Boolean).slice().sort(function(a,b){ var d=total(b)-total(a); if(d) return d; return ((F.tb[b]||{}).p||-1)-((F.tb[a]||{}).p||-1); }); };
+  var tied=function(){ var o=order(); if(o.length<2) return []; var top=total(o[0]); var t=o.filter(function(n){ return total(n)===top; }); if(t.length<2) return []; var tbs=t.map(function(n){ return F.tb[n]?F.tb[n].p:null; }); if(tbs.every(function(x){return x!==null;})){ var m=Math.max.apply(null,tbs); if(tbs.filter(function(x){return x===m;}).length===1) return []; } return t; };
+  FX.render=function(){
+    pFinal.hidden=false;
+    if(F.step==='setup'){
+      fc.innerHTML=head('FINAL EN VIVO')+'<p class="lead">Escribe los finalistas en el orden en que van a jugar. Todos juegan el mismo recorrido.</p><form class="fnames" id="fform">'+
+        ['Juega primero (3.<sup>er</sup> clasificado)','Juega segundo (2.º clasificado)','Juega de último (1.<sup>er</sup> clasificado)'].map(function(l,i){ return '<label for="fn'+i+'">'+l+'</label><input id="fn'+i+'" maxlength="18" autocomplete="off" value="'+esc(F.names[i]||'')+'">'; }).join('')+
+        '<div class="btns"><button class="btn btn-wax" type="submit">Comenzar la final</button><button class="btn" type="button" id="fs">Pantalla completa</button></div><div class="msg" id="fmsg"></div></form>';
+      document.getElementById('fform').addEventListener('submit',function(e){ e.preventDefault(); var n=[0,1,2].map(function(i){ return document.getElementById('fn'+i).value.trim(); }); if(n.filter(Boolean).length<2){ document.getElementById('fmsg').textContent='Escribe al menos dos finalistas.'; return; } if(new Set(n.filter(Boolean)).size!==n.filter(Boolean).length){ document.getElementById('fmsg').textContent='Los nombres deben ser diferentes.'; return; } F.names=n; F.res={}; F.tb={}; F.q=n.filter(Boolean); F.i=0; F.step='turn'; save(); FX.render(); });
+      document.getElementById('fs').addEventListener('click',fullscreen);
+    } else if(F.step==='turn'){
+      var n=F.q[F.i], tb=F.mode==='tb';
+      fc.innerHTML=head(esc(n).toUpperCase())+'<div class="sc" style="margin-top:10px">'+(tb?'Desempate · ':'')+'Turno '+(F.i+1)+' de '+F.q.length+'</div><p class="lead">Un solo intento. Toca la pantalla o pulsa espacio para saltar.</p><div class="btns"><button class="btn btn-wax" type="button" id="go">¡Listo! 3, 2, 1…</button></div>';
+      document.getElementById('go').addEventListener('click',countdown); setTimeout(function(){ var g=document.getElementById('go'); g&&g.focus({preventScroll:true}); },30);
+    } else if(F.step==='done'){
+      var n2=F.q[F.i], r=(F.mode==='tb'?F.tb:F.res)[n2], last=F.i>=F.q.length-1;
+      fc.innerHTML=head(esc(n2).toUpperCase())+'<div class="big">'+r.p+'</div><div class="sc">'+r.m+' metros · '+r.b+' banderas</div><div class="btns"><button class="btn btn-wax" type="button" id="nx">'+(last?'Ver resultados':'Siguiente: '+esc(F.q[F.i+1]))+'</button><button class="btn" type="button" id="rp">Repetir turno (falla técnica)</button></div>';
+      document.getElementById('nx').addEventListener('click',function(){ if(last){ F.step='results'; F.mode=''; } else { F.i++; F.step='turn'; } save(); FX.render(); });
+      document.getElementById('rp').addEventListener('click',function(){ delete (F.mode==='tb'?F.tb:F.res)[n2]; F.step='turn'; save(); FX.render(); });
+    } else if(F.step==='results'){
+      var o=order(), t=tied();
+      var list='<ol class="fres">'+o.map(function(n,i){ var tbp=F.tb[n]?' <small>(desempate '+F.tb[n].p+')</small>':''; return '<li class="'+(i===0&&!t.length?'win':'')+'"><span class="pos">'+(i+1)+'.</span><span class="nm">'+esc(n)+tbp+'</span><span class="pt">'+total(n)+'</span></li>'; }).join('')+'</ol>';
+      fc.innerHTML=head(t.length?'¡EMPATE!':'¡GANADOR: '+esc(o[0]).toUpperCase()+'!')+list+
+        (t.length?'<p class="lead">Empate entre '+t.slice(0,-1).map(esc).join(', ')+' y '+esc(t[t.length-1])+': juegan un intento más.</p><div class="btns"><button class="btn btn-wax" type="button" id="tbb">Jugar desempate</button></div>':'')+
+        '<div class="btns"><button class="btn" type="button" id="nw">Nueva final</button><button class="btn" type="button" id="fs2">Pantalla completa</button></div>';
+      if(t.length) document.getElementById('tbb').addEventListener('click',function(){ t.forEach(function(n){ delete F.tb[n]; }); F.q=t; F.i=0; F.mode='tb'; F.step='turn'; save(); FX.render(); });
+      document.getElementById('nw').addEventListener('click',function(){ if(!confirmNew()) return; F={names:['','',''],res:{},q:[],i:0,step:'setup',tb:{}}; save(); FX.render(); });
+      document.getElementById('fs2').addEventListener('click',fullscreen);
+      if(!t.length){ beep(660,.12); setTimeout(function(){beep(880,.12)},140); setTimeout(function(){beep(1320,.25)},280); }
+    }
+  };
+  var confirmNew=function(){ var b=document.getElementById('nw'); if(b.dataset.ok) return true; b.dataset.ok='1'; b.textContent='¿Seguro? Toca de nuevo'; return false; };
+  var fullscreen=function(){ var d=document.documentElement; try{ (d.requestFullscreen||d.webkitRequestFullscreen).call(d); }catch(e){} };
+  var countdown=function(){
+    pFinal.hidden=true; FX.cur=F.q[F.i]; reset(); countEl.hidden=false; var k=3;
+    (function tick(){ if(k>0){ countEl.textContent=k; beep(520,.15); k--; setTimeout(tick,900); } else { countEl.textContent='¡YA!'; beep(1040,.3); setTimeout(function(){ countEl.hidden=true; },500); start(); pFinal.hidden=true; } })();
+  };
+  window.finalTurnDone=function(p,m,b){ var r={p:p,m:m,b:b}; if(F.mode==='tb') F.tb[F.q[F.i]]=r; else F.res[F.q[F.i]]=r; F.step='done'; save(); FX.render(); };
+  FX.render();
+}
 paintPrize(); load();
 })();
 </script>

@@ -21,21 +21,32 @@ En la pestaña **Patrocinadores** de la hoja escribe una fila por marca:
 
 | Nombre | Nivel | Logo (URL) | Activo (Sí/No) |
 |---|---|---|---|
-| Nombre de la marca | Diamante / Oro / Plata / Aliado | enlace a su logo (PNG) | Sí |
+| Nombre de la marca | Juego / Diamante / Oro / Plata / Premio / Aliado | enlace a su logo (PNG) | Sí |
 
 - El juego los muestra en los letreros del camino (el Diamante sale más veces) y en
   «Con el apoyo de». Los cambios aparecen al recargar la página.
 - Logo: súbelo a `baraya/juego/logos/` en tu repositorio y usa
   `https://camott.com/baraya/juego/logos/archivo.png`. Mejor PNG con fondo transparente.
 - Para quitar uno sin borrarlo, pon «No» en Activo.
+- Nivel **Juego** = Patrocinador del juego: aparece como «Presentado por» en la pantalla de
+  inicio y en la final, y tiene los letreros más frecuentes. Nivel **Premio** = marcas que
+  ponen los premios del 2.º y 3.er puesto.
 
 ## 4. El concurso
-- En `config.js` cambia `premio`, `patrocinador` y `cierre` cuando los tengas.
+- En `config.js` cambia `premio`, `patrocinador`, `cierre` y `premios` cuando los tengas.
+  `premios` es una lista, por ejemplo:
+  `["1.er puesto: bono de $500.000 de Café La Plaza", "2.º puesto: …", "3.er puesto: …"]`.
 - Pon la misma fecha en `CIERRE` dentro del Apps Script y vuelve a implementar
   (**Implementar › Gestionar implementaciones › editar › Nueva versión**).
 - La pestaña **Ranking** guarda todos los intentos con su contacto (privado; en la web solo
   se ve el nombre). El servidor rechaza puntajes imposibles para el tiempo jugado.
-- Recomendado: final en vivo con los 3 mejores en la pantalla gigante.
+- **Final en vivo:** abre `camott.com/baraya/juego/?final` en el portátil conectado a la pantalla.
+  Escribe los 3 finalistas en el orden en que juegan (3.º, 2.º, 1.º), pulsa «Pantalla completa»
+  y «Comenzar la final». Cada turno tiene cuenta regresiva 3, 2, 1, el nombre del jugador en
+  pantalla y el **mismo recorrido para todos**. Si falla algo técnico, «Repetir turno». Al final
+  muestra el ganador; si hay empate, ofrece «Jugar desempate». Los puntajes de la final no van
+  al ranking en línea y se guardan en el portátil aunque recargues la página.
+  Para ensayar con un recorrido distinto usa `?final&ruta=2027` (el de la noche es el normal).
 
 ## 5. Inscripciones al estreno
 La sección «Inscríbete y asegura tu cupo» de la página principal usa la misma hoja.
