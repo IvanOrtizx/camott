@@ -92,6 +92,13 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .ink-in.d2{animation-delay:.15s}.ink-in.d3{animation-delay:.3s}.ink-in.d4{animation-delay:.45s}.ink-in.d5{animation-delay:.6s}
 @keyframes ink{from{opacity:.0;filter:blur(3px);transform:translateY(6px)}to{opacity:1;filter:none;transform:none}}
 
+/* llamado al juego */
+.game-cta{display:flex;align-items:center;gap:14px;max-width:480px;margin-top:8px;padding:12px 18px 12px 12px;background:var(--night);color:#F1E4C6;text-decoration:none;border:2px solid #C9A44C;box-shadow:4px 4px 0 var(--wax);transition:transform .15s,box-shadow .15s}
+.game-cta:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--wax);color:#fff}
+.gc-icon{flex:none;width:44px;height:44px;display:grid;place-items:center;background:var(--wax);color:#F6EAD0;border:2px solid #C9A44C}
+.gc-txt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.gc-txt b{font-family:var(--display);font-weight:800;font-size:17px;letter-spacing:.06em;color:#E9D29A}
+.gc-txt small{font-family:var(--body);font-size:15px;line-height:1.3;color:#E6D7B3}
 /* historia */
 .story{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:64px}
 .story-copy{display:flex;flex-direction:column;gap:22px;min-width:0}
@@ -260,6 +267,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
       <a href="#galeria">Láminas</a>
       <a href="#estreno">Estreno</a>
       <a href="#patrocina">Patrocina</a>
+      <a href="juego/">Juego</a>
     </nav>
     <a class="btn btn-wax" href="https://wa.me/573213973458?text=Hola%20Camilo%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20cortometraje%20Baraya" target="_blank" rel="noopener">Escríbenos</a>
   </div>
@@ -278,6 +286,10 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
         <span>Plaza Botero · Olave Tower</span>
         <span>Neiva, Huila</span>
       </div>
+      <a class="game-cta ink-in d5" href="juego/">
+        <span class="gc-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>
+        <span class="gc-txt"><b>Juega «La Campaña»</b><small>Cabalga con Baraya y gana un premio la noche del estreno</small></span>
+      </a>
       <div class="hero-actions ink-in d5">
         <a class="btn btn-wax" href="#historia">Conoce la historia</a>
         <a class="btn" href="#patrocina">Patrocina el estreno</a>

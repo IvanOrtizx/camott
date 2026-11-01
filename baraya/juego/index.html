@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Baraya: La Campaña · El juego</title>
+<meta name="description" content="Cabalga con el general Antonio Baraya, salta a los realistas y entra al ranking. El mejor puntaje gana un premio la noche del estreno.">
+<meta property="og:title" content="Baraya: La Campaña · El juego">
+<meta property="og:description" content="Cabalga con Baraya, salta a los realistas y entra al ranking. ¿Me superas?">
+<meta property="og:image" content="https://camott.com/baraya/img/og.jpg">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%238E1B14'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='%23F1E4C6'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Cinzel:wght@700;800&family=Cormorant+Garamond:ital,wght@0,600;0,700;1,500&family=EB+Garamond:wght@400;500;600&display=swap">
+<script src="config.js"></script>
+<style>
+:root{--paper:#EEE1C2;--paper2:#F6ECD4;--ink:#2A1C10;--ink2:#5E4930;--rule:#B79E72;--wax:#8E1B14;--gilt:#C9A44C;--wood:#1B140D;color-scheme:dark}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%}
+body{background:radial-gradient(ellipse at 50% 30%,#3A2A1A 0%,#1B140D 70%) fixed,#1B140D;color:#EFE2C4;font-family:"EB Garamond",Georgia,serif;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:#1B140D}
+a{color:#E2C98A}
+button{font:inherit}
+:focus-visible{outline:2px solid var(--gilt);outline-offset:3px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:56px;padding-left:max(14px, env(safe-area-inset-left, 0px));padding-right:max(14px, env(safe-area-inset-right, 0px));background:rgba(27,20,13,.92);border-bottom:1px solid #3A2C1C}
+.back{color:#E6D3A8;text-decoration:none;font-family:"Cormorant Garamond",serif;font-weight:700;font-size:18px;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.back:hover{color:#fff}
+.gtitle{font-family:Cinzel,serif;font-weight:800;letter-spacing:.14em;font-size:16px;color:#E2C98A;text-align:center}
+.iconbtn{min-width:44px;min-height:44px;border:1px solid #5A4630;background:transparent;color:#E6D3A8;cursor:pointer;display:grid;place-items:center}
+.iconbtn:hover{border-color:#E6D3A8}
+.wrap{max-width:1120px;margin:0 auto;padding:16px max(12px, env(safe-area-inset-right, 0px)) 40px max(12px, env(safe-area-inset-left, 0px))}
+.stage{position:relative;margin:0 auto;box-shadow:0 0 0 3px #5A4630,0 20px 50px rgba(0,0,0,.6);background:#000;touch-action:none;user-select:none;-webkit-user-select:none}
+canvas{display:block;width:100%;height:auto;image-rendering:pixelated}
+.panel{position:absolute;inset:0;display:flex;align-items:flex-start;justify-content:center;padding:14px;background:rgba(15,10,6,.55);overflow:auto;touch-action:auto}
+.panel[hidden]{display:none}
+.card{margin:auto;width:min(620px,100%);overflow:auto;background:var(--paper);color:var(--ink);padding:22px 24px;border:1px solid var(--rule);box-shadow:0 16px 40px rgba(0,0,0,.5);position:relative;
+  background-image:radial-gradient(ellipse at center,rgba(255,250,235,.5),rgba(150,110,50,.18) 100%)}
+.card::before{content:"";position:absolute;inset:6px;border:1px solid rgba(138,102,32,.45);pointer-events:none}
+.card h1,.card h2{margin:0;font-family:Cinzel,serif;font-weight:800;letter-spacing:.06em;color:var(--ink);text-align:center}
+.card h1{font-size:clamp(24px,4vw,34px)}
+.card h2{font-size:clamp(20px,3.4vw,28px)}
+.sc{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink2);text-align:center}
+.lead{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;font-size:19px;text-align:center;color:var(--ink2);margin:6px 0 0}
+.how{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin:14px 0 4px;font-size:16px}
+.how span{display:inline-flex;align-items:center;gap:6px}
+.kbd{font-family:"Press Start 2P",monospace;font-size:9px;border:1px solid var(--ink2);padding:4px 6px;background:var(--paper2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 22px;border:1.5px solid var(--ink);background:transparent;color:var(--ink);font-family:"Cormorant Garamond",serif;font-weight:700;font-size:18px;letter-spacing:.06em;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn-wax{background:var(--wax);border-color:var(--wax);color:#F6EAD0}
+.btn-wax:hover{background:var(--ink);border-color:var(--ink)}
+.btns{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:16px}
+.prize{margin-top:16px;border:1.5px solid var(--wax);padding:12px 14px;text-align:center;background:rgba(246,236,212,.6)}
+.prize b{font-family:Cinzel,serif;color:var(--wax);font-size:17px;letter-spacing:.04em}
+.prize p{margin:4px 0 0;font-size:15.5px;line-height:1.4;color:var(--ink2)}
+.rank{list-style:none;margin:10px 0 0;padding:0;font-size:16px}
+.rank li{display:flex;gap:8px;align-items:baseline;padding:4px 0;border-bottom:1px dotted var(--rule)}
+.rank .pos{font-family:"Press Start 2P",monospace;font-size:9px;color:var(--wax);width:28px}
+.rank .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rank .pt{font-family:"Press Start 2P",monospace;font-size:9px}
+.rank li.me{background:rgba(201,164,76,.25)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:12px}
+@media (max-width:560px){.cols{grid-template-columns:1fr}}
+.score{font-family:"Press Start 2P",monospace;font-size:clamp(18px,4vw,26px);color:var(--wax);text-align:center;margin:10px 0 2px}
+.form{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.form label{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:15px;color:var(--ink2)}
+.form input[type=text]{min-height:44px;padding:8px 10px;border:1.5px solid var(--ink2);background:#FBF5E6;color:var(--ink);font:inherit;font-size:17px}
+.check{display:flex;gap:8px;align-items:flex-start;font-size:14px;line-height:1.35;color:var(--ink2)}
+.check input{width:20px;height:20px;margin-top:2px;flex:none;accent-color:var(--wax)}
+.msg{min-height:20px;font-size:15px;text-align:center;color:var(--wax);margin-top:6px}
+.toast{position:absolute;left:50%;top:12%;transform:translateX(-50%);background:rgba(238,225,194,.95);color:var(--ink);border:1px solid var(--rule);padding:8px 16px;font-family:"Cormorant Garamond",serif;font-weight:700;font-size:clamp(14px,2.2vw,20px);text-align:center;pointer-events:none;opacity:0;transition:opacity .4s;max-width:90%}
+.toast.on{opacity:1}
+.below{margin-top:22px;display:grid;grid-template-columns:1fr 1fr;gap:22px}
+@media (max-width:760px){.below{grid-template-columns:1fr}}
+.box{border:1px solid #4A3926;padding:18px 20px;background:rgba(238,225,194,.05)}
+.box h3{margin:0 0 8px;font-family:Cinzel,serif;font-size:16px;letter-spacing:.1em;color:#E2C98A}
+.box p,.box li{font-size:16px;line-height:1.5;color:#DCCDAB}
+.box ol{margin:0;padding-left:20px}
+.sponsors{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:8px}
+.sponsors .sp{background:#F6ECD4;padding:8px 10px;min-height:52px;display:flex;align-items:center;justify-content:center}
+.sponsors .sp img{max-height:40px;max-width:140px;object-fit:contain}
+.sponsors .sp span{color:var(--ink);font-family:"Cormorant Garamond",serif;font-weight:700}
+.hint{display:none;text-align:center;font-family:"Cormorant Garamond",serif;font-style:italic;font-size:18px;color:#CDBB93;padding:18px 10px}
+@media (max-aspect-ratio:1/1){
+  .panel{position:static;background:none;padding:12px 0 0}
+  .card{max-height:none}
+  body.playing .hint{display:block}
+}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="back" id="back" href="../">← Volver a Baraya</a>
+  <div class="gtitle">LA CAMPAÑA</div>
+  <button class="iconbtn" id="mute" type="button" aria-label="Activar sonido" aria-pressed="false">
+    <svg id="ico-off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M22 9l-6 6M16 9l6 6"/></svg>
+    <svg id="ico-on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:none"><path d="M11 5L6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 010 7M18.5 5.5a9 9 0 010 13"/></svg>
+  </button>
+</header>
+
+<div class="wrap">
+  <div class="stage" id="stage">
+    <canvas id="cv" width="320" height="180" aria-label="Juego Baraya: La Campaña. Toca la pantalla o pulsa espacio para saltar."></canvas>
+    <div class="toast" id="toast" aria-live="polite"></div>
+
+    <div class="panel" id="p-start">
+      <div class="card">
+        <div class="sc">Un juego del cortometraje</div>
+        <h1>BARAYA: LA CAMPAÑA</h1>
+        <p class="lead">Cabalga con el general, salta a los realistas y recoge las banderas patriotas.</p>
+        <div class="how">
+          <span><span class="kbd">TOCA</span> o <span class="kbd">ESPACIO</span> para saltar</span>
+          <span>Mantén presionado para saltar más alto</span>
+        </div>
+        <div class="btns"><button class="btn btn-wax" type="button" id="play">▶ Cabalgar</button></div>
+        <div class="prize" id="prize-start" hidden></div>
+        <div class="cols">
+          <div><div class="sc">Ranking</div><ol class="rank" id="rank-start"></ol></div>
+          <div><div class="sc">Tu mejor marca</div><div class="score" id="best-start">0</div><p class="lead" style="font-size:16px" id="rank-note"></p></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="panel" id="p-over" hidden>
+      <div class="card">
+        <h2 id="over-title">¡Caíste en combate!</h2>
+        <div class="score" id="final">0</div>
+        <div class="sc" id="final-sub">Puntos</div>
+        <div id="save-wrap">
+          <form class="form" id="save" novalidate>
+            <label for="nombre">Tu nombre para el ranking</label>
+            <input type="text" id="nombre" name="nombre" maxlength="14" autocomplete="nickname" placeholder="Ej.: Camila R.">
+            <label for="contacto">WhatsApp o Instagram (solo para avisarte si ganas)</label>
+            <input type="text" id="contacto" name="contacto" maxlength="40" autocomplete="tel" placeholder="Ej.: 300 123 4567 o @usuario">
+            <label class="check"><input type="checkbox" id="acepto"> Autorizo el uso de estos datos solo para contactarme sobre el concurso, según la Ley 1581 de 2012. No se publican.</label>
+            <button class="btn btn-wax" type="submit" id="save-btn">Guardar en el ranking</button>
+            <div class="msg" id="save-msg" role="status"></div>
+          </form>
+        </div>
+        <div class="btns">
+          <button class="btn" type="button" id="again">↻ Jugar de nuevo</button>
+          <button class="btn" type="button" id="share">Compartir</button>
+        </div>
+        <div class="cols">
+          <div><div class="sc">Ranking</div><ol class="rank" id="rank-over"></ol></div>
+          <div><div class="prize" id="prize-over" hidden style="margin-top:0"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <p class="hint">Toca en cualquier parte de la pantalla para saltar</p>
+
+  <div class="below">
+    <div class="box">
+      <h3>BASES DEL CONCURSO</h3>
+      <ol>
+        <li>Juega todas las veces que quieras; cuenta tu mejor puntaje.</li>
+        <li>Para participar, guarda tu puntaje con tu nombre y un contacto.</li>
+        <li id="base-cierre">El ranking se cierra antes del estreno; la fecha se anunciará en nuestras redes.</li>
+        <li>Los 3 mejores puntajes jugarán la final en vivo en la pantalla gigante de la Plaza Botero la noche del estreno.</li>
+        <li>Puntajes imposibles o hechos con trampas se eliminan.</li>
+      </ol>
+    </div>
+    <div class="box">
+      <h3>CON EL APOYO DE</h3>
+      <div class="sponsors" id="sponsors"></div>
+      <p style="margin-top:12px">¿Quieres que tu marca aparezca en el juego y en la pantalla gigante? <a href="../#patrocina">Patrocina el estreno</a>.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+'use strict';
+var CFG=window.BARAYA_JUEGO||{}; var CON=CFG.concurso||{};
+var cv=document.getElementById('cv'), ctx=cv.getContext('2d'), stage=document.getElementById('stage');
+var W=320,H=180,GY=152; // suelo
+var S=1;
+function store(k,v){ try{ if(v===undefined) return localStorage.getItem(k); localStorage.setItem(k,v);}catch(e){ return null; } }
+if(CFG.paginaPrincipal) document.getElementById('back').href=CFG.paginaPrincipal;
+
+/* ---------- tamaño ---------- */
+function resize(){
+  var cs=getComputedStyle(stage.parentElement); var maxW=stage.parentElement.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight);
+  var portrait=window.innerHeight>window.innerWidth;
+  var availH=window.innerHeight-70;
+  var cssW=portrait?maxW:Math.min(maxW,availH*16/9);
+  cssW=Math.max(240,Math.floor(cssW));
+  stage.style.width=cssW+'px';
+  var dpr=Math.min(3,window.devicePixelRatio||1);
+  S=Math.max(1,cssW*dpr/W);
+  cv.width=Math.round(W*S); cv.height=Math.round(H*S);
+  cv.style.height=(cssW*9/16)+'px';
+}
+window.addEventListener('resize',resize); resize();
+
+/* ---------- dibujo ---------- */
+function R(x,y,w,h,c){ ctx.fillStyle=c; ctx.fillRect(Math.round(x),Math.round(y),w,h); }
+function lerp(a,b,t){return a+(b-a)*t}
+function hex(c){return [parseInt(c.slice(1,3),16),parseInt(c.slice(3,5),16),parseInt(c.slice(5,7),16)]}
+function mix(a,b,t){var A=hex(a),B=hex(b);return 'rgb('+Math.round(lerp(A[0],B[0],t))+','+Math.round(lerp(A[1],B[1],t))+','+Math.round(lerp(A[2],B[2],t))+')'}
+
+var STAGES=[
+ {n:'Los llanos del Huila', s1:'#7FB6DE',s2:'#E9DDB4',m:'#7C8C96',h:'#5E7A3A',g:'#9A7446',gr:'#6B8E3A',d:'tree'},
+ {n:'Desierto de la Tatacoa', s1:'#E9A15C',s2:'#F6DCA6',m:'#B35F37',h:'#CF8A4E',g:'#C58650',gr:'#9C5B2E',d:'cactus'},
+ {n:'El paso del río', s1:'#8DBBD3',s2:'#DCE8DA',m:'#6F8790',h:'#567355',g:'#8D7A5E',gr:'#5C7A44',d:'bridge'},
+ {n:'Atardecer de la campaña', s1:'#3E2747',s2:'#E8713B',m:'#4A2A3A',h:'#3A2430',g:'#5A3A2A',gr:'#3E2A1E',d:'tree'},
+ {n:'Noche en Santafé', s1:'#0C1230',s2:'#2C3360',m:'#1C2140',h:'#222844',g:'#2E2A2A',gr:'#24241E',d:'house'}
+];
+var STAGE_LEN=800; // metros por etapa
+function stageAt(m){ var i=Math.floor(m/STAGE_LEN); var idx=i<STAGES.length?i:1+((i-1)%(STAGES.length-1)); var nxt=(i+1)<STAGES.length?i+1:1+(i%(STAGES.length-1)); var t=Math.max(0,(m%STAGE_LEN)-(STAGE_LEN-80))/80; return {a:STAGES[idx],b:STAGES[nxt],t:t,i:i}; }
+
+/* montañas precalculadas */
+var MTN=[],HIL=[];
+for(var i=0;i<640;i++){ MTN.push(38+Math.round(14*Math.sin(i*0.021)+9*Math.sin(i*0.057+1)+5*Math.sin(i*0.13))); HIL.push(20+Math.round(7*Math.sin(i*0.033+2)+4*Math.sin(i*0.09))); }
+var STARS=[]; for(i=0;i<60;i++) STARS.push([Math.random()*W,Math.random()*90,Math.random()<.2?2:1]);
+
+function drawBG(m,cam){
+  var st=stageAt(m), A=st.a, B=st.b, t=st.t;
+  var g=ctx.createLinearGradient(0,0,0,GY); g.addColorStop(0,mix(A.s1,B.s1,t)); g.addColorStop(1,mix(A.s2,B.s2,t));
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,GY);
+  var night=(A.n.indexOf('Noche')>=0?1-t:0)+(B.n.indexOf('Noche')>=0?t:0);
+  if(night>0){ ctx.globalAlpha=night; STARS.forEach(function(s){R(s[0],s[1],s[2],s[2],'#F4EBC8')}); ctx.globalAlpha=1; R(262,22,10,10,'#EFE6C2'); R(264,20,6,1,'#EFE6C2');R(264,32,6,1,'#EFE6C2');R(260,24,1,6,'#EFE6C2');R(272,24,1,6,'#EFE6C2'); }
+  else { var sunY=A.n.indexOf('Atardecer')>=0?70:26; R(250,sunY,14,14,'rgba(255,240,190,.9)'); R(248,sunY+2,18,10,'rgba(255,240,190,.9)'); R(252,sunY-2,10,18,'rgba(255,240,190,.9)'); }
+  var mc=mix(A.m,B.m,t), hc=mix(A.h,B.h,t);
+  var o=Math.floor(cam*0.15);
+  for(var x=0;x<W;x+=2){ var hh=MTN[(x+o)%640]; R(x,GY-18-hh,2,hh+18,mc); }
+  o=Math.floor(cam*0.35);
+  for(x=0;x<W;x+=2){ hh=HIL[(x+o)%640]; R(x,GY-hh,2,hh,hc); }
+  // río en la etapa del río
+  var river=(A.n.indexOf('río')>=0?1-t:0)+(B.n.indexOf('río')>=0?t:0);
+  if(river>0){ ctx.globalAlpha=river; R(0,GY-6,W,6,'#4E86A6'); for(x=0;x<W;x+=12){ R((x+Math.floor(cam*0.5))%W,GY-4,5,1,'#A9D2E6'); } ctx.globalAlpha=1; }
+}
+function drawGround(m,cam){
+  var st=stageAt(m),A=st.a,B=st.b,t=st.t;
+  R(0,GY,W,H-GY,mix(A.g,B.g,t));
+  R(0,GY,W,3,mix(A.gr,B.gr,t));
+  var o=Math.floor(cam)%16;
+  for(var x=-o;x<W;x+=16){ R(x+3,GY+8,2,1,'rgba(0,0,0,.25)'); R(x+10,GY+15,3,1,'rgba(0,0,0,.2)'); R(x+6,GY+22,2,1,'rgba(255,255,255,.12)'); R(x,GY+3,1,2,mix(A.gr,B.gr,t)); }
+}
+
+/* decoraciones de plano medio */
+function drawDecor(d){
+  var x=d.x, y=GY;
+  if(d.k==='tree'){ R(x+6,y-14,3,14,'#4A3020'); R(x,y-26,15,10,'#3E5E2A'); R(x+2,y-30,11,5,'#4C6E30'); R(x+4,y-33,7,3,'#567A36'); }
+  else if(d.k==='cactus'){ R(x+5,y-20,4,20,'#4F7A3A'); R(x+1,y-14,3,7,'#4F7A3A'); R(x+1,y-15,2,2,'#4F7A3A'); R(x+9,y-17,3,8,'#4F7A3A'); R(x+11,y-19,2,3,'#4F7A3A'); R(x+6,y-19,1,17,'#6C9A4E'); }
+  else if(d.k==='bridge'){ R(x,y-16,46,4,'#8C8070'); R(x+4,y-12,6,12,'#7A6E60'); R(x+36,y-12,6,12,'#7A6E60'); R(x+12,y-12,22,2,'#7A6E60'); }
+  else if(d.k==='house'){ R(x,y-16,22,16,'#4A3A30'); R(x-2,y-20,26,4,'#6A3020'); R(x+4,y-11,4,4,'#E8C060'); R(x+14,y-11,4,4,'#E8C060'); }
+}
+
+/* banderines de patrocinadores */
+var SPONS=[], LOGOS={};
+function drawBanner(b){
+  var x=b.x,y=GY-44,w=74,h=32;
+  R(x+6,y+h,3,44-h,'#5A3A1E'); R(x+w-9,y+h,3,44-h,'#5A3A1E');
+  R(x-1,y-1,w+2,h+2,'#5A3A1E'); R(x,y,w,h,'#EFE2C4'); R(x+1,y+1,w-2,1,'#FFF6DE');
+  ctx.save(); ctx.imageSmoothingEnabled=true;
+  var sp=b.s, img=sp&&LOGOS[sp.logo];
+  if(img&&img.complete&&img.naturalWidth){
+    var bw=w-8,bh=h-10,r=Math.min(bw/img.naturalWidth,bh/img.naturalHeight);
+    var iw=img.naturalWidth*r, ih=img.naturalHeight*r;
+    ctx.drawImage(img,x+(w-iw)/2,y+2+(h-8-ih)/2,iw,ih);
+    ctx.fillStyle='#8E1B14'; ctx.font='700 4px Cinzel, Georgia, serif'; ctx.textAlign='center'; ctx.fillText((sp.nivel||'PATROCINADOR').toUpperCase(),x+w/2,y+h-2);
+  } else {
+    ctx.fillStyle='#2A1C10'; ctx.textAlign='center';
+    ctx.font='800 7px Cinzel, Georgia, serif'; ctx.fillText(sp?sp.nombre.toUpperCase():'TU MARCA AQUÍ',x+w/2,y+15,w-6);
+    ctx.fillStyle='#8E1B14'; ctx.font='700 4.4px Cinzel, Georgia, serif'; ctx.fillText(sp?(sp.nivel||'PATROCINADOR').toUpperCase():'CAMOTT.COM/BARAYA',x+w/2,y+24,w-6);
+  }
+  ctx.restore(); ctx.imageSmoothingEnabled=false;
+}
+
+/* ---------- sprites ---------- */
+var C={hb:'#6E3F1E',hd:'#4A2812',mn:'#1E120A',coat:'#1E2A4A',red:'#B02A1E',wh:'#EDE6D6',skin:'#E2B48C',hair:'#2A1A10',blk:'#141414',gold:'#D4AE5A',steel:'#D9D9D9'};
+function leg(x,y,dx,len,c){ R(x,y,2,5,c); R(x+dx,y+5,2,len-5,c); R(x+dx,y+len-1,2,1,C.mn); }
+function drawRider(px,py,f,air,dead){
+  var x=px,y=py; // caja 36x30, suelo en y+30
+  // cola
+  var tw=Math.sin(f*1.6)>0?0:1;
+  R(x+3,y+12,5,2,C.mn); R(x+2,y+14+tw,3,6,C.mn);
+  // cuerpo
+  R(x+7,y+12,19,8,C.hb); R(x+8,y+19,17,2,C.hd); R(x+7,y+13,2,5,C.hd);
+  // cuello y cabeza
+  R(x+24,y+8,5,9,C.hb); R(x+26,y+5,5,6,C.hb); R(x+28,y+3,7,5,C.hb); R(x+33,y+6,3,3,C.hd); R(x+28,y+1,2,2,C.hb); R(x+31,y+4,1,1,'#000');
+  R(x+24,y+3,3,9,C.mn); R(x+26,y+2,2,2,C.mn);
+  // patas
+  var fr=Math.floor(f)%4;
+  if(air){ leg(x+9,y+20,-2,7,C.hb); leg(x+12,y+20,-3,6,C.hd); leg(x+22,y+20,3,7,C.hb); leg(x+25,y+20,4,6,C.hd); }
+  else {
+    var P=[[-3,1,3,-1],[-1,3,1,-3],[2,0,-2,1],[0,-2,4,2]][fr];
+    leg(x+9,y+20,P[0],10,C.hd); leg(x+12,y+20,P[1],10,C.hb); leg(x+22,y+20,P[2],10,C.hd); leg(x+25,y+20,P[3],10,C.hb);
+  }
+  // jinete
+  var by=dead?2:0;
+  R(x+14,y+11,7,2,'#3A1E0E');
+  R(x+17,y+10+by,3,4,C.wh); R(x+18,y+13+by,3,5,C.blk);
+  R(x+15,y+1+by,6,10,C.coat); R(x+19,y+2+by,2,8,C.red); R(x+15,y+8+by,6,1,C.wh); R(x+15,y+1+by,3,1,C.gold);
+  R(x+16,y-4+by,5,5,C.skin); R(x+16,y-5+by,5,2,C.hair); R(x+16,y-3+by,1,3,C.hair); R(x+20,y-2+by,1,1,'#000');
+  R(x+14,y-7+by,9,2,C.blk); R(x+16,y-9+by,5,2,C.blk); R(x+20,y-8+by,1,1,C.red); R(x+19,y-8+by,1,1,'#F2C200');
+  if(!dead){ R(x+20,y+3,3,2,C.coat); R(x+23,y+2,1,2,C.skin); R(x+24,y-5,1,8,C.steel); R(x+23,y+2,3,1,C.gold); }
+  else { R(x+21,y+6,4,2,C.coat); }
+}
+function drawSoldier(o,f){
+  var x=o.x,y=GY-24, st=Math.floor(f*2)%2;
+  R(x+3,y-2,2,2,'#C0392B'); R(x+2,y,5,5,'#151515'); R(x+2,y+1,5,1,'#C9A44C');
+  R(x+2,y+5,5,4,C.skin); R(x+2,y+5,1,1,'#000');
+  R(x+1,y+9,7,8,'#8FB3D9'); R(x+2,y+10,1,6,'#F2F2F2'); R(x+6,y+10,1,6,'#F2F2F2'); R(x+0,y+14,1,2,C.red);
+  R(x+2,y+17,5,4,'#EFEFEF'); R(x+2+st,y+21,2,3,'#151515'); R(x+5-st,y+21,2,3,'#151515');
+  R(x-1,y+3,1,15,'#6B4A2B'); R(x-1,y+0,1,3,'#CFCFCF');
+}
+function drawBarricade(o){ var x=o.x,y=GY-13; R(x,y+3,18,10,'#7A5230'); R(x,y+7,18,1,'#5A3A1E'); R(x+6,y+3,1,10,'#5A3A1E'); R(x+12,y+3,1,10,'#5A3A1E'); R(x+1,y,7,4,'#C9B48A'); R(x+9,y,8,4,'#BCA67A'); R(x+4,y-3,8,4,'#C9B48A'); }
+function drawBall(o){ var x=o.x,y=GY-7; R(x+1,y,5,7,'#1C1C1C'); R(x,y+1,7,5,'#1C1C1C'); var a=Math.floor(o.rot)%4; var hx=[1,4,4,1][a],hy=[1,1,4,4][a]; R(x+hx,y+hy,2,1,'#6A6A6A'); }
+function drawCannon(o){ var x=o.x,y=GY-12; R(x+2,y+2,16,5,'#2A2A2A'); R(x+16,y+1,3,7,'#2A2A2A'); R(x+3,y+3,12,1,'#4A4A4A'); R(x+3,y+6,9,6,'#6B4A2B'); R(x+4,y+7,7,4,'#4A3020'); R(x+6,y+8,3,2,'#C9A44C'); }
+function drawFlag(o,tm){ var x=o.x,y=o.y+Math.round(Math.sin(tm*4+o.x)*1.5); R(x,y,1,14,'#5A3A1E'); R(x+1,y,8,3,'#F2C200'); R(x+1,y+3,8,2,'#1F3A93'); R(x+1,y+5,8,1,'#C0392B'); R(x,y-1,1,1,'#C9A44C'); }
+
+/* ---------- sonido ---------- */
+var AC=null, muted=store('baraya-mute')!=='0';
+function beep(fr,dur,type,vol,slide){ if(muted) return; try{ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); var o=AC.createOscillator(),g=AC.createGain(); o.type=type||'square'; o.frequency.value=fr; if(slide) o.frequency.linearRampToValueAtTime(slide,AC.currentTime+dur); g.gain.value=vol||.05; g.gain.exponentialRampToValueAtTime(.0001,AC.currentTime+dur); o.connect(g); g.connect(AC.destination); o.start(); o.stop(AC.currentTime+dur);}catch(e){} }
+var muteBtn=document.getElementById('mute');
+function paintMute(){ document.getElementById('ico-on').style.display=muted?'none':''; document.getElementById('ico-off').style.display=muted?'':'none'; muteBtn.setAttribute('aria-pressed',String(!muted)); muteBtn.setAttribute('aria-label',muted?'Activar sonido':'Silenciar'); }
+muteBtn.addEventListener('click',function(){ muted=!muted; store('baraya-mute',muted?'1':'0'); paintMute(); if(!muted) beep(660,.08); }); paintMute();
+
+/* ---------- estado ---------- */
+var state='start', P, obs, flags, decor, banners, dist, flagsN, tStart, tm, nextObs, nextFlag, nextDecor, nextBanner, shake, dieT, msIdx, last, holding=false, pressedAt=-1;
+var MILESTONES=[[300,'1810 · Santafé se levanta el 20 de julio'],[700,'1811 · Victoria en el Bajo Palacé'],[1200,'1812 · Baraya se une a los federalistas'],[1800,'1816 · La Reconquista llega a Santafé'],[2500,'1884 · Un pueblo del Huila adopta su nombre'],[3200,'¡Leyenda de la Independencia!']];
+var best=parseInt(store('baraya-best')||'0',10)||0;
+function reset(){
+  P={x:44,y:GY-30,vy:0,ground:true,hold:0,coyote:0,f:0};
+  obs=[];flags=[];decor=[];banners=[];dist=0;flagsN=0;tm=0;nextObs=220;nextFlag=160;nextDecor=40;nextBanner=260;shake=0;dieT=0;msIdx=0;
+  for(var i=0;i<4;i++) decor.push({x:i*90+20,k:'tree'});
+}
+reset();
+function meters(){ return Math.floor(dist/10); }
+function score(){ return meters()+flagsN*50; }
+function speed(){ return 125+Math.min(190,meters()*0.07); }
+
+function pickSponsor(){
+  if(!SPONS.length) return null;
+  var wts={diamante:6,oro:3,plata:2,aliado:1}, tot=0, arr=SPONS.map(function(s){ var w=wts[(s.nivel||'').toLowerCase()]||1; tot+=w; return [s,w]; });
+  var r=Math.random()*tot; for(var i=0;i<arr.length;i++){ r-=arr[i][1]; if(r<=0) return arr[i][0]; } return arr[0][0];
+}
+function spawnObs(){
+  var m=meters(), r=Math.random(), k='soldier';
+  if(m>150 && r<.22) k='ball'; else if(r<.48) k='barricade'; else if(m>1000 && r<.6) k='cannon';
+  var o={k:k,x:W+10,rot:0}; obs.push(o);
+  if(k==='soldier' && m>600 && Math.random()<.3) obs.push({k:'soldier',x:W+24,rot:0});
+  if(Math.random()<.35) flags.push({x:W+4,y:GY-58-Math.random()*10});
+  var sp=speed(); nextObs=sp*(0.95+Math.random()*0.9)+ (m<200?60:0);
+}
+function box(o){
+  if(o.k==='soldier') return [o.x,GY-23,8,23];
+  if(o.k==='barricade') return [o.x+1,GY-14,16,14];
+  if(o.k==='ball') return [o.x+1,GY-6,5,6];
+  if(o.k==='cannon') return [o.x+2,GY-11,16,11];
+}
+function hit(a,b){ return a[0]<b[0]+b[2]&&a[0]+a[2]>b[0]&&a[1]<b[1]+b[3]&&a[1]+a[3]>b[1]; }
+
+/* ---------- entrada ---------- */
+var jumpBuffer=0;
+function press(){ if(state!=='play') return; holding=true; jumpBuffer=0.12; }
+function release(){ holding=false; }
+window.addEventListener('keydown',function(e){
+  if(e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW'){ if(state==='play'){ e.preventDefault(); if(!e.repeat) press(); } else if(state==='start' && document.activeElement===document.body){ e.preventDefault(); start(); } }
+});
+window.addEventListener('keyup',function(e){ if(e.code==='Space'||e.code==='ArrowUp'||e.code==='KeyW') release(); });
+function isUI(t){ return t.closest && t.closest('button,a,input,label,form,.card'); }
+document.addEventListener('pointerdown',function(e){ if(state==='play' && !isUI(e.target)){ e.preventDefault(); press(); } },{passive:false});
+document.addEventListener('pointerup',release); document.addEventListener('pointercancel',release);
+document.addEventListener('visibilitychange',function(){ if(document.hidden && state==='play'){ last=0; } });
+
+/* ---------- bucle ---------- */
+function update(dt){
+  tm+=dt;
+  if(state==='dying'){ dieT+=dt; P.vy+=700*dt; P.y=Math.min(GY-26,P.y+P.vy*dt); shake=Math.max(0,shake-dt*20); if(dieT>0.9) gameOver(); return; }
+  if(state!=='play') { dist+=40*dt; return; }
+  var sp=speed(), dx=sp*dt; dist+=dx;
+  // salto
+  jumpBuffer-=dt; P.coyote= P.ground?0.08:P.coyote-dt;
+  if(jumpBuffer>0 && P.coyote>0){ P.vy=-238; P.ground=false; P.coyote=0; P.hold=0; jumpBuffer=0; beep(420,.12,'square',.04,760); }
+  if(!P.ground){ P.hold+=dt; var g=(holding&&P.vy<0&&P.hold<0.22)?430:980; P.vy+=g*dt; P.y+=P.vy*dt; if(P.y>=GY-30){ P.y=GY-30; P.vy=0; P.ground=true; } }
+  P.f+=dt*sp*0.08;
+  // spawn
+  nextObs-=dx; if(nextObs<=0) spawnObs();
+  nextDecor-=dx*0.6; if(nextDecor<=0){ var st=stageAt(meters()); decor.push({x:W+10,k:st.a.d}); nextDecor=60+Math.random()*120; }
+  nextBanner-=dx*0.6; if(nextBanner<=0){ banners.push({x:W+10,s:pickSponsor()}); nextBanner=900+Math.random()*700; }
+  obs.forEach(function(o){ o.x-=dx+(o.k==='ball'?55*dt:0); if(o.k==='ball') o.rot+=dt*10; });
+  flags.forEach(function(o){ o.x-=dx; });
+  decor.forEach(function(o){ o.x-=dx*0.6; }); banners.forEach(function(o){ o.x-=dx*0.6; });
+  obs=obs.filter(function(o){return o.x>-30}); flags=flags.filter(function(o){return o.x>-12&&!o.got}); decor=decor.filter(function(o){return o.x>-60}); banners=banners.filter(function(o){return o.x>-90});
+  // colisiones
+  var pb=[P.x+8,P.y+5,24,24];
+  for(var i=0;i<obs.length;i++){ if(hit(pb,box(obs[i]))){ die(); return; } }
+  var fb=[P.x+6,P.y-8,28,36];
+  flags.forEach(function(f){ if(!f.got && hit(fb,[f.x,f.y,9,14])){ f.got=true; flagsN++; beep(880,.08,'square',.04); setTimeout(function(){beep(1320,.1,'square',.035)},70); } });
+  // hitos
+  if(msIdx<MILESTONES.length && meters()>=MILESTONES[msIdx][0]){ toast(MILESTONES[msIdx][1]); msIdx++; }
+  var stI=Math.floor(meters()/STAGE_LEN); if(stI!==update.stI){ if(update.stI!==undefined) toast(stageAt(meters()+1).a.n); update.stI=stI; }
+}
+function render(){
+  ctx.setTransform(S,0,0,S,0,0); ctx.imageSmoothingEnabled=false;
+  if(shake>0){ ctx.translate((Math.random()-.5)*shake,(Math.random()-.5)*shake); }
+  var m=meters();
+  drawBG(m,dist);
+  decor.forEach(drawDecor); banners.forEach(drawBanner);
+  drawGround(m,dist);
+  flags.forEach(function(f){ drawFlag(f,tm); });
+  obs.forEach(function(o){ if(o.k==='soldier') drawSoldier(o,tm); else if(o.k==='barricade') drawBarricade(o); else if(o.k==='ball') drawBall(o); else drawCannon(o); });
+  if(state!=='start') drawRider(P.x,P.y,P.f,!P.ground,state==='dying'||state==='over');
+  else drawRider(44,GY-30,tm*10,false,false);
+  // HUD
+  if(state==='play'||state==='dying'){
+    ctx.fillStyle='rgba(20,14,8,.55)'; ctx.fillRect(4,4,118,20);
+    ctx.font='8px "Press Start 2P", monospace'; ctx.textAlign='left'; ctx.fillStyle='#F2E3BF';
+    ctx.fillText('PUNTOS '+String(score()).padStart(5,'0'),8,14);
+    ctx.fillStyle='#E2C98A'; ctx.font='6px "Press Start 2P", monospace'; ctx.fillText(m+' m  ⚑'+flagsN,8,21);
+    ctx.textAlign='right'; ctx.fillStyle='rgba(20,14,8,.55)'; ctx.fillRect(W-86,4,82,12); ctx.fillStyle='#F2E3BF'; ctx.font='6px "Press Start 2P", monospace'; ctx.fillText('MEJOR '+best,W-8,12);
+  }
+}
+var raf;
+function loop(ts){
+  raf=requestAnimationFrame(loop);
+  if(!last){ last=ts; return; }
+  var dt=Math.min(0.05,(ts-last)/1000); last=ts;
+  update(dt); render();
+}
+raf=requestAnimationFrame(loop);
+
+/* ---------- pantallas ---------- */
+var pStart=document.getElementById('p-start'), pOver=document.getElementById('p-over');
+var toastEl=document.getElementById('toast'), toastT;
+function toast(t){ toastEl.textContent=t; toastEl.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){toastEl.classList.remove('on')},2600); }
+function start(){ reset(); state='play'; tStart=performance.now(); last=0; pStart.hidden=true; pOver.hidden=true; document.body.classList.add('playing'); update.stI=undefined; try{ if(!muted){ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume&&AC.resume(); } }catch(e){} stage.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+function die(){ state='dying'; shake=4; P.vy=-120; holding=false; beep(220,.35,'sawtooth',.06,70); }
+var lastRun={};
+function gameOver(){
+  state='over'; document.body.classList.remove('playing');
+  var sc=score(); lastRun={puntos:sc,duracion:Math.round((performance.now()-tStart)/1000),banderas:flagsN,metros:meters()};
+  var nb=sc>best; if(nb){ best=sc; store('baraya-best',String(best)); }
+  document.getElementById('final').textContent=sc;
+  document.getElementById('final-sub').textContent=meters()+' metros · '+flagsN+' banderas'+(nb?' · ¡Nueva marca!':'');
+  document.getElementById('over-title').textContent=nb?'¡Nueva mejor marca!':'¡Caíste en combate!';
+  document.getElementById('save-msg').textContent='';
+  var canSave=!!CFG.rankingUrl && concursoAbierto() && sc>0;
+  document.getElementById('save-wrap').hidden=!canSave;
+  document.getElementById('save-btn').disabled=false;
+  document.getElementById('nombre').value=store('baraya-nombre')||'';
+  document.getElementById('contacto').value=store('baraya-contacto')||'';
+  pOver.hidden=false;
+  renderRank('rank-over');
+  setTimeout(function(){ document.getElementById(canSave?'nombre':'again').focus({preventScroll:true}); },50);
+}
+document.getElementById('play').addEventListener('click',start);
+document.getElementById('again').addEventListener('click',start);
+
+/* ---------- concurso y ranking ---------- */
+function concursoAbierto(){ if(!CON.activo) return false; if(!CON.cierre) return true; var d=new Date(CON.cierre); return isNaN(d)||Date.now()<d.getTime(); }
+function fmtFecha(s){ var d=new Date(s); if(isNaN(d)) return ''; return d.toLocaleDateString('es-CO',{day:'numeric',month:'long',year:'numeric'})+', '+d.toLocaleTimeString('es-CO',{hour:'numeric',minute:'2-digit'}); }
+function paintPrize(){
+  if(!CON.activo) return;
+  var html='<b>'+esc(CON.premio||'Premio al mejor puntaje')+'</b>'+(CON.patrocinador?'<p>Patrocinado por <strong>'+esc(CON.patrocinador)+'</strong></p>':'')+'<p>'+esc(CON.textoFinal||'')+'</p>'+(CON.cierre?('<p>'+(concursoAbierto()?'El ranking cierra el ':'El ranking cerró el ')+fmtFecha(CON.cierre)+'.</p>'):'');
+  ['prize-start','prize-over'].forEach(function(id){ var el=document.getElementById(id); el.innerHTML=html; el.hidden=false; });
+  if(CON.cierre) document.getElementById('base-cierre').textContent='El ranking se cierra el '+fmtFecha(CON.cierre)+'.';
+}
+function esc(s){ return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]}); }
+var RANK=[], myName=store('baraya-nombre')||'';
+function renderRank(id){
+  var el=document.getElementById(id);
+  if(!CFG.rankingUrl){ el.innerHTML='<li><span class="nm" style="white-space:normal">El ranking en línea se activará muy pronto.</span></li>'; return; }
+  if(!RANK.length){ el.innerHTML='<li><span class="nm">Aún no hay puntajes. ¡Sé el primero!</span></li>'; return; }
+  el.innerHTML=RANK.slice(0,10).map(function(r,i){ return '<li class="'+(myName&&r.nombre===myName?'me':'')+'"><span class="pos">'+(i+1)+'.</span><span class="nm">'+esc(r.nombre)+'</span><span class="pt">'+Number(r.puntos)+'</span></li>'; }).join('');
+}
+function paintSponsors(){
+  var el=document.getElementById('sponsors');
+  if(!SPONS.length){ el.innerHTML='<div class="sp"><span>Tu marca aquí</span></div>'; return; }
+  var order={diamante:0,oro:1,plata:2,aliado:3};
+  el.innerHTML=SPONS.slice().sort(function(a,b){ return (order[(a.nivel||'').toLowerCase()]??9)-(order[(b.nivel||'').toLowerCase()]??9); }).map(function(s){ return '<div class="sp" title="'+esc(s.nivel||'')+'">'+(s.logo?'<img src="'+esc(s.logo)+'" alt="'+esc(s.nombre)+'">':'<span>'+esc(s.nombre)+'</span>')+'</div>'; }).join('');
+}
+function useSponsors(list){
+  SPONS=(list||[]).filter(function(s){ return s&&s.nombre; });
+  SPONS.forEach(function(s){ if(s.logo&&!LOGOS[s.logo]){ var im=new Image(); im.crossOrigin='anonymous'; im.src=s.logo; LOGOS[s.logo]=im; } });
+  paintSponsors();
+}
+function load(){
+  document.getElementById('best-start').textContent=best;
+  document.getElementById('rank-note').textContent=concursoAbierto()?'Guarda tu puntaje al terminar para entrar al concurso.':'';
+  if(CFG.rankingUrl){
+    fetch(CFG.rankingUrl).then(function(r){return r.json()}).then(function(d){ RANK=d.ranking||[]; renderRank('rank-start'); renderRank('rank-over'); if(d.patrocinadores&&d.patrocinadores.length) useSponsors(d.patrocinadores); else fallbackSponsors(); }).catch(function(){ renderRank('rank-start'); fallbackSponsors(); });
+  } else { renderRank('rank-start'); fallbackSponsors(); }
+}
+function fallbackSponsors(){ fetch('patrocinadores.json').then(function(r){return r.json()}).then(useSponsors).catch(function(){ useSponsors([]); }); }
+document.getElementById('save').addEventListener('submit',function(e){
+  e.preventDefault();
+  var n=document.getElementById('nombre').value.trim(), c=document.getElementById('contacto').value.trim(), ok=document.getElementById('acepto').checked, msg=document.getElementById('save-msg');
+  if(n.length<2){ msg.textContent='Escribe tu nombre (mínimo 2 letras).'; document.getElementById('nombre').focus(); return; }
+  if(c.length<5){ msg.textContent='Escribe tu WhatsApp o Instagram para avisarte si ganas.'; document.getElementById('contacto').focus(); return; }
+  if(!ok){ msg.textContent='Debes autorizar el uso de tus datos para participar.'; return; }
+  store('baraya-nombre',n); store('baraya-contacto',c); myName=n;
+  var btn=document.getElementById('save-btn'); btn.disabled=true; msg.textContent='Guardando…';
+  fetch(CFG.rankingUrl,{method:'POST',body:JSON.stringify({nombre:n,contacto:c,puntos:lastRun.puntos,duracion:lastRun.duracion,banderas:lastRun.banderas,metros:lastRun.metros,consentimiento:true})})
+   .then(function(r){return r.json()}).then(function(d){
+     if(d.ok){ msg.textContent='¡Guardado! Ya estás en el concurso.'; document.getElementById('save-wrap').hidden=true; RANK=d.ranking||RANK; renderRank('rank-over'); renderRank('rank-start'); }
+     else { msg.textContent=d.error||'No se pudo guardar. Intenta de nuevo.'; btn.disabled=false; }
+   }).catch(function(){ msg.textContent='Sin conexión. Intenta de nuevo en un momento.'; btn.disabled=false; });
+});
+document.getElementById('share').addEventListener('click',function(){
+  var text='Llegué a '+(lastRun.puntos||0)+' puntos cabalgando con Baraya. ¿Me superas?';
+  var url=location.href.split('#')[0];
+  if(navigator.share){ navigator.share({title:'Baraya: La Campaña',text:text,url:url}).catch(function(){}); return; }
+  var full=text+' '+url;
+  if(navigator.clipboard){ navigator.clipboard.writeText(full).then(function(){ toast('Enlace copiado. ¡Compártelo!'); }).catch(function(){ toast(full); }); } else toast(full);
+});
+paintPrize(); load();
+})();
+</script>
+</body>
+</html>
