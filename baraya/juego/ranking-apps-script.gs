@@ -130,6 +130,7 @@ function correoConfirmacion_(correo, nombre, codigo, personas, token) {
     });
   } catch (err) {}
 }
+function norm_(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim(); }
 function inscribir_(d) {
   const nombre = limpio_(d.nombre, 60), correo = limpio_(d.correo, 80), municipio = limpio_(d.municipio, 40);
   const celular = String(d.celular || '').replace(/\D/g, '').slice(-10);
@@ -142,7 +143,7 @@ function inscribir_(d) {
   const ins = inscritos_();
   for (var i = 0; i < ins.filas.length; i++) {
     const f = ins.filas[i];
-    if (String(f[2]).replace(/\D/g, '').slice(-10) === celular) {
+    if (String(f[2]).replace(/\D/g, '').slice(-10) === celular && norm_(f[1]) === norm_(nombre)) {   // mismo celular Y mismo nombre
       const t = f[10] || asegurarToken_(ins.sh, i + 2, f[0]);
       return { ok: true, repetido: true, codigo: f[0], token: t, nombre: f[1], personas: f[5], restantes: c.restantes };
     }

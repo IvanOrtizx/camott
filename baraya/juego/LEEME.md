@@ -43,7 +43,8 @@ La sección «Inscríbete y asegura tu cupo» de la página principal usa la mis
   correo, municipio y si acepta recibir mensajes. Cada persona se inscribe por separado.
 - El cupo total está en `CUPO_INSCRIPCIONES` (3000) dentro del Apps Script; la página
   muestra cuántos quedan y bloquea el formulario al llenarse (cada inscripción = 1 persona).
-- Un mismo celular no puede inscribirse dos veces: recibe su código anterior.
+- Un mismo celular puede inscribir a varias personas (por ejemplo, un papá con sus hijos), pero
+  la misma persona (mismo nombre y celular) no se inscribe dos veces: recibe su código anterior.
 - Cada inscrito recibe una **entrada con QR personal**: la ve al inscribirse, la puede abrir en
   `camott.com/baraya/entrada/?c=…&t=…` y, si dejó correo, le llega por email con el QR
   (Gmail permite unos 100 correos al día). El enlace de cada uno queda en la columna
