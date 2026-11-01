@@ -4,6 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <!--HEAD-START-->
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VLC8V3CSM"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6VLC8V3CSM');
+window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};</script>
+
 <title>Baraya: El Prócer Independentista</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Cortometraje sobre el general Antonio Baraya, prócer de la Independencia. Estreno en febrero de 2027 en la pantalla LED de la Plaza Botero, Olave Tower, Neiva.">
@@ -505,7 +510,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     var btn=document.getElementById('r-btn'); btn.disabled=true; msg.textContent='Enviando…';
     fetch(URL,{method:'POST',body:JSON.stringify({tipo:'inscripcion',nombre:n,celular:c,correo:document.getElementById('r-correo').value.trim(),municipio:document.getElementById('r-muni').value.trim(),personas:1,aceptaDatos:true,aceptaMensajes:document.getElementById('r-msj').checked})})
       .then(function(r){return r.json()}).then(function(d){
-        if(d.ok&&d.codigo){ var t={codigo:d.codigo,token:d.token,nombre:d.nombre,personas:d.personas,repetido:!!d.repetido,cel:c}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
+        if(d.ok&&d.codigo){ if(!d.repetido) track('sign_up',{method:'inscripcion_estreno'}); var t={codigo:d.codigo,token:d.token,nombre:d.nombre,personas:d.personas,repetido:!!d.repetido,cel:c}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
         else { msg.textContent=d.error||'No se pudo completar la inscripción. Intenta de nuevo.'; btn.disabled=false; }
       }).catch(function(){ msg.textContent='Sin conexión. Intenta de nuevo en un momento.'; btn.disabled=false; });
   });
@@ -520,6 +525,10 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
   document.getElementById('lb-close').addEventListener('click',function(){dlg.close();});
   dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
 })();
+</script>
+<script>
+document.addEventListener('click',function(e){ var a=e.target.closest&&e.target.closest('a'); if(!a||!window.track) return; var h=a.getAttribute('href')||'';
+  if(h.indexOf('dossier')>-1) track('solicitar_dossier'); else if(/wa\.me\/57321/.test(h)) track('contacto_whatsapp'); else if(/^juego\//.test(h)) track('abrir_juego',{origen:a.className.indexOf('game-cta')>-1?'portada':'menu'}); else if(h.indexOf('entrada/')>-1) track('ver_entrada'); else if(h.indexOf('wa.me/57')>-1) track('enviar_entrada_whatsapp'); });
 </script>
 <!--BODY-END-->
 </body>

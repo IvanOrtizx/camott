@@ -2,6 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="utf-8">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6VLC8V3CSM"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-6VLC8V3CSM');
+window.track=function(n,p){try{gtag('event',n,p||{});}catch(e){}};</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Baraya: La Campaña · El juego</title>
 <meta name="description" content="Cabalga con el general Antonio Baraya, salta a los realistas y entra al ranking. El mejor puntaje gana un premio la noche del estreno.">
@@ -474,13 +479,14 @@ raf=requestAnimationFrame(loop);
 var pStart=document.getElementById('p-start'), pOver=document.getElementById('p-over');
 var toastEl=document.getElementById('toast'), toastT;
 function toast(t){ toastEl.textContent=t; toastEl.classList.add('on'); clearTimeout(toastT); toastT=setTimeout(function(){toastEl.classList.remove('on')},2600); }
-function start(){ reset(); state='play'; tStart=performance.now(); last=0; pStart.hidden=true; pOver.hidden=true; document.body.classList.add('playing'); update.stI=undefined; try{ if(!muted){ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume&&AC.resume(); } }catch(e){} stage.scrollIntoView({block:'nearest',behavior:'smooth'}); }
+function start(){ if(window.track) track(FINAL?'final_turno':'partida_iniciada'); reset(); state='play'; tStart=performance.now(); last=0; pStart.hidden=true; pOver.hidden=true; document.body.classList.add('playing'); update.stI=undefined; try{ if(!muted){ AC=AC||new (window.AudioContext||window.webkitAudioContext)(); AC.resume&&AC.resume(); } }catch(e){} stage.scrollIntoView({block:'nearest',behavior:'smooth'}); }
 function die(){ state='dying'; shake=4; P.vy=-120; holding=false; beep(220,.35,'sawtooth',.06,70); }
 var lastRun={};
 function gameOver(){
   state='over'; document.body.classList.remove('playing');
   if(FINAL){ finalTurnDone(score(),meters(),flagsN); return; }
   var sc=score(); lastRun={puntos:sc,duracion:Math.round((performance.now()-tStart)/1000),banderas:flagsN,metros:meters()};
+  if(!FINAL&&window.track) track('partida_terminada',{puntos:sc,metros:meters()});
   var nb=sc>best; if(nb){ best=sc; store('baraya-best',String(best)); }
   document.getElementById('final').textContent=sc;
   document.getElementById('final-sub').textContent=meters()+' metros · '+flagsN+' banderas'+(nb?' · ¡Nueva marca!':'');
@@ -547,7 +553,7 @@ document.getElementById('save').addEventListener('submit',function(e){
   var btn=document.getElementById('save-btn'); btn.disabled=true; msg.textContent='Guardando…';
   fetch(CFG.rankingUrl,{method:'POST',body:JSON.stringify({nombre:n,contacto:c,puntos:lastRun.puntos,duracion:lastRun.duracion,banderas:lastRun.banderas,metros:lastRun.metros,consentimiento:true})})
    .then(function(r){return r.json()}).then(function(d){
-     if(d.ok){ msg.textContent='¡Guardado! Ya estás en el concurso.'; document.getElementById('save-wrap').hidden=true; RANK=d.ranking||RANK; renderRank('rank-over'); renderRank('rank-start'); }
+     if(d.ok){ if(window.track) track('post_score',{score:lastRun.puntos}); msg.textContent='¡Guardado! Ya estás en el concurso.'; document.getElementById('save-wrap').hidden=true; RANK=d.ranking||RANK; renderRank('rank-over'); renderRank('rank-start'); }
      else { msg.textContent=d.error||'No se pudo guardar. Intenta de nuevo.'; btn.disabled=false; }
    }).catch(function(){ msg.textContent='Sin conexión. Intenta de nuevo en un momento.'; btn.disabled=false; });
 });
