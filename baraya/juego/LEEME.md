@@ -44,7 +44,12 @@ La sección «Inscríbete y asegura tu cupo» de la página principal usa la mis
 - El cupo total está en `CUPO_INSCRIPCIONES` (3000) dentro del Apps Script; la página
   muestra cuántos quedan y bloquea el formulario al llenarse.
 - Un mismo celular no puede inscribirse dos veces: recibe su código anterior.
-- Si la persona deja correo, le llega la confirmación (Gmail permite unos 100 al día).
+- Cada inscrito recibe una **entrada con QR personal**: la ve al inscribirse, la puede abrir en
+  `camott.com/baraya/entrada/?c=…&t=…` y, si dejó correo, le llega por email con el QR
+  (Gmail permite unos 100 correos al día). El enlace de cada uno queda en la columna
+  **Enlace entrada**, listo para enviarlo por WhatsApp.
+- El QR contiene `BARAYA|código|firma`. La firma se genera con una clave secreta guardada
+  en las propiedades del script (no está en GitHub), así nadie puede inventar entradas.
 - La columna **Asistió** sirve para marcar el ingreso la noche del evento.
 - Para mensajes masivos, filtra «Acepta mensajes = Sí» y exporta la lista.
 

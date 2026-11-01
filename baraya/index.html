@@ -180,6 +180,8 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
 .regform .check input{width:20px;height:20px;margin-top:3px;flex:none;accent-color:var(--wax)}
 .regmsg{min-height:22px;color:var(--wax);font-size:16px}
 .ticket{border:2px dashed var(--wax);padding:22px;text-align:center;background:#FBF5E6;display:flex;flex-direction:column;gap:6px;align-items:center}
+.ticket #t-qr img{width:200px;height:200px;display:block;image-rendering:pixelated}
+.ticket .btn{width:100%;max-width:340px}
 .ticket .code{font-family:var(--display);font-weight:800;font-size:clamp(34px,5vw,48px);letter-spacing:.08em;color:var(--wax)}
 @media (max-width:860px){.reg{grid-template-columns:1fr;gap:32px}}
 /* patrocinio */
@@ -245,7 +247,8 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
       <div class="sub ink-in d3">EL PRÓCER INDEPENDENTISTA</div>
       <p class="tagline ink-in d4">Desde el ejército del Rey hasta la causa de la libertad.</p>
       <div class="hero-meta ink-in d5">
-        <span><b>40 min</b></span>
+        <span><b>Entrada libre</b></span>
+        <span>40 min</span>
         <span>Plaza Botero · Olave Tower</span>
         <span>Neiva, Huila</span>
       </div>
@@ -377,7 +380,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     <div>
       <div class="sc">Asiste al estreno</div>
       <h2 class="h2" style="margin-top:12px">Inscríbete y asegura tu cupo</h2>
-      <p class="lede" style="margin-top:18px">El aforo de la Plaza Botero es limitado. Inscríbete con tus datos y recibe un código para reclamar tu manilla de ingreso la noche del estreno. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
+      <p class="lede" style="margin-top:18px">La entrada es libre, pero el aforo de la Plaza Botero es limitado. Inscríbete y recibe tu entrada con un código QR personal: lo presentas esa noche y recibes tu manilla. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
       <div class="cupos" id="cupos" hidden>
         <div class="num" id="cupos-num">—</div>
         <div class="sc" id="cupos-txt">cupos disponibles</div>
@@ -402,10 +405,13 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
         <div class="regmsg" id="r-msg" role="status"></div>
       </form>
       <div class="ticket" id="ticket" hidden>
-        <div class="sc">Tu código de inscripción</div>
+        <div class="sc">Tu entrada al estreno</div>
+        <div id="t-qr" style="background:#fff;padding:10px;border:2px solid var(--wax);margin:6px 0"></div>
         <div class="code" id="t-code">BAR-0000</div>
         <p id="t-txt"></p>
-        <p class="muted" style="font-size:16px">Toma un pantallazo o guárdalo: lo mostrarás al ingresar para recibir tu manilla.</p>
+        <p class="muted" style="font-size:16px">Presenta este QR en la entrada para recibir tu manilla. Si dejaste correo, también te lo enviamos.</p>
+        <a class="btn btn-wax" id="t-ver" href="entrada/" style="justify-content:center">Ver y descargar mi entrada</a>
+        <a class="btn" id="t-wa" href="#" target="_blank" rel="noopener" style="justify-content:center">Enviármela por WhatsApp</a>
         <button class="btn" type="button" id="t-otra" style="margin-top:8px">Inscribir a otra persona</button>
       </div>
     </div>
@@ -467,6 +473,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
 </footer>
 
 <script src="juego/config.js"></script>
+<script src="js/qrcode.js"></script>
 <script>
 (function(){
   var CFG=window.BARAYA_JUEGO||{}, URL=CFG.rankingUrl;
@@ -478,10 +485,16 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     document.getElementById('cupos-fill').style.width=Math.min(100,(c.inscritos/c.cupo)*100)+'%';
     if(c.cerrado||c.restantes<=0){ document.getElementById('r-btn').disabled=true; } }
   if(URL){ fetch(URL).then(function(r){return r.json()}).then(function(d){ paint(d.cupos); }).catch(function(){}); }
-  try{ var saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); if(saved&&saved.codigo) showTicket(saved); }catch(e){}
+  try{ var saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); if(saved&&saved.codigo&&saved.token) showTicket(saved); }catch(e){}
   function showTicket(t){ form.hidden=true; var tk=document.getElementById('ticket'); tk.hidden=false;
     document.getElementById('t-code').textContent=t.codigo;
-    document.getElementById('t-txt').textContent=(t.repetido?'Ya estabas inscrito. ':'¡Listo! ')+'Cupo para '+t.personas+' persona'+(t.personas>1?'s':'')+'.'; }
+    document.getElementById('t-txt').textContent=(t.repetido?'Ya estabas inscrito. ':'¡Bienvenido'+(t.nombre?', '+String(t.nombre).split(' ')[0]:'')+'! ')+'Entrada para '+t.personas+' persona'+(t.personas>1?'s':'')+'.';
+    var qb=document.getElementById('t-qr'); qb.innerHTML='';
+    if(window.qrcode&&t.token){ var qq=qrcode(0,'M'); qq.addData('BARAYA|'+t.codigo+'|'+t.token); qq.make(); var im=new Image(); im.alt='Código QR de tu entrada'; im.src=qq.createDataURL(8,2); qb.appendChild(im); qb.hidden=false; } else qb.hidden=true;
+    var link=new URL('entrada/?c='+encodeURIComponent(t.codigo)+'&t='+encodeURIComponent(t.token||''),location.href).href;
+    document.getElementById('t-ver').href=link;
+    var txt='Mi entrada al estreno de «Baraya: El Prócer Independentista» ('+t.codigo+'): '+link;
+    document.getElementById('t-wa').href='https://wa.me/'+(t.cel?'57'+t.cel:'')+'?text='+encodeURIComponent(txt); }
   document.getElementById('t-otra').addEventListener('click',function(){ document.getElementById('ticket').hidden=true; form.hidden=false; form.reset(); document.getElementById('r-muni').value='Neiva'; document.getElementById('r-btn').disabled=false; msg.textContent=''; document.getElementById('r-nombre').focus(); });
   form.addEventListener('submit',function(e){
     e.preventDefault();
@@ -493,7 +506,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     var btn=document.getElementById('r-btn'); btn.disabled=true; msg.textContent='Enviando…';
     fetch(URL,{method:'POST',body:JSON.stringify({tipo:'inscripcion',nombre:n,celular:c,correo:document.getElementById('r-correo').value.trim(),municipio:document.getElementById('r-muni').value.trim(),personas:Number(document.getElementById('r-pers').value),aceptaDatos:true,aceptaMensajes:document.getElementById('r-msj').checked})})
       .then(function(r){return r.json()}).then(function(d){
-        if(d.ok&&d.codigo){ var t={codigo:d.codigo,personas:d.personas,repetido:!!d.repetido}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
+        if(d.ok&&d.codigo){ var t={codigo:d.codigo,token:d.token,nombre:d.nombre,personas:d.personas,repetido:!!d.repetido,cel:c}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
         else { msg.textContent=d.error||'No se pudo completar la inscripción. Intenta de nuevo.'; btn.disabled=false; }
       }).catch(function(){ msg.textContent='Sin conexión. Intenta de nuevo en un momento.'; btn.disabled=false; });
   });

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi entrada · Baraya: El Prócer Independentista</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%238E1B14'/%3E%3Ctext x='32' y='44' font-family='Georgia,serif' font-size='34' font-weight='700' text-anchor='middle' fill='%23F1E4C6'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Cormorant+Garamond:ital,wght@0,700;1,500&family=EB+Garamond:wght@400;600&display=swap">
+<script src="../juego/config.js"></script>
+<script src="../js/qrcode.js"></script>
+<style>
+:root{--paper:#EEE1C2;--ink:#2A1C10;--ink2:#5E4930;--rule:#B79E72;--wax:#8E1B14;color-scheme:light}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;padding:24px max(16px, env(safe-area-inset-right, 0px)) 24px max(16px, env(safe-area-inset-left, 0px));
+  background:radial-gradient(ellipse at center,#3A2A1A 0%,#1B140D 75%) fixed,#1B140D;font-family:"EB Garamond",Georgia,serif;color:var(--ink)}
+.ticket{width:min(440px,100%);background:var(--paper);background-image:radial-gradient(ellipse at center,rgba(255,250,235,.55),rgba(150,110,50,.2) 100%);padding:28px 26px 24px;text-align:center;position:relative;box-shadow:0 24px 60px rgba(0,0,0,.55)}
+.ticket::before{content:"";position:absolute;inset:7px;border:1px solid rgba(138,102,32,.5);pointer-events:none}
+.sc{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:12.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink2)}
+h1{font-family:Cinzel,serif;font-weight:800;font-size:44px;letter-spacing:.08em;margin:4px 0 0;line-height:1}
+h1 b{color:var(--wax)}
+.sub{font-family:Cinzel,serif;font-weight:600;font-size:12px;letter-spacing:.28em;margin-top:6px}
+.hello{font-family:"Cormorant Garamond",serif;font-style:italic;font-weight:500;font-size:23px;margin:18px 0 6px}
+.qr{display:inline-block;background:#fff;padding:12px;border:2px solid var(--wax);margin:10px 0 6px}
+.qr img{display:block;width:220px;height:220px;image-rendering:pixelated}
+.code{font-family:Cinzel,serif;font-weight:800;font-size:28px;letter-spacing:.1em;color:var(--wax)}
+.meta{border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink);margin:16px 0;padding:8px 0;text-align:left}
+.meta div{display:flex;gap:8px;align-items:baseline;padding:5px 0;font-size:16px}
+.meta dt{font-family:"Cormorant Garamond",serif;font-weight:700;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);white-space:nowrap}
+.meta .dots{flex:1;border-bottom:1px dotted var(--rule);transform:translateY(-4px)}
+.meta dd{margin:0;font-weight:600;text-align:right}
+.btns{display:flex;flex-direction:column;gap:10px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:0 18px;border:1.5px solid var(--ink);color:var(--ink);background:transparent;font-family:"Cormorant Garamond",serif;font-weight:700;font-size:18px;letter-spacing:.05em;text-decoration:none;cursor:pointer}
+.btn:hover{background:var(--ink);color:var(--paper)}
+.btn-wax{background:var(--wax);border-color:var(--wax);color:#F6EAD0}
+.note{font-size:14.5px;color:var(--ink2);margin-top:14px;line-height:1.45}
+.err{font-size:17px;color:var(--wax);margin:18px 0}
+.used{background:var(--wax);color:#F6EAD0;font-family:Cinzel,serif;font-size:14px;letter-spacing:.12em;padding:6px 10px;display:inline-block;margin-top:8px}
+</style>
+</head>
+<body>
+<main class="ticket">
+  <div class="sc">Presentación del cortometraje</div>
+  <h1><b>B</b>ARAYA</h1>
+  <div class="sub">EL PRÓCER INDEPENDENTISTA</div>
+
+  <div id="ok" hidden>
+    <p class="hello" id="hello">¡Bienvenido!</p>
+    <div class="qr" id="qr" role="img" aria-label="Código QR de tu entrada"></div>
+    <div class="code" id="code">BAR-0000</div>
+    <div id="used" hidden><span class="used">ENTRADA YA USADA</span></div>
+    <dl class="meta">
+      <div><dt>Válido para</dt><span class="dots"></span><dd id="pers">1 persona</dd></div>
+      <div><dt>Fecha</dt><span class="dots"></span><dd>Febrero de 2027 · día por confirmar</dd></div>
+      <div><dt>Lugar</dt><span class="dots"></span><dd>Plaza Botero, Olave Tower</dd></div>
+      <div><dt>Puertas</dt><span class="dots"></span><dd>5:45 p. m.</dd></div>
+      <div><dt>Entrada</dt><span class="dots"></span><dd>Libre</dd></div>
+    </dl>
+    <div class="btns">
+      <a class="btn btn-wax" id="dl" download="entrada-baraya.png" href="#">Descargar mi QR</a>
+      <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Guardar en WhatsApp</a>
+      <a class="btn" href="../">Ir a la página del corto</a>
+    </div>
+    <p class="note">Presenta este QR en la entrada para recibir tu manilla. Cada QR vale para el número de personas indicado.</p>
+  </div>
+
+  <div id="bad" hidden>
+    <p class="err" id="bad-msg">Este enlace de entrada no es válido.</p>
+    <div class="btns"><a class="btn btn-wax" href="../#asistir">Inscribirme al estreno</a></div>
+  </div>
+</main>
+<script>
+(function(){
+  var q=new URLSearchParams(location.search), c=(q.get('c')||'').trim(), t=(q.get('t')||'').trim();
+  var CFG=window.BARAYA_JUEGO||{};
+  if(!/^BAR-\d{4,}$/.test(c)||t.length<8){ document.getElementById('bad').hidden=false; return; }
+  function show(nombre,personas,asistio){
+    document.getElementById('ok').hidden=false;
+    document.getElementById('code').textContent=c;
+    if(nombre) document.getElementById('hello').textContent='¡Bienvenido, '+String(nombre).split(' ')[0]+'!';
+    if(personas) document.getElementById('pers').textContent=personas+' persona'+(personas>1?'s':'');
+    if(asistio) document.getElementById('used').hidden=false;
+    var box=document.getElementById('qr');
+    if(window.qrcode){ var qq=qrcode(0,'M'); qq.addData('BARAYA|'+c+'|'+t); qq.make(); var url=qq.createDataURL(10,2); var im=new Image(); im.alt='Código QR de tu entrada '+c; im.src=url; box.appendChild(im); var dl=document.getElementById('dl'); dl.href=url; dl.download='entrada-'+c+'.gif'; }
+    var msg='Mi entrada al estreno de «Baraya: El Prócer Independentista» ('+c+'): '+location.href;
+    document.getElementById('wa').href='https://wa.me/?text='+encodeURIComponent(msg);
+  }
+  if(CFG.rankingUrl){
+    fetch(CFG.rankingUrl+'?accion=entrada&c='+encodeURIComponent(c)+'&t='+encodeURIComponent(t)).then(function(r){return r.json()}).then(function(d){
+      if(d.ok) show(d.nombre,Number(d.personas),d.asistio);
+      else { document.getElementById('bad-msg').textContent=d.error||'Este enlace de entrada no es válido.'; document.getElementById('bad').hidden=false; }
+    }).catch(function(){ show('',0,false); });
+  } else show('',0,false);
+})();
+</script>
+</body>
+</html>
