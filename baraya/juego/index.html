@@ -339,6 +339,7 @@ function drawSoldier(o,f){
 function drawBarricade(o){ var x=o.x,y=GY-13; R(x,y+3,18,10,'#7A5230'); R(x,y+7,18,1,'#5A3A1E'); R(x+6,y+3,1,10,'#5A3A1E'); R(x+12,y+3,1,10,'#5A3A1E'); R(x+1,y,7,4,'#C9B48A'); R(x+9,y,8,4,'#BCA67A'); R(x+4,y-3,8,4,'#C9B48A'); }
 function drawBall(o){ var x=o.x,y=GY-7; R(x+1,y,5,7,'#1C1C1C'); R(x,y+1,7,5,'#1C1C1C'); var a=Math.floor(o.rot)%4; var hx=[1,4,4,1][a],hy=[1,1,4,4][a]; R(x+hx,y+hy,2,1,'#6A6A6A'); }
 function drawCannon(o){ var x=o.x,y=GY-12; R(x+2,y+2,16,5,'#2A2A2A'); R(x+16,y+1,3,7,'#2A2A2A'); R(x+3,y+3,12,1,'#4A4A4A'); R(x+3,y+6,9,6,'#6B4A2B'); R(x+4,y+7,7,4,'#4A3020'); R(x+6,y+8,3,2,'#C9A44C'); }
+function drawShot(o,tm){ var x=o.x,y=o.y; for(var i=1;i<=3;i++){ ctx.globalAlpha=.5-i*.13; R(x+3+i*5,y+1+((i+Math.floor(tm*12))%2),3,3,'#CFC8B8'); } ctx.globalAlpha=1; R(x+1,y,4,6,'#1C1C1C'); R(x,y+1,6,4,'#1C1C1C'); R(x+1,y+1,2,1,'#7A7A7A'); if(Math.floor(tm*16)%2) R(x+6,y+2,2,2,'#E8713B'); }
 function drawFlag(o,tm){ var x=o.x,y=o.y+Math.round(Math.sin(tm*4+o.x)*1.5); R(x,y,1,14,'#5A3A1E'); R(x+1,y,8,3,'#F2C200'); R(x+1,y+3,8,2,'#1F3A93'); R(x+1,y+5,8,1,'#C0392B'); R(x,y-1,1,1,'#C9A44C'); }
 
 /* ---------- sonido ---------- */
@@ -351,17 +352,18 @@ muteBtn.addEventListener('click',function(){ muted=!muted; store('baraya-mute',m
 /* ---------- estado ---------- */
 var state='start', P, obs, flags, decor, banners, dist, flagsN, tStart, tm, nextObs, nextFlag, nextDecor, nextBanner, shake, dieT, msIdx, last, holding=false, pressedAt=-1;
 var MILESTONES=[[300,'1810 · Santafé se levanta el 20 de julio'],[700,'1811 · Victoria en el Bajo Palacé'],[1200,'1812 · Baraya se une a los federalistas'],[1800,'1816 · La Reconquista llega a Santafé'],[2500,'1884 · Un pueblo del Huila adopta su nombre'],[3200,'¡Leyenda de la Independencia!']];
+var TIPS=[[780,'¡Balas de cañón! Las bajas se saltan'],[1480,'Balas altas: ¡no saltes, pasan por encima!'],[2700,'¡La campaña se endurece!']], tipIdx=0;
 var best=parseInt(store('baraya-best')||'0',10)||0;
 function reset(){
   if(FINAL){ rO=mulberry(SEED); rD=mulberry(SEED*7+3); }
   P={x:44,y:GY-30,vy:0,ground:true,hold:0,coyote:0,f:0};
-  obs=[];flags=[];decor=[];banners=[];dist=0;flagsN=0;tm=0;nextObs=220;nextFlag=160;nextDecor=40;nextBanner=260;shake=0;dieT=0;msIdx=0;
+  tipIdx=0;obs=[];flags=[];decor=[];banners=[];dist=0;flagsN=0;tm=0;nextObs=220;nextFlag=160;nextDecor=40;nextBanner=260;shake=0;dieT=0;msIdx=0;
   for(var i=0;i<4;i++) decor.push({x:i*90+20,k:'tree'});
 }
 reset();
 function meters(){ return Math.floor(dist/10); }
 function score(){ return meters()+flagsN*50; }
-function speed(){ return 125+Math.min(190,meters()*0.07); }
+function speed(){ var m=meters(); return 125+Math.min(190,m*0.07)+Math.min(110,Math.max(0,m-2700)*0.02); }   // después de 2.700 m sigue subiendo, más despacio
 
 function pickSponsor(){
   if(!SPONS.length) return null;
@@ -369,18 +371,31 @@ function pickSponsor(){
   var r=Math.random()*tot; for(var i=0;i<arr.length;i++){ r-=arr[i][1]; if(r<=0) return arr[i][0]; } return arr[0][0];
 }
 function spawnObs(){
-  var m=meters(), r=rO(), k='soldier';
+  var m=meters(), sp=speed(), hard=Math.min(1,Math.max(0,(m-2700)/4000));
+  // balas de cañón en el aire: bajas (hay que saltar) desde 800 m; altas (quedarse quieto) desde 1.500 m
+  var pShot=m>800?Math.min(.3,.1+(m-800)*0.00008):0;
+  if(rO()<pShot){
+    var near=obs.some(function(o){ return o.x>W-150; });
+    if(near){ nextObs=30; return; }
+    var high=m>1500&&rO()<.5;
+    obs.push({k:'shot',x:W+10,y:high?GY-46:GY-18,high:high,rot:0});
+    nextObs=sp*(1.1+rO()*0.8); return;
+  }
+  var r=rO(), k='soldier';
   if(m>150 && r<.22) k='ball'; else if(r<.48) k='barricade'; else if(m>1000 && r<.6) k='cannon';
-  var o={k:k,x:W+10,rot:0}; obs.push(o);
-  if(k==='soldier' && m>600 && rO()<.3) obs.push({k:'soldier',x:W+24,rot:0});
+  obs.push({k:k,x:W+10,rot:0});
+  var pDouble=m>600?Math.min(.65,.3+Math.max(0,m-2000)*0.00015):0;
+  if(k==='soldier' && rO()<pDouble){ obs.push({k:'soldier',x:W+24,rot:0}); if(m>3500 && rO()<.3) obs.push({k:'soldier',x:W+38,rot:0}); }
+  if(k==='barricade' && m>2000 && rO()<.3) obs.push({k:'soldier',x:W+31,rot:0});
   if(rO()<.35) flags.push({x:W+4,y:GY-58-rO()*10});
-  var sp=speed(); nextObs=sp*(0.95+rO()*0.9)+ (m<200?60:0);
+  nextObs=sp*(0.95+rO()*0.9)*(1-0.2*hard)+(m<200?60:0);
 }
 function box(o){
   if(o.k==='soldier') return [o.x,GY-23,8,23];
   if(o.k==='barricade') return [o.x+1,GY-14,16,14];
   if(o.k==='ball') return [o.x+1,GY-6,5,6];
   if(o.k==='cannon') return [o.x+2,GY-11,16,11];
+  if(o.k==='shot') return [o.x,o.y,6,6];
 }
 function hit(a,b){ return a[0]<b[0]+b[2]&&a[0]+a[2]>b[0]&&a[1]<b[1]+b[3]&&a[1]+a[3]>b[1]; }
 
@@ -412,7 +427,7 @@ function update(dt){
   nextObs-=dx; if(nextObs<=0) spawnObs();
   nextDecor-=dx*0.6; if(nextDecor<=0){ var st=stageAt(meters()); decor.push({x:W+10,k:st.a.d}); nextDecor=60+rD()*120; }
   nextBanner-=dx*0.6; if(nextBanner<=0){ banners.push({x:W+10,s:pickSponsor()}); nextBanner=900+rD()*700; }
-  obs.forEach(function(o){ o.x-=dx+(o.k==='ball'?55*dt:0); if(o.k==='ball') o.rot+=dt*10; });
+  obs.forEach(function(o){ o.x-=dx+(o.k==='ball'?55*dt:o.k==='shot'?35*dt:0); if(o.k==='ball') o.rot+=dt*10; });
   flags.forEach(function(o){ o.x-=dx; });
   decor.forEach(function(o){ o.x-=dx*0.6; }); banners.forEach(function(o){ o.x-=dx*0.6; });
   obs=obs.filter(function(o){return o.x>-30}); flags=flags.filter(function(o){return o.x>-12&&!o.got}); decor=decor.filter(function(o){return o.x>-60}); banners=banners.filter(function(o){return o.x>-90});
@@ -422,7 +437,8 @@ function update(dt){
   var fb=[P.x+6,P.y-8,28,36];
   flags.forEach(function(f){ if(!f.got && hit(fb,[f.x,f.y,9,14])){ f.got=true; flagsN++; beep(880,.08,'square',.04); setTimeout(function(){beep(1320,.1,'square',.035)},70); } });
   // hitos
-  if(msIdx<MILESTONES.length && meters()>=MILESTONES[msIdx][0]){ toast(MILESTONES[msIdx][1]); msIdx++; }
+  if(tipIdx<TIPS.length && meters()>=TIPS[tipIdx][0]){ toast(TIPS[tipIdx][1]); tipIdx++; }
+  else if(msIdx<MILESTONES.length && meters()>=MILESTONES[msIdx][0]){ toast(MILESTONES[msIdx][1]); msIdx++; }
   var stI=Math.floor(meters()/STAGE_LEN); if(stI!==update.stI){ if(update.stI!==undefined) toast(stageAt(meters()+1).a.n); update.stI=stI; }
 }
 function render(){
@@ -433,7 +449,7 @@ function render(){
   decor.forEach(drawDecor); banners.forEach(drawBanner);
   drawGround(m,dist);
   flags.forEach(function(f){ drawFlag(f,tm); });
-  obs.forEach(function(o){ if(o.k==='soldier') drawSoldier(o,tm); else if(o.k==='barricade') drawBarricade(o); else if(o.k==='ball') drawBall(o); else drawCannon(o); });
+  obs.forEach(function(o){ if(o.k==='soldier') drawSoldier(o,tm); else if(o.k==='barricade') drawBarricade(o); else if(o.k==='ball') drawBall(o); else if(o.k==='shot') drawShot(o,tm); else drawCannon(o); });
   if(state!=='start') drawRider(P.x,P.y,P.f,!P.ground,state==='dying'||state==='over');
   else drawRider(44,GY-30,tm*10,false,false);
   // HUD
