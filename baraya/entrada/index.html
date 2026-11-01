@@ -74,9 +74,13 @@ h1 b{color:var(--wax)}
 </main>
 <script>
 (function(){
-  var q=new URLSearchParams(location.search), c=(q.get('c')||'').trim(), t=(q.get('t')||'').trim();
+  var q=new URLSearchParams(location.search), c=(q.get('c')||'').trim().toUpperCase(), t=(q.get('t')||'').trim();
   var CFG=window.BARAYA_JUEGO||{};
-  if(!/^BAR-\d{4,}$/.test(c)||t.length<8){ document.getElementById('bad').hidden=false; return; }
+  var saved=null; try{ saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); }catch(e){}
+  if(saved&&saved.codigo){ if(!c) c=String(saved.codigo); if(!t&&saved.token&&String(saved.codigo)===c) t=String(saved.token); }
+  function bad(m){ document.getElementById('bad-msg').textContent=m||'Este enlace de entrada no es válido.'; document.getElementById('bad').hidden=false; }
+  if(!/^BAR-\d{4,}$/.test(c)){ bad('No encontramos el código de tu entrada. Ábrela desde el correo que te enviamos o inscríbete de nuevo con los mismos datos: te devolvemos tu misma entrada.'); return; }
+  if(t.length<8){ bad('A este enlace le falta la firma de seguridad de la entrada '+c+'. Ábrela desde el botón «Ver mi entrada» del correo, o inscríbete de nuevo con el mismo nombre y celular: te devolvemos tu misma entrada.'); return; }
   function show(nombre,personas,asistio){
     document.getElementById('ok').hidden=false;
     document.getElementById('code').textContent=c;
@@ -89,10 +93,11 @@ h1 b{color:var(--wax)}
   }
   if(CFG.rankingUrl){
     fetch(CFG.rankingUrl+'?accion=entrada&c='+encodeURIComponent(c)+'&t='+encodeURIComponent(t)).then(function(r){return r.json()}).then(function(d){
-      if(d.ok) show(d.nombre,Number(d.personas),d.asistio);
-      else { document.getElementById('bad-msg').textContent=d.error||'Este enlace de entrada no es válido.'; document.getElementById('bad').hidden=false; }
-    }).catch(function(){ show('',0,false); });
-  } else show('',0,false);
+      if(d&&d.ok===true) show(d.nombre,Number(d.personas),d.asistio);
+      else if(d&&d.ok===false) bad(d.error==='Entrada no válida.'?'La firma de esta entrada no coincide. Ábrela desde el correo que te enviamos.':d.error);
+      else show(saved&&saved.codigo===c?saved.nombre:'',1,false);   // servidor sin verificación: se muestra igual; se valida en la puerta
+    }).catch(function(){ show(saved&&saved.codigo===c?saved.nombre:'',1,false); });
+  } else show('',1,false);
 })();
 </script>
 </body>
