@@ -13,7 +13,7 @@
  */
 const CIERRE = '';                 // Cierre del ranking del juego. Vacío = abierto.
 const MAX_POR_SEGUNDO = 60;        // Puntos máximos por segundo de juego (anti-trampas).
-const CUPO_INSCRIPCIONES = 3000;   // Personas que se pueden inscribir (incluye acompañantes).
+const CUPO_INSCRIPCIONES = 3000;   // Personas que se pueden inscribir (una inscripción = una persona).
 const CIERRE_INSCRIPCIONES = '';   // Cierre de inscripciones. Vacío = abierto.
 const ENVIAR_CORREO = true;        // Confirmación con QR por correo (Gmail permite ~100 al día).
 const URL_ENTRADA = 'https://camott.com/baraya/entrada/';
@@ -119,11 +119,10 @@ function correoConfirmacion_(correo, nombre, codigo, personas, token) {
         '<h1 style="font-size:34px;letter-spacing:4px;margin:6px 0">BARAYA</h1>' +
         '<p style="letter-spacing:3px;font-size:12px;margin:0 0 18px">EL PRÓCER INDEPENDENTISTA</p>' +
         '<h2 style="font-size:22px;margin:0 0 10px">¡Bienvenido, ' + nombre.split(' ')[0] + '!</h2>' +
-        '<p style="font-size:16px;line-height:1.5">Tu inscripción está confirmada. Presenta este código QR en la entrada de la Plaza Botero para recibir ' +
-        (personas > 1 ? 'las <b>' + personas + ' manillas</b> de tu grupo' : 'tu <b>manilla</b>') + '.</p>' +
+        '<p style="font-size:16px;line-height:1.5">Tu inscripción está confirmada. Presenta este código QR en la entrada de la Plaza Botero para recibir tu <b>manilla</b>. Es personal: vale para una sola persona.</p>' +
         '<img src="cid:qr" alt="Código QR de tu entrada" width="240" height="240" style="background:#fff;padding:10px;border:2px solid #8E1B14">' +
         '<p style="font-size:22px;color:#8E1B14;letter-spacing:3px;margin:12px 0 4px"><b>' + codigo + '</b></p>' +
-        '<p style="font-size:15px;margin:0 0 16px">Válido para ' + personas + ' persona' + (personas > 1 ? 's' : '') + ' · Entrada libre</p>' +
+        '<p style="font-size:15px;margin:0 0 16px">Entrada personal · Entrada libre</p>' +
         '<p style="font-size:15px;line-height:1.5"><b>Cuándo:</b> ' + FECHA_EVENTO + '<br><b>Dónde:</b> Plaza Botero, Olave Tower, Neiva<br><b>Apertura de puertas:</b> 5:45 p. m.</p>' +
         '<p style="margin:18px 0"><a href="' + link + '" style="background:#8E1B14;color:#F6EAD0;padding:12px 20px;text-decoration:none;font-weight:bold">Ver mi entrada</a></p>' +
         '<p style="font-size:13px;color:#5E4930">Guarda este correo o toma un pantallazo del QR. camott.com/baraya</p></div>',
@@ -134,10 +133,9 @@ function correoConfirmacion_(correo, nombre, codigo, personas, token) {
 function inscribir_(d) {
   const nombre = limpio_(d.nombre, 60), correo = limpio_(d.correo, 80), municipio = limpio_(d.municipio, 40);
   const celular = String(d.celular || '').replace(/\D/g, '').slice(-10);
-  const personas = Math.floor(Number(d.personas));
+  const personas = 1;                                   // inscripción personal
   if (nombre.length < 3) return { ok: false, error: 'Escribe tu nombre completo.' };
   if (celular.length !== 10) return { ok: false, error: 'Escribe un celular válido de 10 dígitos.' };
-  if (!(personas >= 1 && personas <= 4)) return { ok: false, error: 'Elige entre 1 y 4 personas.' };
   if (d.aceptaDatos !== true) return { ok: false, error: 'Debes autorizar el tratamiento de tus datos.' };
   const c = cupos_();
   if (c.cerrado) return { ok: false, error: 'Las inscripciones ya cerraron.' };

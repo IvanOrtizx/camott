@@ -40,9 +40,9 @@ En la pestaña **Patrocinadores** de la hoja escribe una fila por marca:
 ## 5. Inscripciones al estreno
 La sección «Inscríbete y asegura tu cupo» de la página principal usa la misma hoja.
 - Cada inscripción queda en la pestaña **Inscritos** con un código (BAR-0001…), celular,
-  correo, municipio, número de personas y si acepta recibir mensajes.
+  correo, municipio y si acepta recibir mensajes. Cada persona se inscribe por separado.
 - El cupo total está en `CUPO_INSCRIPCIONES` (3000) dentro del Apps Script; la página
-  muestra cuántos quedan y bloquea el formulario al llenarse.
+  muestra cuántos quedan y bloquea el formulario al llenarse (cada inscripción = 1 persona).
 - Un mismo celular no puede inscribirse dos veces: recibe su código anterior.
 - Cada inscrito recibe una **entrada con QR personal**: la ve al inscribirse, la puede abrir en
   `camott.com/baraya/entrada/?c=…&t=…` y, si dejó correo, le llega por email con el QR

@@ -64,7 +64,7 @@ h1 b{color:var(--wax)}
       <a class="btn" id="wa" href="#" target="_blank" rel="noopener">Guardar en WhatsApp</a>
       <a class="btn" href="../">Ir a la página del corto</a>
     </div>
-    <p class="note">Presenta este QR en la entrada para recibir tu manilla. Cada QR vale para el número de personas indicado.</p>
+    <p class="note">Presenta este QR en la entrada para recibir tu manilla. Es personal: vale para una sola persona.</p>
   </div>
 
   <div id="bad" hidden>
@@ -81,7 +81,6 @@ h1 b{color:var(--wax)}
     document.getElementById('ok').hidden=false;
     document.getElementById('code').textContent=c;
     if(nombre) document.getElementById('hello').textContent='¡Bienvenido, '+String(nombre).split(' ')[0]+'!';
-    if(personas) document.getElementById('pers').textContent=personas+' persona'+(personas>1?'s':'');
     if(asistio) document.getElementById('used').hidden=false;
     var box=document.getElementById('qr');
     if(window.qrcode){ var qq=qrcode(0,'M'); qq.addData('BARAYA|'+c+'|'+t); qq.make(); var url=qq.createDataURL(10,2); var im=new Image(); im.alt='Código QR de tu entrada '+c; im.src=url; box.appendChild(im); var dl=document.getElementById('dl'); dl.href=url; dl.download='entrada-'+c+'.gif'; }

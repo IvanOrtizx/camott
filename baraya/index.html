@@ -380,7 +380,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     <div>
       <div class="sc">Asiste al estreno</div>
       <h2 class="h2" style="margin-top:12px">Inscríbete y asegura tu cupo</h2>
-      <p class="lede" style="margin-top:18px">La entrada es libre, pero el aforo de la Plaza Botero es limitado. Inscríbete y recibe tu entrada con un código QR personal: lo presentas esa noche y recibes tu manilla. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
+      <p class="lede" style="margin-top:18px">La entrada es libre, pero el aforo de la Plaza Botero es limitado. Cada asistente se inscribe y recibe su propia entrada con un código QR personal: lo presentas esa noche y recibes tu manilla. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
       <div class="cupos" id="cupos" hidden>
         <div class="num" id="cupos-num">—</div>
         <div class="sc" id="cupos-txt">cupos disponibles</div>
@@ -394,11 +394,8 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
           <div class="field"><label for="r-cel">Celular (WhatsApp)</label><input type="tel" id="r-cel" autocomplete="tel" inputmode="numeric" maxlength="14" placeholder="300 123 4567" required></div>
           <div class="field"><label for="r-correo">Correo (opcional)</label><input type="email" id="r-correo" autocomplete="email" maxlength="80"></div>
         </div>
-        <div class="two">
-          <div class="field"><label for="r-muni">Municipio</label><input type="text" id="r-muni" maxlength="40" value="Neiva" autocomplete="address-level2"></div>
-          <div class="field"><label for="r-pers">¿Cuántas personas asisten?</label>
-            <select id="r-pers"><option value="1">1 (solo yo)</option><option value="2">2 personas</option><option value="3">3 personas</option><option value="4">4 personas</option></select></div>
-        </div>
+        <div class="field"><label for="r-muni">Municipio</label><input type="text" id="r-muni" maxlength="40" value="Neiva" autocomplete="address-level2"></div>
+        <p class="muted" style="font-size:15px;margin:0">La inscripción es personal: cada asistente, incluidos los niños, debe inscribirse con su propio nombre y recibe su propio QR.</p>
         <label class="check"><input type="checkbox" id="r-datos" required> Autorizo el tratamiento de mis datos personales para gestionar mi inscripción al evento, según la Ley 1581 de 2012.</label>
         <label class="check"><input type="checkbox" id="r-msj" checked> Quiero recibir recordatorios y novedades del cortometraje por WhatsApp y correo.</label>
         <button class="btn btn-wax" type="submit" id="r-btn" style="justify-content:center">Inscribirme</button>
@@ -488,7 +485,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
   try{ var saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); if(saved&&saved.codigo&&saved.token) showTicket(saved); }catch(e){}
   function showTicket(t){ form.hidden=true; var tk=document.getElementById('ticket'); tk.hidden=false;
     document.getElementById('t-code').textContent=t.codigo;
-    document.getElementById('t-txt').textContent=(t.repetido?'Ya estabas inscrito. ':'¡Bienvenido'+(t.nombre?', '+String(t.nombre).split(' ')[0]:'')+'! ')+'Entrada para '+t.personas+' persona'+(t.personas>1?'s':'')+'.';
+    document.getElementById('t-txt').textContent=(t.repetido?'Ya estabas inscrito. ':'¡Bienvenido'+(t.nombre?', '+String(t.nombre).split(' ')[0]:'')+'! ')+'Esta es tu entrada personal.';
     var qb=document.getElementById('t-qr'); qb.innerHTML='';
     if(window.qrcode&&t.token){ var qq=qrcode(0,'M'); qq.addData('BARAYA|'+t.codigo+'|'+t.token); qq.make(); var im=new Image(); im.alt='Código QR de tu entrada'; im.src=qq.createDataURL(8,2); qb.appendChild(im); qb.hidden=false; } else qb.hidden=true;
     var link=new URL('entrada/?c='+encodeURIComponent(t.codigo)+'&t='+encodeURIComponent(t.token||''),location.href).href;
@@ -504,7 +501,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     if(!document.getElementById('r-datos').checked){ msg.textContent='Debes autorizar el tratamiento de tus datos para inscribirte.'; return; }
     if(!URL){ msg.textContent='Las inscripciones abren muy pronto.'; return; }
     var btn=document.getElementById('r-btn'); btn.disabled=true; msg.textContent='Enviando…';
-    fetch(URL,{method:'POST',body:JSON.stringify({tipo:'inscripcion',nombre:n,celular:c,correo:document.getElementById('r-correo').value.trim(),municipio:document.getElementById('r-muni').value.trim(),personas:Number(document.getElementById('r-pers').value),aceptaDatos:true,aceptaMensajes:document.getElementById('r-msj').checked})})
+    fetch(URL,{method:'POST',body:JSON.stringify({tipo:'inscripcion',nombre:n,celular:c,correo:document.getElementById('r-correo').value.trim(),municipio:document.getElementById('r-muni').value.trim(),personas:1,aceptaDatos:true,aceptaMensajes:document.getElementById('r-msj').checked})})
       .then(function(r){return r.json()}).then(function(d){
         if(d.ok&&d.codigo){ var t={codigo:d.codigo,token:d.token,nombre:d.nombre,personas:d.personas,repetido:!!d.repetido,cel:c}; try{ localStorage.setItem('baraya-inscripcion',JSON.stringify(t)); }catch(e){} showTicket(t); fetch(URL).then(function(r){return r.json()}).then(function(x){ paint(x.cupos); }).catch(function(){}); }
         else { msg.textContent=d.error||'No se pudo completar la inscripción. Intenta de nuevo.'; btn.disabled=false; }
