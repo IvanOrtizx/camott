@@ -19,13 +19,14 @@
 :root{
   --noche:#0b1712;
   --musgo:#142a1f;
-  --oro:#d9b66a;
+  --oro:#ecc874;
   --oro-claro:#f6e3a8;
   --oro-osc:#8a6a2c;
   --nenufar:#9cc9a0;
   --cielo:#bcd6f0;
   --texto:#efe8d6;
   --tenue:#b5b19c;
+  --dorado-txt:linear-gradient(115deg,#ffd877 0%,#fff8e6 18%,#ffe08a 34%,#ffffff 48%,#ffd365 62%,#fff3cf 80%,#ffd877 100%);
   --dorado:linear-gradient(115deg,#a8833a 0%,#f6e3a8 22%,#d9b66a 38%,#fff3c9 50%,#c79d4f 64%,#f6e3a8 80%,#a8833a 100%);
   --f-nombre:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
   --f-cuerpo:"Cormorant Garamond",Georgia,"Times New Roman",serif;
@@ -47,26 +48,36 @@ body.cerrado{overflow:hidden}
 .bruma::before,.bruma::after{content:"";position:absolute;left:-50%;width:200%;height:38%;border-radius:50%;filter:blur(40px);opacity:.16;background:radial-gradient(ellipse at center,#cfe3cf 0%,transparent 65%)}
 .bruma::before{bottom:6%}
 .bruma::after{top:30%;opacity:.08}
-#luces{z-index:1;width:100%;height:100%}
+#luces{z-index:55;width:100%;height:100%}
 
 main{position:relative;z-index:2;max-width:560px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:34px 60px;display:flex;flex-direction:column;gap:72px}
 section{display:flex;flex-direction:column;align-items:center;text-align:center;gap:18px;position:relative}
 .eti{font-family:var(--f-etiqueta);letter-spacing:.24em;font-size:.76rem;color:var(--oro);text-transform:uppercase;display:flex;align-items:center;gap:10px}
 .eti::before,.eti::after{content:"";width:22px;height:1px;background:linear-gradient(90deg,transparent,var(--oro))}
 .eti::after{transform:scaleX(-1)}
-.oro-txt{background:var(--dorado);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent}
+.oro-txt{background:var(--dorado-txt);background-size:220% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 1px 0 rgba(70,45,0,.75)) drop-shadow(0 0 10px rgba(255,214,110,.55)) drop-shadow(0 0 26px rgba(255,200,90,.3))}
 h2{font-family:var(--f-nombre);font-weight:400;font-size:clamp(2.7rem,11vw,3.4rem);line-height:1.05;margin:0;text-wrap:balance;padding:0 .2em}
 p{margin:0;max-width:34ch}
 .divisor{width:min(300px,82%);height:auto;display:block;overflow:visible}
 
 /* ---------- Sobre de entrada ---------- */
-#sobre{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));background:radial-gradient(ellipse 80% 70% at 50% 45%,rgba(30,58,42,.92),rgba(8,16,12,.97));transition:opacity .9s ease,visibility .9s}
+#sobre{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(10px,2.2vh,22px);overflow:hidden;padding:24px max(16px,env(safe-area-inset-right,0px)) 24px max(16px,env(safe-area-inset-left,0px));background:#071420;transition:opacity .9s ease,visibility .9s}
+#sobre > *{position:relative;z-index:1}
+#sobre > #escenaSobre{position:absolute;inset:0;width:100%;height:100%;z-index:0}
+.heroina{position:relative;height:clamp(140px,30vh,290px);aspect-ratio:560/758;max-width:100%;margin-top:clamp(0px,2vh,20px)}
+.heroina .luna{position:absolute;left:50%;top:44%;width:190%;aspect-ratio:1;transform:translate(-50%,-50%);border-radius:50%;background:radial-gradient(circle,rgba(220,240,255,.55) 0%,rgba(150,200,235,.25) 28%,rgba(90,150,190,.08) 50%,transparent 68%);animation:latido 6s ease-in-out infinite}
+.heroina .sil{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;-webkit-mask-image:radial-gradient(ellipse 58% 78% at 55% 22%,#000 62%,transparent 100%);mask-image:radial-gradient(ellipse 58% 78% at 55% 22%,#000 62%,transparent 100%);filter:drop-shadow(0 0 1.5px rgba(255,236,170,.9)) drop-shadow(0 0 12px rgba(190,225,255,.45))}
+.heroina .tiara{position:absolute;left:51%;top:-3%;width:24%;filter:drop-shadow(0 0 6px rgba(255,220,130,.9))}
+.heroina .ranita{position:absolute;right:-30%;bottom:2%;width:38%}
+.heroina .ranita svg{width:100%;height:auto;display:block;filter:brightness(.55) saturate(.8) drop-shadow(0 0 1.5px rgba(255,236,170,.8))}
+.heroina .agua{position:absolute;left:-60%;right:-60%;bottom:-6%;height:22%;background:radial-gradient(ellipse at 50% 30%,rgba(190,225,255,.22),transparent 70%);border-radius:50%}
+
 #sobre.fuera{opacity:0;visibility:hidden}
 #sobre .aviso{font-family:var(--f-etiqueta);letter-spacing:.26em;font-size:.78rem;color:var(--oro);text-align:center}
 #sobre .para{font-family:var(--f-nombre);font-size:clamp(2.4rem,10vw,3.2rem);line-height:1}
 #sobre .toca{font-style:italic;color:var(--tenue);font-size:1.05rem;display:flex;align-items:center;gap:8px}
 #sobre .toca span{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--oro-claro);box-shadow:0 0 10px var(--oro-claro);animation:latido 1.6s ease-in-out infinite}
-.env{position:relative;width:min(340px,84vw);aspect-ratio:1.45;perspective:1100px;cursor:pointer;border:0;padding:0;background:none;transition:transform .4s}
+.env{position:relative;width:min(330px,82vw,calc(30vh * 1.45));aspect-ratio:1.45;perspective:1100px;cursor:pointer;border:0;padding:0;background:none;transition:transform .4s}
 .env:hover{transform:translateY(-4px) rotate(-.6deg)}
 .env:focus-visible{outline:2px solid var(--oro-claro);outline-offset:8px;border-radius:8px}
 .env .atras{position:absolute;inset:0;border-radius:8px;background:linear-gradient(160deg,#1f4030,#132a1f);box-shadow:0 30px 60px rgba(0,0,0,.55),inset 0 0 0 1px rgba(217,182,106,.45)}
@@ -107,7 +118,7 @@ p{margin:0;max-width:34ch}
 .chispa{position:absolute;width:12px;height:12px;pointer-events:none}
 .chispa::before{content:"";position:absolute;inset:0;background:var(--oro-claro);clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:titila 2.4s ease-in-out infinite}
 .mis{font-family:var(--f-etiqueta);letter-spacing:.34em;color:var(--oro);font-size:.95rem;margin-top:30px}
-.nombre{font-family:var(--f-nombre);font-weight:400;font-size:clamp(4.4rem,21vw,6.4rem);line-height:1;margin:0;padding:0 .15em;filter:drop-shadow(0 0 22px rgba(246,227,168,.25));animation:brillo 6s linear infinite}
+.nombre{font-family:var(--f-nombre);font-weight:400;font-size:clamp(4.4rem,21vw,6.4rem);line-height:1;margin:0;padding:0 .15em;animation:brillo 6s linear infinite}
 .apellidos{font-family:var(--f-etiqueta);letter-spacing:.3em;font-size:.9rem;color:var(--texto)}
 .fecha-corta{display:flex;align-items:center;gap:14px;font-family:var(--f-etiqueta);letter-spacing:.14em;margin-top:8px}
 .fecha-corta .dia{font-size:2.8rem;font-family:var(--f-cuerpo);font-weight:500;letter-spacing:0;line-height:1;padding:0 16px;border-left:1px solid var(--oro);border-right:1px solid var(--oro)}
@@ -279,7 +290,15 @@ footer .pide{min-height:42px;font-size:.7rem;padding:10px 18px}
 
 <!-- SOBRE DE ENTRADA -->
 <div id="sobre" role="dialog" aria-label="Invitación cerrada">
+  <canvas id="escenaSobre" aria-hidden="true"></canvas>
   <div class="aviso">TIENES UNA INVITACIÓN</div>
+  <div class="heroina" aria-hidden="true">
+    <span class="luna"></span>
+    <span class="agua"></span>
+    <img class="sil" src="img/silueta.png" alt="">
+    <svg class="tiara" viewBox="0 0 60 26"><path d="M4 24 L2 10 L15 17 L30 2 L45 17 L58 10 L56 24 Z" fill="url(#goldG)" stroke="#7a5a22" stroke-width="1"/><circle cx="30" cy="13" r="3" fill="#bcd6f0"/><circle cx="30" cy="2" r="2" fill="#fff3c9"/><circle cx="2" cy="10" r="1.6" fill="#fff3c9"/><circle cx="58" cy="10" r="1.6" fill="#fff3c9"/></svg>
+    <span class="ranita"><svg viewBox="0 0 120 110"><use href="#nenufar" x="0" y="80" width="120" height="30"/><use href="#sapo" width="120" height="110"/></svg></span>
+  </div>
   <div class="para oro-txt">Mis XV Años</div>
   <button class="env" id="env" type="button" aria-label="Abrir la invitación">
     <span class="atras"></span>
@@ -474,6 +493,45 @@ musica.volume=.85;
 function estadoMusica(){mBtn.classList.toggle('suena',!musica.paused)}
 musica.addEventListener('play',estadoMusica);musica.addEventListener('pause',estadoMusica);
 mBtn.addEventListener('click',function(){if(musica.paused){musica.play().catch(function(){})}else musica.pause()});
+
+/* ---- Escena nocturna del sobre ---- */
+(function(){
+  var c=document.getElementById('escenaSobre'),x=c.getContext('2d');
+  function rnd(s){return function(){s=(s*16807)%2147483647;return (s-1)/2147483646}}
+  function dibuja(){
+    var dpr=Math.min(devicePixelRatio||1,2),W=innerWidth,H=innerHeight,R=rnd(11);
+    c.width=W*dpr;c.height=H*dpr;x.setTransform(dpr,0,0,dpr,0,0);
+    var g=x.createLinearGradient(0,0,0,H);g.addColorStop(0,'#04101a');g.addColorStop(.35,'#0b2a3c');g.addColorStop(.62,'#123a4a');g.addColorStop(1,'#04121a');
+    x.fillStyle=g;x.fillRect(0,0,W,H);
+    var cy=H*.3,lu=x.createRadialGradient(W/2,cy,0,W/2,cy,Math.max(W,H)*.6);
+    lu.addColorStop(0,'rgba(170,215,240,.45)');lu.addColorStop(.35,'rgba(90,150,190,.18)');lu.addColorStop(1,'rgba(0,0,0,0)');x.fillStyle=lu;x.fillRect(0,0,W,H);
+    for(var i=0;i<70;i++){x.fillStyle='rgba(255,255,255,'+(.2+R()*.6)+')';x.beginPath();x.arc(R()*W,R()*H*.45,R()*1.1,0,6.283);x.fill()}
+    // agua
+    var wy=H*.58;var ag=x.createLinearGradient(0,wy,0,H);ag.addColorStop(0,'rgba(60,120,150,.35)');ag.addColorStop(1,'rgba(3,12,18,.9)');x.fillStyle=ag;x.fillRect(0,wy,W,H-wy);
+    for(i=0;i<50;i++){var yy=wy+R()*(H-wy),ww=20+R()*110,xx=R()*W;x.strokeStyle='rgba(170,215,240,'+(.05+R()*.12)+')';x.lineWidth=1;x.beginPath();x.moveTo(xx,yy);x.quadraticCurveTo(xx+ww/2,yy-2,xx+ww,yy);x.stroke()}
+    for(i=0;i<10;i++){var nx=R()*W,ny=wy+20+R()*(H-wy-20),nr=10+R()*26;x.fillStyle='rgba(20,60,50,'+(.5+R()*.3)+')';x.beginPath();x.ellipse(nx,ny,nr,nr*.32,0,.25,6.1);x.lineTo(nx,ny);x.fill();
+      if(R()>.55){x.fillStyle='rgba(240,180,200,.55)';x.beginPath();x.arc(nx-nr*.25,ny-4,3.5,0,6.283);x.fill()}}
+    // árboles enmarcando
+    function tronco(lado){
+      var e=lado<0?0:W,k=lado<0?1:-1,a=Math.min(W*.07,60);
+      x.fillStyle='#020a10';x.beginPath();x.moveTo(e+k*a,H);x.bezierCurveTo(e+k*a*.3,H*.6,e+k*a*1.4,H*.3,e+k*a*3.2,0);x.lineTo(e-k*20,0);x.lineTo(e-k*20,H);x.fill();
+    }
+    tronco(-1);tronco(1);
+    // dosel superior
+    x.fillStyle='#020a10';x.beginPath();x.moveTo(0,0);x.lineTo(W,0);x.lineTo(W,H*.1);
+    for(var k=0;k<=12;k++){var px=W-(W/12)*k,py=H*.06+Math.sin(k*1.7)*H*.03+(k>3&&k<9?-H*.02:H*.03);x.quadraticCurveTo(px+W/24,py+H*.04,px,py)}
+    x.lineTo(0,0);x.fill();
+    // musgo colgante
+    for(i=0;i<Math.round(W/4);i++){
+      var mx=R()*W,centro=Math.abs(mx-W/2)/(W/2),largo=H*(.06+R()*.3)*(.35+centro*.9),my=H*.04+R()*H*.06;
+      x.strokeStyle='rgba('+(60+R()*50|0)+','+(110+R()*60|0)+','+(130+R()*60|0)+','+(.25+R()*.4)+')';x.lineWidth=.8+R()*1.8;x.beginPath();x.moveTo(mx,my);
+      x.bezierCurveTo(mx+(R()-.5)*10,my+largo*.35,mx+(R()-.5)*14,my+largo*.7,mx+(R()-.5)*8,my+largo);x.stroke();
+    }
+    // juncos al frente
+    for(i=0;i<Math.round(W/6);i++){var jx=R()*W,jh=30+R()*H*.16,cur=(R()-.5)*30;x.strokeStyle='rgba(1,8,12,'+(.8+R()*.2)+')';x.lineWidth=1.5+R()*2.2;x.beginPath();x.moveTo(jx,H+4);x.quadraticCurveTo(jx+cur*.3,H-jh*.6,jx+cur,H-jh);x.stroke()}
+  }
+  dibuja();var t;addEventListener('resize',function(){clearTimeout(t);t=setTimeout(dibuja,150)});
+})();
 
 /* ---- Abrir el sobre ---- */
 (function(){
