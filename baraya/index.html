@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<!--HEAD-START-->
+<title>Baraya: El Prócer Independentista</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Cortometraje sobre el general Antonio Baraya, prócer de la Independencia. Estreno en febrero de 2027 en la pantalla LED de la Plaza Botero, Olave Tower, Neiva.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Baraya: El Prócer Independentista">
+<meta property="og:description" content="Estreno en febrero de 2027 en la pantalla de 144 m² de la Plaza Botero, Olave Tower, Neiva.">
+<meta property="og:image" content="https://camott.com/baraya/img/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%230E0C0A'/%3E%3Ctext x='32' y='46' font-family='Georgia,serif' font-size='40' font-weight='700' text-anchor='middle' fill='%23D4AE5A'%3EB%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Cormorant+Garamond:ital,wght@1,500&family=Manrope:wght@400;500;700&display=swap">
+<style>
+/* Layout: cine de época — bandas oscuras a todo lo ancho, fotogramas a sangre, texto en columna estrecha */
+:root{
+  --ink:#0E0C0A; --ink-2:#17130F; --line:#3A3128; --bone:#F2EADB; --dust:#C9BDA6; --gold:#D4AE5A; --ember:#B0412C;
+  --display:"Cinzel","Trajan Pro",Georgia,serif;
+  --quote:"Cormorant Garamond",Georgia,serif;
+  --body:"Manrope","Segoe UI",system-ui,sans-serif;
+  --wrap:1180px;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:72px}
+body{margin:0;background:var(--ink);color:var(--bone);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--gold)}
+a:hover{color:var(--bone)}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+h1,h2,h3{font-family:var(--display);font-weight:800;line-height:1.08;text-wrap:balance;margin:0}
+p{margin:0}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px))}
+.eyebrow{font-size:13px;letter-spacing:.28em;text-transform:uppercase;font-weight:700;color:var(--dust)}
+.section{padding-block:clamp(72px,10vw,128px)}
+.section + .section{border-top:1px solid var(--line)}
+.h2{font-size:clamp(34px,5vw,56px);color:var(--gold)}
+.lede{font-size:clamp(18px,2vw,21px);color:var(--bone);max-width:62ch}
+.muted{color:var(--dust)}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.06em;text-decoration:none;border:1px solid var(--gold);transition:background .2s,color .2s}
+.btn-solid{background:var(--gold);color:var(--ink)}
+.btn-solid:hover{background:var(--bone);border-color:var(--bone);color:var(--ink)}
+.btn-ghost{color:var(--bone)}
+.btn-ghost:hover{background:rgba(212,174,90,.14);color:var(--bone)}
+
+/* barra superior */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--ink)}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:rgba(14,12,10,.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px}
+.brand{font-family:var(--display);font-weight:800;font-size:22px;letter-spacing:.14em;color:var(--gold);text-decoration:none}
+.nav{display:flex;gap:28px}
+.nav a{color:var(--dust);text-decoration:none;font-size:14px;font-weight:500;letter-spacing:.04em}
+.nav a:hover{color:var(--bone)}
+.top .btn{min-height:44px;padding:0 18px;font-size:14px}
+@media (max-width:860px){.nav{display:none}}
+
+/* hero */
+.hero{position:relative;overflow:hidden;isolation:isolate}
+.hero-bg{position:absolute;inset:0;z-index:-2}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:35% center;animation:drift 26s ease-out both}
+@keyframes drift{from{transform:scale(1.08)}to{transform:scale(1)}}
+.hero::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(14,12,10,.94) 0%,rgba(14,12,10,.72) 48%,rgba(14,12,10,.25) 100%),linear-gradient(0deg,var(--ink) 0%,rgba(14,12,10,0) 30%)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr);gap:56px;align-items:end;padding-block:clamp(96px,14vw,168px) clamp(64px,8vw,96px)}
+.hero-copy{display:flex;flex-direction:column;gap:20px;min-width:0}
+.hero h1{font-size:clamp(68px,13vw,168px);color:var(--gold);letter-spacing:.04em;line-height:.92}
+.hero .sub{font-family:var(--display);font-weight:700;font-size:clamp(16px,2.4vw,28px);letter-spacing:.32em;color:var(--bone)}
+.hero .tagline{font-family:var(--quote);font-style:italic;font-size:clamp(22px,2.6vw,30px);line-height:1.3;color:var(--bone);max-width:30ch}
+.hero-meta{display:flex;flex-wrap:wrap;gap:10px 28px;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--dust);padding-top:8px}
+.hero-meta strong{color:var(--gold);font-weight:700}
+.hero-actions{display:flex;flex-wrap:wrap;gap:14px;padding-top:12px}
+.poster{border:1px solid var(--line);box-shadow:0 30px 80px rgba(0,0,0,.6);aspect-ratio:2/3;max-width:100%}
+.poster img{width:100%;height:100%;object-fit:cover}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr}.poster{max-width:300px}}
+
+/* sinopsis */
+.story{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,.6fr);gap:64px}
+.story-copy{display:flex;flex-direction:column;gap:24px;min-width:0}
+.quote{font-family:var(--quote);font-style:italic;font-size:clamp(24px,3vw,32px);line-height:1.3;color:var(--bone);max-width:40ch}
+.ficha{border-top:1px solid var(--gold);display:flex;flex-direction:column}
+.ficha div{display:flex;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--line)}
+.ficha dt{font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:var(--dust)}
+.ficha dd{margin:0;font-weight:700;text-align:right}
+@media (max-width:860px){.story{grid-template-columns:1fr;gap:40px}}
+
+/* tráiler */
+.trailer{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;border:1px solid var(--line);margin-top:40px}
+.trailer img{width:100%;height:100%;object-fit:cover;filter:brightness(.38)}
+.trailer-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;text-align:center;padding:20px}
+.trailer-label .t{font-family:var(--display);font-weight:800;font-size:clamp(28px,5vw,56px);color:var(--gold)}
+
+/* prócer */
+.procer{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:64px;align-items:start}
+.procer-img{position:relative;aspect-ratio:4/5;max-width:100%;overflow:hidden}
+.procer-img img{width:100%;height:100%;object-fit:cover;object-position:40% center}
+.timeline{list-style:none;margin:32px 0 0;padding:0;border-top:1px solid var(--line)}
+.timeline li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:24px;padding:20px 0;border-bottom:1px solid var(--line)}
+.timeline .y{font-family:var(--display);font-weight:800;font-size:32px;color:var(--gold);line-height:1;font-variant-numeric:tabular-nums}
+@media (max-width:860px){.procer{grid-template-columns:1fr;gap:40px}.timeline li{grid-template-columns:84px minmax(0,1fr);gap:16px}.timeline .y{font-size:26px}}
+
+/* galería */
+.gallery{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:220px;gap:8px;margin-top:40px}
+.gallery button{all:unset;cursor:zoom-in;position:relative;overflow:hidden;display:block}
+.gallery button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.gallery img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease}
+.gallery button:hover img{transform:scale(1.04)}
+.gallery .g-wide{grid-column:span 2}
+.gallery .g-big{grid-column:span 2;grid-row:span 2}
+@media (max-width:860px){.gallery{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:150px}}
+dialog.lightbox{border:0;padding:0;background:transparent;max-width:min(1400px,94vw);width:100%}
+dialog.lightbox::backdrop{background:rgba(8,7,6,.92)}
+.lightbox img{width:100%;height:auto;max-height:84vh;object-fit:contain}
+.lightbox .cap{color:var(--dust);font-size:14px;padding-top:12px;text-align:center}
+.lightbox .close{position:absolute;top:8px;right:8px;width:44px;height:44px;border:1px solid var(--line);background:rgba(14,12,10,.8);color:var(--bone);font-size:22px;cursor:pointer}
+
+/* estreno */
+.estreno-img{position:relative;aspect-ratio:16/9;max-width:100%;overflow:hidden;margin-top:40px}
+.estreno-img img{width:100%;height:100%;object-fit:cover}
+.estreno-img .tag{position:absolute;left:16px;bottom:16px;background:rgba(14,12,10,.8);font-size:12px;letter-spacing:.2em;padding:6px 12px;color:var(--bone)}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;margin-top:48px}
+.stat{border-top:2px solid var(--gold);padding-top:16px;display:flex;flex-direction:column;gap:4px}
+.stat b{font-family:var(--display);font-weight:800;font-size:clamp(34px,4.4vw,52px);line-height:1;color:var(--bone)}
+.stat span{font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:var(--dust)}
+@media (max-width:860px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.screen-quote{font-family:var(--quote);font-style:italic;font-size:clamp(22px,2.6vw,28px);line-height:1.35;max-width:52ch;margin-top:40px;color:var(--bone)}
+.programa{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 40px;margin-top:28px}
+.programa div{border-left:2px solid var(--line);padding-left:18px;display:flex;flex-direction:column;gap:6px}
+.programa div.key{border-left-color:var(--gold)}
+.programa time{font-weight:700;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+@media (max-width:860px){.programa{grid-template-columns:1fr}}
+
+/* patrocinio */
+.sponsor{background:var(--ink-2)}
+.tiers{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:40px}
+.tier{background:var(--ink-2);padding:28px 22px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.tier h3{font-size:22px;color:var(--bone)}
+.tier .price{font-weight:700;font-size:20px;color:var(--gold);font-variant-numeric:tabular-nums}
+.tier .cupos{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--dust)}
+.tier p{font-size:15px;line-height:1.55;color:var(--dust)}
+.tier.feat{background:#221B12}
+@media (max-width:1000px){.tiers{grid-template-columns:repeat(2,minmax(0,1fr))}.tier.feat{grid-column:1/-1}}
+@media (max-width:520px){.tiers{grid-template-columns:1fr}}
+.sponsor-cta{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px;margin-top:40px}
+
+/* director */
+.director{display:grid;grid-template-columns:minmax(0,.6fr) minmax(0,1.4fr);gap:64px;align-items:center}
+.director-img{aspect-ratio:3/4;max-width:100%;overflow:hidden}
+.director-img img{width:100%;height:100%;object-fit:cover;object-position:center 20%}
+.cred{list-style:none;padding:0;margin:28px 0 0;border-top:1px solid var(--line)}
+.cred li{padding:14px 0;border-bottom:1px solid var(--line)}
+.ally{display:flex;align-items:center;gap:28px;flex-wrap:wrap;margin-top:36px;padding:24px 28px;border:1px solid var(--line);background:var(--ink-2)}
+.ally img{height:52px;width:auto}
+@media (max-width:860px){.director{grid-template-columns:1fr;gap:40px}.director-img{max-width:360px}}
+
+/* pie */
+.foot{border-top:1px solid var(--line);padding-block:56px calc(40px + env(safe-area-inset-bottom,0px))}
+.foot .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:32px;align-items:flex-end}
+.foot .brand{font-size:28px}
+.contact{display:flex;flex-wrap:wrap;gap:12px 40px}
+.contact div{display:flex;flex-direction:column;gap:2px}
+.contact span{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--dust)}
+.contact b,.contact a{font-size:18px;font-weight:700;color:var(--bone);text-decoration:none;user-select:all}
+.contact a:hover{color:var(--gold)}
+.small{font-size:13px;color:var(--dust)}
+
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.hero-bg img{animation:none}.gallery img{transition:none}}
+</style>
+<!--HEAD-END-->
+</head>
+<body>
+<!--BODY-START-->
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio">BARAYA</a>
+    <nav class="nav" aria-label="Secciones">
+      <a href="#historia">La historia</a>
+      <a href="#procer">El prócer</a>
+      <a href="#galeria">Galería</a>
+      <a href="#estreno">Estreno</a>
+      <a href="#patrocina">Patrocina</a>
+    </nav>
+    <a class="btn btn-solid" href="https://wa.me/573213973458?text=Hola%20Camilo%2C%20quiero%20informaci%C3%B3n%20sobre%20el%20cortometraje%20Baraya" target="_blank" rel="noopener">Escríbenos</a>
+  </div>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <div class="hero-bg"><img src="img/atardecer_caballo.jpg" alt=""></div>
+  <div class="wrap">
+    <div class="hero-copy">
+      <div class="eyebrow">Cortometraje · Estreno febrero 2027</div>
+      <h1>BARAYA</h1>
+      <div class="sub">EL PRÓCER INDEPENDENTISTA</div>
+      <p class="tagline">Desde el ejército del Rey hasta la causa de la libertad.</p>
+      <div class="hero-meta">
+        <span><strong>40 min</strong></span>
+        <span>Plaza Botero · Olave Tower</span>
+        <span>Neiva, Huila</span>
+      </div>
+      <div class="hero-actions">
+        <a class="btn btn-solid" href="#historia">Conoce la historia</a>
+        <a class="btn btn-ghost" href="#patrocina">Patrocina el estreno</a>
+      </div>
+    </div>
+    <figure class="poster" style="margin:0"><img src="img/poster.jpg" alt="Póster oficial de Baraya: El Prócer Independentista"></figure>
+  </div>
+</section>
+
+<section class="section" id="historia">
+  <div class="wrap story">
+    <div class="story-copy">
+      <div class="eyebrow">La historia</div>
+      <h2 class="h2">Lealtad, guerra y libertad</h2>
+      <p class="lede">«Baraya: El Prócer Independentista» cuenta la historia del general Antonio Baraya, desde sus primeros años hasta su fusilamiento el 20 de julio de 1816. Una historia llena de lealtades puestas a prueba, batallas decisivas y decisiones que lo llevaron a enfrentarse incluso a quienes alguna vez fueron sus aliados.</p>
+      <p class="quote">Entre recuerdos y despedidas, el camino de un hombre que lo entregó todo por una patria que apenas empezaba a nacer.</p>
+      <p class="muted">Una producción que busca rescatar su legado y devolverle a su nombre el lugar que merece en la memoria de su gente.</p>
+    </div>
+    <dl class="ficha" style="margin:0">
+      <div><dt>Duración</dt><dd>40 minutos</dd></div>
+      <div><dt>Género</dt><dd>Drama histórico</dd></div>
+      <div><dt>Técnica</dt><dd>Inteligencia artificial</dd></div>
+      <div><dt>Dirección</dt><dd>Camilo Ortiz Motta</dd></div>
+      <div><dt>Origen</dt><dd>Huila, Colombia</dd></div>
+      <div><dt>Estreno</dt><dd>Febrero 2027</dd></div>
+    </dl>
+  </div>
+  <div class="wrap">
+    <div class="trailer">
+      <img src="img/batalla_puente.jpg" alt="">
+      <div class="trailer-label">
+        <div class="eyebrow">Tráiler oficial</div>
+        <div class="t">Muy pronto</div>
+        <div class="muted">Síguenos en <a href="https://www.instagram.com/fotografohuila/" target="_blank" rel="noopener">@fotografohuila</a> para verlo primero.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="procer">
+  <div class="wrap procer">
+    <div class="procer-img"><img src="img/mirada_serio.jpg" alt="Antonio Baraya, fotograma del cortometraje"></div>
+    <div>
+      <div class="eyebrow">El prócer</div>
+      <h2 class="h2" style="margin-top:14px">Antonio Baraya</h2>
+      <p class="lede" style="margin-top:20px">Militar de la Independencia de la Nueva Granada. Pasó del ejército del Rey a la causa patriota y pagó con su vida esa decisión. Su nombre lo lleva un municipio del Huila; su historia, muy pocos la conocen.</p>
+      <ol class="timeline">
+        <li><span class="y">1810</span><span>Participa en la revolución del 20 de julio en Santafé y hace parte de la Junta Suprema.</span></li>
+        <li><span class="y">1811</span><span>Vence en la batalla del Bajo Palacé (28 de marzo), la primera victoria patriota sobre las tropas realistas.</span></li>
+        <li><span class="y">1812</span><span>Rompe con el centralismo y se une a los federalistas: se enfrenta a quienes habían sido sus aliados.</span></li>
+        <li><span class="y">1816</span><span>Capturado durante la Reconquista española, es fusilado en Santafé el 20 de julio.</span></li>
+        <li><span class="y">1884</span><span>El municipio de La Nutria, en el Huila, adopta su nombre: Baraya.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="galeria">
+  <div class="wrap">
+    <div class="eyebrow">Galería</div>
+    <h2 class="h2" style="margin-top:14px">Así se ve el corto</h2>
+    <p class="lede muted" style="margin-top:16px">Fotogramas del cortometraje, producido íntegramente con inteligencia artificial.</p>
+    <div class="gallery" id="gallery">
+      <button class="g-big" type="button" data-cap="La artillería en el puente"><img src="img/canon.jpg" alt="Artilleros cargando un cañón junto a un puente de piedra" loading="lazy"></button>
+      <button class="g-wide" type="button" data-cap="El patio de la fortaleza"><img src="img/patio_fortaleza.jpg" alt="Baraya camina entre la tropa formada" loading="lazy"></button>
+      <button type="button" data-cap="La infancia"><img src="img/nino.jpg" alt="Baraya de niño sonriendo" loading="lazy" style="object-position:30% center"></button>
+      <button type="button" data-cap="Tras las rejas"><img src="img/ventana_rejas.jpg" alt="Baraya mira por una ventana con rejas" loading="lazy" style="object-position:65% center"></button>
+      <button class="g-wide" type="button" data-cap="La batalla junto al río"><img src="img/batalla_puente.jpg" alt="Vista aérea de una batalla junto a un río" loading="lazy"></button>
+      <button type="button" data-cap="El consejo de guerra"><img src="img/consejo_guerra.jpg" alt="Consejo de guerra en una sala con escudos españoles" loading="lazy"></button>
+      <button type="button" data-cap="El calabozo"><img src="img/calabozo.jpg" alt="Prisionero en un calabozo iluminado con antorchas" loading="lazy"></button>
+      <button class="g-wide" type="button" data-cap="Al frente de la tropa"><img src="img/caballo_cielo.jpg" alt="Baraya a caballo ante un cielo despejado" loading="lazy" style="object-position:center 30%"></button>
+      <button class="g-wide" type="button" data-cap="Un patriota"><img src="img/sonrisa.jpg" alt="Baraya sonríe con uniforme patriota" loading="lazy" style="object-position:center 30%"></button>
+    </div>
+  </div>
+  <dialog class="lightbox" id="lightbox" aria-label="Fotograma ampliado">
+    <button class="close" type="button" id="lb-close" aria-label="Cerrar">×</button>
+    <img id="lb-img" src="img/canon.jpg" alt="">
+    <div class="cap" id="lb-cap"></div>
+  </dialog>
+</section>
+
+<section class="section" id="estreno">
+  <div class="wrap">
+    <div class="eyebrow">El estreno</div>
+    <h2 class="h2" style="margin-top:14px">En la pantalla más grande de la región</h2>
+    <div class="estreno-img">
+      <img src="img/estreno_pantalla.jpg" alt="Simulación del cortometraje en la pantalla LED de la Plaza Botero" loading="lazy">
+      <div class="tag">SIMULACIÓN</div>
+    </div>
+    <div class="stats">
+      <div class="stat"><b>144 m²</b><span>Pantalla LED de 16 × 9 m</span></div>
+      <div class="stat"><b>3.000</b><span>Asistentes esperados</span></div>
+      <div class="stat"><b>40′</b><span>De proyección</span></div>
+      <div class="stat"><b>Feb</b><span>2027 · fecha por confirmar</span></div>
+    </div>
+    <p class="screen-quote">«La superestructura LED de Olave Tower es la pantalla de espacio público peatonal más grande de toda Colombia, diseñada exclusivamente para el disfrute de la gente a nivel de calle.»</p>
+    <div style="margin-top:56px">
+      <div class="eyebrow">Programa de la noche</div>
+      <div class="programa">
+        <div><time>5:45 p. m.</time><span>Apertura de puertas, ingreso con manilla y zona de patrocinadores.</span></div>
+        <div><time>7:00 p. m.</time><span>Inicio del evento: presentación dancística.</span></div>
+        <div><time>7:10 p. m.</time><span>Palabras del director, de Felipe Olave e invitados especiales.</span></div>
+        <div class="key"><time>7:40 p. m.</time><span>Proyección de «Baraya: El Prócer Independentista».</span></div>
+        <div><time>8:30 p. m.</time><span>Show de la fuente de la Plaza Botero.</span></div>
+        <div><time>9:00 p. m.</time><span>Cierre y salida ordenada del público.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section sponsor" id="patrocina">
+  <div class="wrap">
+    <div class="eyebrow">Patrocina el estreno</div>
+    <h2 class="h2" style="margin-top:14px">Que tu marca haga parte de la historia</h2>
+    <p class="lede" style="margin-top:20px">Tu marca en 144 m² de pantalla, frente a 3.000 personas, unida al rescate de la memoria de un prócer huilense. Hay una forma de participar para cada empresa.</p>
+    <div class="tiers">
+      <div class="tier feat"><span class="cupos">1 cupo</span><h3>Presentador</h3><span class="price">$9.000.000</span><p>El evento «presentado por» tu marca, spot de 30 s, logo en las 3.000 manillas y crédito al inicio del corto.</p></div>
+      <div class="tier"><span class="cupos">2 cupos</span><h3>Oro</h3><span class="price">$4.500.000</span><p>Spot de 20 s en pantalla, espacio en la plaza y logo en los créditos.</p></div>
+      <div class="tier"><span class="cupos">4 cupos</span><h3>Plata</h3><span class="price">$2.000.000</span><p>Logo en pantalla en rotación y en las piezas del evento.</p></div>
+      <div class="tier"><span class="cupos">8 cupos</span><h3>Aliado</h3><span class="price">$800.000</span><p>Logo en rotación compartida y en el flyer oficial.</p></div>
+      <div class="tier"><span class="cupos">Sin límite</span><h3>Amigo</h3><span class="price">$250.000</span><p>Tu nombre en la pantalla de agradecimientos.</p></div>
+    </div>
+    <div class="sponsor-cta">
+      <p class="muted" style="max-width:56ch">También puedes patrocinar una parte del festival (atención médica, manillas, hidratación), tomar un espacio de marca en la zona de patrocinadores o aportar en especie. Pide el dossier completo.</p>
+      <a class="btn btn-solid" href="https://wa.me/573213973458?text=Hola%20Camilo%2C%20quiero%20recibir%20el%20dossier%20de%20patrocinio%20de%20Baraya" target="_blank" rel="noopener">Solicitar el dossier</a>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="director">
+  <div class="wrap director">
+    <div class="director-img"><img src="img/camilo.jpg" alt="Camilo Ortiz Motta" loading="lazy"></div>
+    <div>
+      <div class="eyebrow">Dirección y producción</div>
+      <h2 class="h2" style="margin-top:14px">Camilo Ortiz Motta</h2>
+      <ul class="cred">
+        <li>Comunicador Social y Periodista, Universidad Jorge Tadeo Lozano.</li>
+        <li>Especialista en Marketing Digital, Universidad Manuela Beltrán.</li>
+        <li>Fotógrafo y realizador audiovisual: produce contenido para empresas del Huila.</li>
+        <li>Creador de contenido con inteligencia artificial enfocado en el Huila.</li>
+      </ul>
+      <div class="ally">
+        <img src="img/olave_logo.png" alt="Olave Tower">
+        <p style="flex:1 1 260px;min-width:0"><span class="eyebrow" style="display:block;color:var(--gold);margin-bottom:4px">Con el respaldo de</span><strong>Felipe Olave</strong>, empresario huilense, que apoya el proyecto y abre la Plaza Botero de Olave Tower para el estreno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <a class="brand" href="#inicio">BARAYA</a>
+      <span class="small">El Prócer Independentista · © 2026 Camilo Ortiz Motta</span>
+    </div>
+    <div class="contact">
+      <div><span>Contacto</span><b>Camilo Ortiz Motta</b></div>
+      <div><span>Celular y WhatsApp</span><b>321 397 3458</b></div>
+      <div><span>Instagram</span><a href="https://www.instagram.com/fotografohuila/" target="_blank" rel="noopener">@fotografohuila</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var dlg=document.getElementById('lightbox'), img=document.getElementById('lb-img'), cap=document.getElementById('lb-cap');
+  document.getElementById('gallery').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    var i=b.querySelector('img'); img.src=i.src; img.alt=i.alt; cap.textContent=b.dataset.cap||'';
+    if(dlg.showModal) dlg.showModal();
+  });
+  document.getElementById('lb-close').addEventListener('click',function(){dlg.close();});
+  dlg.addEventListener('click',function(e){ if(e.target===dlg) dlg.close(); });
+})();
+</script>
+<!--BODY-END-->
+</body>
+</html>
