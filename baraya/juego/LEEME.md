@@ -46,8 +46,10 @@ La sección «Inscríbete y asegura tu cupo» de la página principal usa la mis
 - Un mismo celular puede inscribir a varias personas (por ejemplo, un papá con sus hijos), pero
   la misma persona (mismo nombre y celular) no se inscribe dos veces: recibe su código anterior.
 - Cada inscrito recibe una **entrada con QR personal**: la ve al inscribirse, la puede abrir en
-  `camott.com/baraya/entrada/?c=…&t=…` y, si dejó correo, le llega por email con el QR
-  (Gmail permite unos 100 correos al día). El enlace de cada uno queda en la columna
+  `camott.com/baraya/entrada/?c=…&t=…` y le llega por correo (obligatorio) con el QR.
+  Gmail gratuito permite unos 100 correos al día: si se agota, la columna **Correo enviado**
+  queda en «Pendiente». Crea un activador diario para la función `enviarPendientes`
+  (Apps Script › Activadores › Añadir activador › enviarPendientes › Basado en tiempo › Diario). El enlace de cada uno queda en la columna
   **Enlace entrada**, listo para enviarlo por WhatsApp.
 - El QR contiene `BARAYA|código|firma`. La firma se genera con una clave secreta guardada
   en las propiedades del script (no está en GitHub), así nadie puede inventar entradas.

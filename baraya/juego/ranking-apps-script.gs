@@ -15,13 +15,14 @@ const CIERRE = '';                 // Cierre del ranking del juego. Vacío = abi
 const MAX_POR_SEGUNDO = 60;        // Puntos máximos por segundo de juego (anti-trampas).
 const CUPO_INSCRIPCIONES = 3000;   // Personas que se pueden inscribir (una inscripción = una persona).
 const CIERRE_INSCRIPCIONES = '';   // Cierre de inscripciones. Vacío = abierto.
-const ENVIAR_CORREO = true;        // Confirmación con QR por correo (Gmail permite ~100 al día).
+const ENVIAR_CORREO = true;        // Confirmación con QR por correo. Gmail gratuito permite ~100 al día:
+                                   // si se agota, queda «Pendiente» y se envía con enviarPendientes().
 const URL_ENTRADA = 'https://camott.com/baraya/entrada/';
 const FECHA_EVENTO = 'Febrero de 2027 (te confirmaremos el día exacto)';
 
 const ENC_RANK = ['Nombre','Puntos','Contacto','Fecha','Duración (s)','Banderas','Metros'];
 const ENC_PAT  = ['Nombre','Nivel','Logo (URL)','Activo (Sí/No)'];
-const ENC_INS  = ['Código','Nombre','Celular','Correo','Municipio','Personas','Acepta datos','Acepta mensajes','Fecha','Asistió','Token','Enlace entrada'];
+const ENC_INS  = ['Código','Nombre','Celular','Correo','Municipio','Personas','Acepta datos','Acepta mensajes','Fecha','Asistió','Token','Enlace entrada','Correo enviado'];
 
 function hoja_(nombre, encabezados) {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
@@ -104,7 +105,8 @@ function asegurarToken_(sh, fila, codigo) {   // completa token y enlace en fila
   return t;
 }
 function correoConfirmacion_(correo, nombre, codigo, personas, token) {
-  if (!ENVIAR_CORREO || !correo || !/.+@.+\..+/.test(correo) || MailApp.getRemainingDailyQuota() < 1) return;
+  if (!ENVIAR_CORREO || !correo || !/.+@.+\..+/.test(correo)) return 'No';
+  if (MailApp.getRemainingDailyQuota() < 1) return 'Pendiente';
   try {
     const contenido = 'BARAYA|' + codigo + '|' + token;
     const qr = UrlFetchApp.fetch('https://quickchart.io/qr?size=360&margin=2&ecLevel=M&text=' + encodeURIComponent(contenido)).getBlob().setName('entrada-' + codigo + '.png');
@@ -128,15 +130,17 @@ function correoConfirmacion_(correo, nombre, codigo, personas, token) {
         '<p style="font-size:13px;color:#5E4930">Guarda este correo o toma un pantallazo del QR. camott.com/baraya</p></div>',
       inlineImages: { qr: qr }
     });
-  } catch (err) {}
+    return 'Sí';
+  } catch (err) { return 'Pendiente'; }
 }
 function norm_(s) { return String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/\s+/g, ' ').trim(); }
 function inscribir_(d) {
-  const nombre = limpio_(d.nombre, 60), correo = limpio_(d.correo, 80), municipio = limpio_(d.municipio, 40);
+  const nombre = limpio_(d.nombre, 60), correo = limpio_(d.correo, 80).toLowerCase(), municipio = limpio_(d.municipio, 40);
   const celular = String(d.celular || '').replace(/\D/g, '').slice(-10);
   const personas = 1;                                   // inscripción personal
   if (nombre.length < 3) return { ok: false, error: 'Escribe tu nombre completo.' };
   if (celular.length !== 10) return { ok: false, error: 'Escribe un celular válido de 10 dígitos.' };
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return { ok: false, error: 'Escribe un correo válido: ahí te llega tu entrada.' };
   if (d.aceptaDatos !== true) return { ok: false, error: 'Debes autorizar el tratamiento de tus datos.' };
   const c = cupos_();
   if (c.cerrado) return { ok: false, error: 'Las inscripciones ya cerraron.' };
@@ -151,8 +155,9 @@ function inscribir_(d) {
   if (personas > c.restantes) return { ok: false, lleno: true, error: c.restantes > 0 ? 'Solo quedan ' + c.restantes + ' cupos.' : 'Los cupos se agotaron.', restantes: c.restantes };
   const codigo = 'BAR-' + String(ins.sh.getLastRow()).padStart(4, '0');
   const token = token_(codigo);
-  ins.sh.appendRow([codigo, nombre, "'" + celular, correo, municipio, personas, 'Sí', d.aceptaMensajes === true ? 'Sí' : 'No', new Date(), '', token, enlace_(codigo, token)]);
-  correoConfirmacion_(correo, nombre, codigo, personas, token);
+  ins.sh.appendRow([codigo, nombre, "'" + celular, correo, municipio, personas, 'Sí', d.aceptaMensajes === true ? 'Sí' : 'No', new Date(), '', token, enlace_(codigo, token), '']);
+  const fila = ins.sh.getLastRow();
+  ins.sh.getRange(fila, 13).setValue(correoConfirmacion_(correo, nombre, codigo, personas, token));
   return { ok: true, codigo: codigo, token: token, nombre: nombre, personas: personas, restantes: cupos_().restantes };
 }
 function entrada_(codigo, token) {                       // datos para la página de entrada
@@ -162,6 +167,20 @@ function entrada_(codigo, token) {                       // datos para la págin
     if (ins.filas[i][0] === codigo) return { ok: true, codigo: codigo, nombre: ins.filas[i][1], personas: ins.filas[i][5], asistio: !!ins.filas[i][9] };
   }
   return { ok: false, error: 'No encontramos esta inscripción.' };
+}
+
+/* Envía los correos que quedaron «Pendiente» (cuando se agotó el cupo diario de Gmail).
+   Ejecútala a mano o crea un activador diario: Activadores › Añadir activador ›
+   enviarPendientes › Basado en tiempo › Diario. */
+function enviarPendientes() {
+  const ins = inscritos_();
+  for (var i = 0; i < ins.filas.length; i++) {
+    const f = ins.filas[i];
+    if (String(f[12]) !== 'Pendiente') continue;
+    if (MailApp.getRemainingDailyQuota() < 1) break;
+    const t = f[10] || asegurarToken_(ins.sh, i + 2, f[0]);
+    ins.sh.getRange(i + 2, 13).setValue(correoConfirmacion_(String(f[3]), String(f[1]), f[0], 1, t));
+  }
 }
 
 /* ---------- Puntos de entrada ---------- */

@@ -381,10 +381,9 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
       <div class="sc">Asiste al estreno</div>
       <h2 class="h2" style="margin-top:12px">Inscríbete y asegura tu cupo</h2>
       <p class="lede" style="margin-top:18px">La entrada es libre, pero el aforo de la Plaza Botero es limitado. Cada asistente se inscribe y recibe su propia entrada con un código QR personal: lo presentas esa noche y recibes tu manilla. Te avisaremos la fecha exacta y te enviaremos recordatorios.</p>
-      <div class="cupos" id="cupos" hidden>
-        <div class="num" id="cupos-num">—</div>
-        <div class="sc" id="cupos-txt">cupos disponibles</div>
-        <div class="bar" aria-hidden="true"><div class="fill" id="cupos-fill"></div></div>
+      <div class="cupos">
+        <div class="num" id="cupos-num" style="font-size:clamp(26px,3.4vw,38px)">Cupos limitados</div>
+        <div class="sc" id="cupos-txt">Entrada libre · inscripción personal</div>
       </div>
     </div>
     <div>
@@ -392,7 +391,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
         <div class="field"><label for="r-nombre">Nombre completo</label><input type="text" id="r-nombre" autocomplete="name" maxlength="60" required></div>
         <div class="two">
           <div class="field"><label for="r-cel">Celular (WhatsApp)</label><input type="tel" id="r-cel" autocomplete="tel" inputmode="numeric" maxlength="14" placeholder="300 123 4567" required></div>
-          <div class="field"><label for="r-correo">Correo (opcional)</label><input type="email" id="r-correo" autocomplete="email" maxlength="80"></div>
+          <div class="field"><label for="r-correo">Correo electrónico</label><input type="email" id="r-correo" autocomplete="email" maxlength="80" required placeholder="Aquí te llega tu entrada"></div>
         </div>
         <div class="field"><label for="r-muni">Municipio</label><input type="text" id="r-muni" maxlength="40" value="Neiva" autocomplete="address-level2"></div>
         <p class="muted" style="font-size:15px;margin:0">La inscripción es personal: cada asistente, incluidos los niños, debe inscribirse con su propio nombre y recibe su propio QR.</p>
@@ -406,7 +405,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
         <div id="t-qr" style="background:#fff;padding:10px;border:2px solid var(--wax);margin:6px 0"></div>
         <div class="code" id="t-code">BAR-0000</div>
         <p id="t-txt"></p>
-        <p class="muted" style="font-size:16px">Presenta este QR en la entrada para recibir tu manilla. Si dejaste correo, también te lo enviamos.</p>
+        <p class="muted" style="font-size:16px">Presenta este QR en la entrada para recibir tu manilla. También te lo enviamos a tu correo.</p>
         <a class="btn btn-wax" id="t-ver" href="entrada/" style="justify-content:center">Ver y descargar mi entrada</a>
         <a class="btn" id="t-wa" href="#" target="_blank" rel="noopener" style="justify-content:center">Enviármela por WhatsApp</a>
         <button class="btn" type="button" id="t-otra" style="margin-top:8px">Inscribir a otra persona</button>
@@ -474,13 +473,13 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
 <script>
 (function(){
   var CFG=window.BARAYA_JUEGO||{}, URL=CFG.rankingUrl;
-  var box=document.getElementById('cupos'), form=document.getElementById('regform'), msg=document.getElementById('r-msg');
+  var form=document.getElementById('regform'), msg=document.getElementById('r-msg');
   function fmt(n){ return Number(n).toLocaleString('es-CO'); }
-  function paint(c){ if(!c) return; box.hidden=false;
-    document.getElementById('cupos-num').textContent=fmt(c.restantes);
-    document.getElementById('cupos-txt').textContent=c.cerrado?'Las inscripciones cerraron':(c.restantes>0?'cupos disponibles de '+fmt(c.cupo):'Cupos agotados');
-    document.getElementById('cupos-fill').style.width=Math.min(100,(c.inscritos/c.cupo)*100)+'%';
-    if(c.cerrado||c.restantes<=0){ document.getElementById('r-btn').disabled=true; } }
+  function paint(c){ if(!c) return;
+    var num=document.getElementById('cupos-num'), txt=document.getElementById('cupos-txt');
+    if(c.cerrado){ num.textContent='Inscripciones cerradas'; txt.textContent='Gracias por tu interés'; document.getElementById('r-btn').disabled=true; }
+    else if(c.restantes<=0){ num.textContent='Cupos agotados'; txt.textContent='Síguenos en redes para más noticias'; document.getElementById('r-btn').disabled=true; }
+    else if(c.restantes<=300){ num.textContent='¡Últimos cupos!'; txt.textContent='Inscríbete antes de que se agoten'; } }
   if(URL){ fetch(URL).then(function(r){return r.json()}).then(function(d){ paint(d.cupos); }).catch(function(){}); }
   try{ var saved=JSON.parse(localStorage.getItem('baraya-inscripcion')||'null'); if(saved&&saved.codigo&&saved.token) showTicket(saved); }catch(e){}
   function showTicket(t){ form.hidden=true; var tk=document.getElementById('ticket'); tk.hidden=false;
@@ -498,6 +497,7 @@ dialog.lightbox::backdrop{background:rgba(27,20,13,.9)}
     var n=document.getElementById('r-nombre').value.trim(), c=document.getElementById('r-cel').value.replace(/\D/g,'');
     if(n.length<3){ msg.textContent='Escribe tu nombre completo.'; document.getElementById('r-nombre').focus(); return; }
     if(c.length<10){ msg.textContent='Escribe tu celular de 10 dígitos.'; document.getElementById('r-cel').focus(); return; }
+    var em=document.getElementById('r-correo').value.trim(); if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)){ msg.textContent='Escribe un correo válido: ahí te llega tu entrada con el QR.'; document.getElementById('r-correo').focus(); return; }
     if(!document.getElementById('r-datos').checked){ msg.textContent='Debes autorizar el tratamiento de tus datos para inscribirte.'; return; }
     if(!URL){ msg.textContent='Las inscripciones abren muy pronto.'; return; }
     var btn=document.getElementById('r-btn'); btn.disabled=true; msg.textContent='Enviando…';
