@@ -7,7 +7,7 @@
 // concurso: textos del premio. Cámbialos cuando tengas patrocinador.
 //   cierre: fecha y hora en que se congela el ranking (formato ISO).
 window.BARAYA_JUEGO = {
-  rankingUrl: "",
+  rankingUrl: "https://script.google.com/macros/s/AKfycbw91Mr0xuRPfsxIkJ6n6btxf3kj5Do-4MB04VIxMdpMr-rS9Zzl0rfqGaq7ZOGxwJq_/exec",
   paginaPrincipal: "../",
   concurso: {
     activo: true,
