@@ -46,7 +46,9 @@ En la pestaña **Patrocinadores** de la hoja escribe una fila por marca:
   pantalla y el **mismo recorrido para todos**. Si falla algo técnico, «Repetir turno». Al final
   muestra el ganador; si hay empate, ofrece «Jugar desempate». Los puntajes de la final no van
   al ranking en línea y se guardan en el portátil aunque recargues la página.
-  Para ensayar con un recorrido distinto usa `?final&ruta=2027` (el de la noche es el normal).
+  **Importante:** la noche del estreno abre `?final&ruta=` con un número que solo tú sepas
+  (por ejemplo `?final&ruta=4719`). Así nadie puede ensayar antes el recorrido de la final.
+  Sin `ruta`, el modo final usa un recorrido de práctica.
 
 ## 5. Inscripciones al estreno
 La sección «Inscríbete y asegura tu cupo» de la página principal usa la misma hoja.
